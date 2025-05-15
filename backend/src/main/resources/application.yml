@@ -1,0 +1,25 @@
+server:
+  servlet:
+    context-path: /sga-ic/api 
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sgaic
+    username: postgres
+    password: 1234
+    driver-class-name: org.postgresql.Driver
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    open-in-view: false
+
+jwt:
+  secret: 7/M4mQ2KiZFLDgCPxXEO060N+IK64PrqU5O2foVfyzs= 
+  expirationMs: 600000  
+  jwtCookieName: sgaicjwt
