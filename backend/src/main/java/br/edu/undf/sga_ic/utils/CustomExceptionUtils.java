@@ -22,4 +22,9 @@ public class CustomExceptionUtils {
 		log.info(" >>> CustomException utils disparada: {}", message);
 		return new CustomException(message, SeverityStatus.ERROR, HttpStatus.BAD_REQUEST);
 	}
+
+	public CustomException errorAndUnauthorized(String message) {
+		log.info(" >>> CustomException utils disparada: {}", message);
+		return new CustomException(message, SeverityStatus.ERROR, HttpStatus.UNAUTHORIZED);
+	}
 }
