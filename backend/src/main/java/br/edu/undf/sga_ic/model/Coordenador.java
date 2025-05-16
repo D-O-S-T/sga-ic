@@ -1,7 +1,5 @@
 package br.edu.undf.sga_ic.model;
 
-import java.time.ZonedDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,12 +23,12 @@ public class Coordenador {
 	@Column(nullable = true)
 	private String descricao;
 
-	@Column(nullable = false)
-	private ZonedDateTime cadastradoEm;
-
 	@Column(nullable = false, unique = true)
 	private String email;
 
 	@Column(nullable = false, unique = true)
 	private String celular;
+	
+	@Column(nullable = true, columnDefinition = "BYTEA")
+	private byte[] fotoPerfil;
 }

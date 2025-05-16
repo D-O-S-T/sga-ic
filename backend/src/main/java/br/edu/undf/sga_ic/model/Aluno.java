@@ -1,7 +1,5 @@
 package br.edu.undf.sga_ic.model;
 
-import java.time.ZonedDateTime;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,9 +23,6 @@ public class Aluno {
 	@Column(nullable = true)
 	private String descricao;
 
-	@Column(nullable = false)
-	private ZonedDateTime cadastradoEm;
-
 	@Column(nullable = false, unique = true)
 	private String email;
 
@@ -36,4 +31,7 @@ public class Aluno {
 
 	@Column(nullable = false, unique = true)
 	private String curriculoLattes;
+	
+	@Column(nullable = true, columnDefinition = "BYTEA")
+	private byte[] fotoPerfil;
 }

@@ -48,7 +48,7 @@ public class JwtService {
 	}
 
 	public ResponseCookie generateJwtCookie(Long usuarioId, UsuarioRole usuarioRole) {
-		String jwt = generateTokenFromUserDetails(usuarioId, usuarioRole.name());
+		String jwt = generateTokenFromUserDetails(usuarioId, usuarioRole);
 		return createCookie(jwtProperties.getJwtCookieName(), jwt, 3600);
 	}
 
@@ -61,8 +61,9 @@ public class JwtService {
 				.sameSite("Strict").build();
 	}
 
-	public String generateTokenFromUserDetails(Long usuarioId, String usuarioRole) {
-		return Jwts.builder().claim("userRole", usuarioRole).claim("usuarioId", usuarioId).setIssuedAt(new Date())
+	public String generateTokenFromUserDetails(Long usuarioId, UsuarioRole usuarioRole) {
+		return Jwts.builder().claim("userRole", usuarioRole.name()).claim("usuarioId", usuarioId)
+				.setIssuedAt(new Date())
 				.setExpiration(new Date((new Date()).getTime() + jwtProperties.getExpirationMs()))
 				.signWith(key(), SignatureAlgorithm.HS256).compact();
 	}

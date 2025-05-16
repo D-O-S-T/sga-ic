@@ -1,7 +1,5 @@
 package br.edu.undf.sga_ic.model;
 
-import java.time.ZonedDateTime;
-
 import br.edu.undf.sga_ic.enums.UsuarioRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -37,12 +34,6 @@ public class Usuario {
 	@Enumerated(EnumType.STRING)
 	private UsuarioRole usuarioRole;
 
-	@Column(nullable = false)
-	private ZonedDateTime cadastradoEm;
-
-	@Column(nullable = true, columnDefinition = "BYTEA")
-	private byte[] fotoPerfil;
-
 	@OneToOne
 	@JoinColumn(name = "aluno_id", referencedColumnName = "id", nullable = true)
 	private Aluno aluno;
@@ -54,8 +45,4 @@ public class Usuario {
 	@OneToOne
 	@JoinColumn(name = "coordenador_id", referencedColumnName = "id", nullable = true)
 	private Coordenador coordenador;
-
-	@ManyToOne
-	@JoinColumn(name = "cadastrado_por_id", referencedColumnName = "id", nullable = true)
-	private Usuario cadastradoPor;
 }
