@@ -1,0 +1,46 @@
+<main>
+ 
+  <section class="middle-form">
+    <img src="../../assets/icone-undf.png" alt="">
+    <h1>Bem-vindo ao hub de pesquisa da UnDF</h1>
+
+
+    <section>
+       
+      <div class="example-button-row">
+        <button mat-raised-button>Login</button>
+        <button mat-raised-button color="primary">Cadastro</button>
+      </div>
+    </section>
+
+
+    <div class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Digite seu email" />
+      </mat-form-field>
+    </div>
+
+
+    <div class="form">
+      <mat-form-field appearance="fill">
+        <mat-label>Enter your password</mat-label>
+        <input matInput placeholder="Digite a senha" [type]="hide() ? 'password' : 'text'" />
+        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()">
+          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+
+    </div>
+      <a href="#">Esqueceu a senha?</a>
+     
+      <button mat-raised-button color="primary">Acessar</button>
+
+  </section>
+
+
+
+
+
+</main>
