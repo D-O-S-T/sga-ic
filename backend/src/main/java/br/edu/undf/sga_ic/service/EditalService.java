@@ -2,6 +2,7 @@ package br.edu.undf.sga_ic.service;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.undf.sga_ic.dto.req.EditalAdd;
 import br.edu.undf.sga_ic.dto.res.Retorno;
@@ -20,6 +21,7 @@ public class EditalService {
 
 	private final EditalRepository editalRepository;
 
+	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(EditalAdd editalAdd) {
 
 		Edital edital = new Edital();

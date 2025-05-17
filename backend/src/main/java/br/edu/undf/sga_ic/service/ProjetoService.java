@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.undf.sga_ic.dto.req.ProjetoAdd;
 import br.edu.undf.sga_ic.dto.res.Retorno;
@@ -28,6 +29,7 @@ public class ProjetoService {
 
 	private final ProjetoRepository projetoRepository;
 
+	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(ProjetoAdd projetoAdd) throws CustomException {
 
 		Edital edital = editalUtils.findById(projetoAdd.editalId());
