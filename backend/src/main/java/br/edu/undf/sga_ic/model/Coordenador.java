@@ -20,9 +20,6 @@ public class Coordenador {
 	@Column(nullable = false)
 	private String nome;
 
-	@Column(nullable = true)
-	private String descricao;
-
 	@Column(nullable = false, unique = true)
 	private String email;
 

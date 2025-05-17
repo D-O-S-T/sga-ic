@@ -23,9 +23,9 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http.csrf(csrf -> csrf.disable())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				.authorizeHttpRequests(auth -> auth.requestMatchers("/auth/**").permitAll()
-						.requestMatchers("aluno/cadastrar").permitAll().requestMatchers("coordenador/cadastrar")
-						.permitAll().requestMatchers("/swagger-ui/**").permitAll().anyRequest().permitAll())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/swagger-ui/**").permitAll()
+						.anyRequest().permitAll())
 				.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
 		return http.build();
