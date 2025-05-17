@@ -38,10 +38,10 @@ public class AuthService {
 			throw customExceptionUtils.errorAndBadRequest("Usuário ou Senha incorreto.");
 		}
 
-		String token = jwtService.generateTokenFromUserDetails(usuario.getId(), usuario.getUsuarioRole());
+		ResponseCookie cookie = jwtService.generateJwtCookie(usuario.getId(), usuario.getUsuarioRole());
 
 		log.info(" >>> Login realizado com sucesso.");
-		return retornoUtils.retornoSucessoLoginComToken(usuario.getUsuarioRole(), token);
+		return retornoUtils.retornoSucessoLoginComToken(usuario.getUsuarioRole(), cookie.toString());
 	}
 
 	public ResponseEntity<Retorno> logout() {

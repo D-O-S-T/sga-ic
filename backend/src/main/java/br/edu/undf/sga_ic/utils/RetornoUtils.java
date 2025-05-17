@@ -42,12 +42,12 @@ public class RetornoUtils {
 	}
 
 	public ResponseEntity<UsuarioRole> retornoSucessoLoginComToken(UsuarioRole usuarioRole, String cookie) {
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie).body(usuarioRole);
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(usuarioRole);
 	}
 
 	public ResponseEntity<Retorno> retornoSucessoLogoutComToken(String message, String cookie) {
 		Retorno retorno = mapearRetorno(message, SeverityStatus.SUCCESS);
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie).body(retorno);
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(retorno);
 	}
 
 	private Retorno mapearRetorno(String message, SeverityStatus severityStatus) {
