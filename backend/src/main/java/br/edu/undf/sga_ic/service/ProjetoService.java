@@ -22,6 +22,7 @@ import br.edu.undf.sga_ic.repository.ProjetoRepository;
 import br.edu.undf.sga_ic.utils.CustomExceptionUtils;
 import br.edu.undf.sga_ic.utils.EditalUtils;
 import br.edu.undf.sga_ic.utils.EmptyUtils;
+import br.edu.undf.sga_ic.utils.ProjetoUtils;
 import br.edu.undf.sga_ic.utils.RetornoUtils;
 import br.edu.undf.sga_ic.utils.UsuarioUtils;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +38,7 @@ public class ProjetoService {
 	private final EditalUtils editalUtils;
 	private final UsuarioUtils usuarioUtils;
 	private final RetornoUtils retornoUtils;
+	private final ProjetoUtils projetoUtils;
 	private final CustomExceptionUtils customExceptionUtils;
 
 	private final ProjetoRepository projetoRepository;
@@ -59,6 +61,20 @@ public class ProjetoService {
 
 		log.info(" >>> Projeto registrado com sucesso.");
 		return retornoUtils.retornoSucesso("Projeto registrado com sucesso.");
+	}
+
+	public ProjetoRes findById(Long projetoId) throws CustomException {
+
+		Projeto projeto = projetoUtils.findById(projetoId);
+
+		ProjetoRes projetoDTO = ProjetoRes.builder().id(projeto.getId()).titulo(projeto.getTitulo())
+				.descricao(projeto.getDescricao())
+				.edital(EditalResShort.builder().titulo(projeto.getEdital().getTitulo())
+						.instituicao(projeto.getEdital().getInstituicao()).build())
+				.build();
+
+		log.info(">>> Retornando projeto de Id: {} - com sucesso.", projeto.getId());
+		return projetoDTO;
 	}
 
 	public List<ProjetoRes> findByAluno(HttpServletRequest request) throws CustomException {

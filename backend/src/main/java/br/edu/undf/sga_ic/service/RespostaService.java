@@ -1,6 +1,7 @@
 package br.edu.undf.sga_ic.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,7 +51,9 @@ public class RespostaService {
 
 		respostaRepository.save(resposta);
 
-		arquivoService.salvar(arquivos, null, resposta);
+		if (arquivos != null && Arrays.stream(arquivos).anyMatch(a -> !a.isEmpty())) {
+			arquivoService.salvar(arquivos, atividade, null);
+		}
 
 		log.info("Resposta registrada com sucesso.");
 		return retornoUtils.retornoSucesso("Resposta registrada com sucesso.");

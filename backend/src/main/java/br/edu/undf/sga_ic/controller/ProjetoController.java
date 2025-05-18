@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,14 +38,21 @@ public class ProjetoController {
 		return projetoService.registrar(projetoAdd);
 	}
 
-	@Operation(summary = "Projetos Aluno", description = "Este endpoint serve para retornar endpoints de um Aluno.")
+	@Operation(summary = "Projeto by Id", description = "Este endpoint serve para retornar um projeto pelo Id.")
+	@GetMapping("/{projetoId}")
+	public ProjetoRes findById(@PathVariable Long projetoId) throws CustomException {
+		log.info(" >>> Um Usuário está tentando retornar um Projeto pelo Id.");
+		return projetoService.findById(projetoId);
+	}
+
+	@Operation(summary = "Projetos Aluno", description = "Este endpoint serve para retornar projetos de um Aluno.")
 	@GetMapping("/aluno")
 	public List<ProjetoRes> findByAluno(HttpServletRequest request) throws CustomException {
 		log.info(" >>> Tentando retornar projetos de um Aluno.");
 		return projetoService.findByAluno(request);
 	}
 
-	@Operation(summary = "Projetos Professor", description = "Este endpoint serve para retornar endpoints de um Professor.")
+	@Operation(summary = "Projetos Professor", description = "Este endpoint serve para retornar projetos de um Professor.")
 	@GetMapping("/professor")
 	public List<ProjetoRes> findByProfessor(HttpServletRequest request) throws CustomException {
 		log.info(" >>> Tentando retornar projetos de um Professor.");

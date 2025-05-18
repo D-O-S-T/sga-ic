@@ -31,6 +31,9 @@ public class Atividade {
 	private String descricao;
 
 	@Column(nullable = false)
+	private LocalDateTime dataRegistro;
+
+	@Column(nullable = false)
 	private LocalDateTime dataAbertura;
 
 	@Column(nullable = false)
