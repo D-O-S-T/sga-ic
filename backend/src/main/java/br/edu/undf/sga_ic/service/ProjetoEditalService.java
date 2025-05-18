@@ -47,6 +47,8 @@ public class ProjetoEditalService {
 
 		Edital edital = projeto.getEdital();
 
+		validaAlunoJaRegistradoEdital(aluno, edital);
+
 		validaAlunoJaRegistrado(aluno, projeto);
 
 		validaQtdTotalAlunoPermitido(edital, projeto);
@@ -80,6 +82,8 @@ public class ProjetoEditalService {
 		Projeto projeto = projetoUtils.findById(projetoProfessorAdd.projetoId());
 
 		Edital edital = projeto.getEdital();
+
+		validaProfessorJaRegistradoEdital(professor, edital);
 
 		validaProfessorJaRegistrado(professor, projeto);
 
@@ -164,6 +168,17 @@ public class ProjetoEditalService {
 		}
 	}
 
+	public void validaAlunoJaRegistradoEdital(Aluno aluno, Edital edital) throws CustomException {
+
+		if (projetoEditalRepository.existsByAlunoIdAndEditalId(aluno.getId(), edital.getId())) {
+			String msg = String.format("O aluno '%s' já está registrado em um projeto do edital '%s'.", aluno.getNome(),
+					edital.getTitulo());
+
+			log.info(msg);
+			throw customExceptionUtils.errorAndBadRequest(msg);
+		}
+	}
+
 	public void validaQtdTotalProfessorPermitido(Edital edital, Projeto projeto) throws CustomException {
 
 		BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndAlunoIsNull(projeto.getId());
@@ -183,6 +198,17 @@ public class ProjetoEditalService {
 		if (projetoEditalRepository.existsByProfessorIdAndProjetoId(professor.getId(), projeto.getId())) {
 			String msg = String.format("O professor '%s' já está registrado no projeto '%s'.", professor.getNome(),
 					projeto.getTitulo());
+
+			log.info(msg);
+			throw customExceptionUtils.errorAndBadRequest(msg);
+		}
+	}
+
+	public void validaProfessorJaRegistradoEdital(Professor professor, Edital edital) throws CustomException {
+
+		if (projetoEditalRepository.existsByProfessorIdAndEditalId(professor.getId(), edital.getId())) {
+			String msg = String.format("O professor '%s' já está registrado em um projeto do edital '%s'.",
+					professor.getNome(), edital.getTitulo());
 
 			log.info(msg);
 			throw customExceptionUtils.errorAndBadRequest(msg);

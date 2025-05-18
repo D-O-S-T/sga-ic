@@ -13,6 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class CustomExceptionUtils {
 
+	public CustomException successAndNoContent(String message) {
+		log.info(" >>> CustomException utils disparada: {}", message);
+		return new CustomException(message, SeverityStatus.SUCCESS, HttpStatus.NO_CONTENT);
+	}
+
 	public CustomException errorAndNotFound(String message) {
 		log.info(" >>> CustomException utils disparada: {}", message);
 		return new CustomException(message, SeverityStatus.ERROR, HttpStatus.NOT_FOUND);
