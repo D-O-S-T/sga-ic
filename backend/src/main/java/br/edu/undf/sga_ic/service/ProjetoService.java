@@ -99,6 +99,16 @@ public class ProjetoService {
 		return mapProjetosToDTO(projetos);
 	}
 
+	public List<ProjetoRes> findByEdital(Long editalId) throws CustomException {
+
+		Edital edital = editalUtils.findById(editalId);
+
+		List<Projeto> projetos = projetoRepository.findProjetoByEditalId(edital.getId());
+
+		log.info(">>> Retornando lista de projetos com sucesso para o Edital de ID: {}", edital.getId());
+		return mapProjetosToDTO(projetos);
+	}
+
 	private List<ProjetoRes> mapProjetosToDTO(List<Projeto> projetos) {
 		return projetos.stream().map(projeto -> ProjetoRes.builder().id(projeto.getId()).titulo(projeto.getTitulo())
 				.descricao(projeto.getDescricao()).build()).toList();
