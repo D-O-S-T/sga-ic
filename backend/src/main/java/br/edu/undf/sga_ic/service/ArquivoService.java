@@ -8,7 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.undf.sga_ic.model.Arquivo;
 import br.edu.undf.sga_ic.model.Atividade;
-import br.edu.undf.sga_ic.model.Resposta;
+import br.edu.undf.sga_ic.model.Relatorio;
+import br.edu.undf.sga_ic.model.ResAtividade;
+import br.edu.undf.sga_ic.model.ResRelatorio;
 import br.edu.undf.sga_ic.repository.ArquivoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,17 +23,23 @@ public class ArquivoService {
 	private final ArquivoRepository arquivoRepository;
 
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public void salvar(MultipartFile[] arquivos, Atividade atividade, Resposta resposta) throws IOException {
+	public void salvar(MultipartFile[] arquivos, Atividade atvd, ResAtividade resatvd, Relatorio rltr,
+			ResRelatorio resrltr) throws IOException {
 
-		Resposta rspt = resposta != null ? resposta : null;
-		Atividade atvd = atividade != null ? atividade : null;
+		Atividade atividade = atvd != null ? atvd : null;
+		ResAtividade resAtividade = resatvd != null ? resatvd : null;
+
+		Relatorio relatorio = rltr != null ? rltr : null;
+		ResRelatorio resRelatorio = resrltr != null ? resrltr : null;
 
 		for (MultipartFile arquivo : arquivos) {
 
 			Arquivo novoArquivo = new Arquivo();
 
-			novoArquivo.setResposta(rspt);
-			novoArquivo.setAtividade(atvd);
+			novoArquivo.setAtividade(atividade);
+			novoArquivo.setResAtividade(resAtividade);
+			novoArquivo.setRelatorio(relatorio);
+			novoArquivo.setResRelatorio(resRelatorio);
 			novoArquivo.setBytesArquivo(arquivo.getBytes());
 			novoArquivo.setTipoArquivo(arquivo.getContentType());
 			novoArquivo.setNomeArquivo(arquivo.getOriginalFilename());

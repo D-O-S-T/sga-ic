@@ -11,9 +11,9 @@ import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.model.Aluno;
 import br.edu.undf.sga_ic.model.Atividade;
-import br.edu.undf.sga_ic.model.Resposta;
+import br.edu.undf.sga_ic.model.ResAtividade;
 import br.edu.undf.sga_ic.model.Usuario;
-import br.edu.undf.sga_ic.repository.RespostaRepository;
+import br.edu.undf.sga_ic.repository.ResAtividadeRepository;
 import br.edu.undf.sga_ic.utils.AtividadeUtils;
 import br.edu.undf.sga_ic.utils.RetornoUtils;
 import br.edu.undf.sga_ic.utils.UsuarioUtils;
@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RespostaService {
+public class ResAtividadeService {
 
 	private final RetornoUtils retornoUtils;
 	private final UsuarioUtils usuariolUtils;
@@ -32,7 +32,7 @@ public class RespostaService {
 
 	private final ArquivoService arquivoService;
 
-	private final RespostaRepository respostaRepository;
+	private final ResAtividadeRepository resAtividadeRepository;
 
 	public ResponseEntity<Retorno> registrar(String descricao, Long atividadeId, MultipartFile[] arquivos,
 			HttpServletRequest request) throws CustomException, IOException {
@@ -43,16 +43,16 @@ public class RespostaService {
 
 		Atividade atividade = atividadeUtils.findById(atividadeId);
 
-		Resposta resposta = new Resposta();
+		ResAtividade resAtividade = new ResAtividade();
 
-		resposta.setAluno(aluno);
-		resposta.setAtividade(atividade);
-		resposta.setDescricao(descricao);
+		resAtividade.setAluno(aluno);
+		resAtividade.setAtividade(atividade);
+		resAtividade.setDescricao(descricao);
 
-		respostaRepository.save(resposta);
+		resAtividadeRepository.save(resAtividade);
 
 		if (arquivos != null && Arrays.stream(arquivos).anyMatch(a -> !a.isEmpty())) {
-			arquivoService.salvar(arquivos, atividade, null);
+			arquivoService.salvar(arquivos, null, resAtividade, null, null);
 		}
 
 		log.info("Resposta registrada com sucesso.");
