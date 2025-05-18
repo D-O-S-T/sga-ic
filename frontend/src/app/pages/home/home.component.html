@@ -1,38 +1,43 @@
 <main>
   <section class="background">
     <section class="middle-form">
-      <img src="../../../assets/icone-undf.png" alt="">
-      <h1>Bem-vindo ao portal de pesquisa da UnDF</h1>
+       <img src="../../../assets/icone-undf.png" alt="">
+       <h1>Bem-vindo ao portal de pesquisa da UnDF</h1>
 
       <div class="form">
         <mat-form-field appearance="outline" class="small-input">
-          <mat-label class="small-label">CPF</mat-label>
-          <input matInput [formControl]="cpf" mask="000.000.000-00" placeholder="___.___.___-__">
+          <mat-label>CPF</mat-label>
+          <input matInput [formControl]="cpf" mask="000.000.000-00" [dropSpecialCharacters]="false"
+            placeholder="___.___.___-__" (ngModelChange)="onCpfChange($event)" />
+          <mat-error *ngIf="cpf.invalid && (cpf.dirty || cpf.touched)">
+            CPF inválido
+          </mat-error>
         </mat-form-field>
       </div>
-
       <div class="form">
         <mat-form-field appearance="outline" class="small-input">
-          <mat-label class="small-label">Senha</mat-label>
-          <input matInput [formControl]="senha" [type]="hide() ? 'password' : 'text'" />
-          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hide()">
-            <mat-icon class="small-icon">{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
+          <mat-label>Senha</mat-label>
+          <input matInput [formControl]="senha" type="password" />
+          <mat-error *ngIf="senha.invalid && (senha.dirty || senha.touched)">
+            Senha é obrigatória
+          </mat-error>
         </mat-form-field>
-      </div>
 
-      <div class="example-button-row">
+       
+        
+
+        <div *ngIf="errorMessage" style="color:red; margin-top: 10px;">
+          {{ errorMessage }}
+        </div>
+        </div>
+
+        <div class="example-button-row">
         <button mat-raised-button color="primary" class="login-button" (click)="login()">
           <span class="login-text">Login</span>
         </button>
       </div>
 
-      <div class="forgot-password">
-        <a href="#">Esqueceu a senha?</a>
-      </div>
-
+      
     </section>
   </section>
-
 </main>

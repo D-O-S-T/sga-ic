@@ -1,16 +1,15 @@
-
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatFormFieldModule, MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { merge } from 'rxjs';
-import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
-import { inject } from '@angular/core';
 import { HomeService } from '../../services/home.service';
+import { NgIf } from '@angular/common'; // Import necessário para *ngIf
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-home',
@@ -19,50 +18,50 @@ import { HomeService } from '../../services/home.service';
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: { appearance: 'fill', density: 'compact' }
-    }
+    },
+    provideNgxMask() // Se estiver usando ngx-mask standalone
   ],
-  imports: [MatIconModule, MatDividerModule, MatButtonModule, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatDividerModule,
+    MatButtonModule,
+    NgIf,
+    NgxMaskDirective // Diretiva da máscara
+  ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrl: './home.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 
 export class HomeComponent {
 
-  readonly cpf = new FormControl('', [Validators.required]);
-  readonly senha = new FormControl('', [Validators.required]);
-  readonly email = new FormControl('', [Validators.required, Validators.email]);
+   cpf = new FormControl('', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]);
+  senha = new FormControl('', [Validators.required]);
+  errorMessage = '';
 
-  errorMessage = signal('');
+  constructor(private homeService: HomeService) {}
 
-  constructor(private homeService: HomeService) {
-    merge(this.email.statusChanges, this.email.valueChanges)
-      .pipe(takeUntilDestroyed())
-      .subscribe(() => this.updateErrorMessage());
+  onCpfChange(value: string) {
+    // Atualiza o FormControl com o valor formatado (sem disparar event change)
+    this.cpf.setValue(value, { emitEvent: false });
   }
 
-  login(): void {
+  login() {
     if (this.cpf.invalid || this.senha.invalid) {
-      this.errorMessage.set('CPF e senha são obrigatórios');
+      this.errorMessage = 'CPF e senha são obrigatórios e devem ser válidos';
       return;
     }
 
-    this.homeService.login(this.cpf.value!, this.senha.value!);
-  }
+    const cpfFormatado = this.cpf.value!;
+    const senha = this.senha.value!;
 
-  updateErrorMessage() {
-    if (this.email.hasError('required')) {
-      this.errorMessage.set('You must enter a value');
-    } else if (this.email.hasError('email')) {
-      this.errorMessage.set('Not a valid email');
-    } else {
-      this.errorMessage.set('');
-    }
-  }
+    console.log('Enviando para backend:', { cpf: cpfFormatado, senha });
 
-  hide = signal(true);
-  clickEvent(event: MouseEvent) {
-    this.hide.set(!this.hide());
-    event.stopPropagation();
+    this.homeService.login(cpfFormatado, senha);
   }
 }
