@@ -7,13 +7,33 @@
   
 }
 
+main{
+  width: 100%;
+  display:flex;
+  flex-direction: row;
+}
+
+
+
+.side-image{
+  background-image: url("../../assets/images/imagem-undf.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  width: 70%;
+  
+}
+
+
 .middle-form{
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 30%;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  
   gap: 0.5em;
 }
 
