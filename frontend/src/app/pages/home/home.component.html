@@ -1,38 +1,38 @@
 <main>
+  <section class="background">
+    <section class="middle-form">
+      <img src="../../../assets/icone-undf.png" alt="">
+      <h1>Bem-vindo ao portal de pesquisa da UnDF</h1>
 
-  <section class="middle-form">
-    <img src="../../../assets/icone-undf.png" alt="">
-    <h1>Bem-vindo ao portal de pesquisa da UnDF</h1>
+      <div class="form">
+        <mat-form-field appearance="outline" class="small-input">
+          <mat-label class="small-label">CPF</mat-label>
+          <input matInput [formControl]="cpf" mask="000.000.000-00" placeholder="___.___.___-__">
+        </mat-form-field>
+      </div>
 
-    <div class="form">
-      <mat-form-field appearance="outline" class="small-input">
-        <mat-label class="small-label">CPF</mat-label>
-        <input matInput [formControl]="cpf">
-      </mat-form-field>
-    </div>
+      <div class="form">
+        <mat-form-field appearance="outline" class="small-input">
+          <mat-label class="small-label">Senha</mat-label>
+          <input matInput [formControl]="senha" [type]="hide() ? 'password' : 'text'" />
+          <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+            [attr.aria-pressed]="hide()">
+            <mat-icon class="small-icon">{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
 
-    <div class="form">
-      <mat-form-field appearance="outline" class="small-input">
-        <mat-label class="small-label">Senha</mat-label>
-        <input matInput [formControl]="senha" [type]="hide() ? 'password' : 'text'" />
-        <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-          [attr.aria-pressed]="hide()">
-          <mat-icon class="small-icon">{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+      <div class="example-button-row">
+        <button mat-raised-button color="primary" class="login-button" (click)="login()">
+          <span class="login-text">Login</span>
         </button>
-      </mat-form-field>
-    </div>
+      </div>
 
-    <div class="example-button-row">
-      <button mat-raised-button color="primary" class="login-button" (click)="login()">
-        <span class="login-text">Login</span>
-      </button>
-    </div>
+      <div class="forgot-password">
+        <a href="#">Esqueceu a senha?</a>
+      </div>
 
-    <div class="forgot-password">
-      <a href="#">Esqueceu a senha?</a>
-    </div>
-
+    </section>
   </section>
-  <section class="side-image">
-  </section>
+
 </main>
