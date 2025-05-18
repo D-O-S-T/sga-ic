@@ -9,7 +9,9 @@
         <mat-label class="small-label">CPF</mat-label>
         <input matInput [formControl]="cpf">
       </mat-form-field>
+    </div>
 
+    <div class="form">
       <mat-form-field appearance="outline" class="small-input">
         <mat-label class="small-label">Senha</mat-label>
         <input matInput [formControl]="senha" [type]="hide() ? 'password' : 'text'" />
