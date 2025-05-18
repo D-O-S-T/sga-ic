@@ -10,9 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { merge } from 'rxjs';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { inject } from '@angular/core';
-
-
-
+import { HomeService } from '../../services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -29,20 +27,27 @@ import { inject } from '@angular/core';
   styleUrl: './home.component.scss'
 })
 
-
 export class HomeComponent {
 
-
-
-
+  readonly cpf = new FormControl('', [Validators.required]);
+  readonly senha = new FormControl('', [Validators.required]);
   readonly email = new FormControl('', [Validators.required, Validators.email]);
 
   errorMessage = signal('');
 
-  constructor() {
+  constructor(private homeService: HomeService) {
     merge(this.email.statusChanges, this.email.valueChanges)
       .pipe(takeUntilDestroyed())
       .subscribe(() => this.updateErrorMessage());
+  }
+
+  login(): void {
+    if (this.cpf.invalid || this.senha.invalid) {
+      this.errorMessage.set('CPF e senha são obrigatórios');
+      return;
+    }
+
+    this.homeService.login(this.cpf.value!, this.senha.value!);
   }
 
   updateErrorMessage() {
@@ -60,7 +65,4 @@ export class HomeComponent {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
-
-
-
 }

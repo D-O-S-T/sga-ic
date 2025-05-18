@@ -1,43 +1,29 @@
 <main>
 
-  
-
   <section class="middle-form">
-    <img src="../../assets/icone-undf.png" alt="">
+    <img src="../../../assets/icone-undf.png" alt="">
     <h1>Bem-vindo ao portal de pesquisa da UnDF</h1>
-
-
-    
 
     <div class="form">
       <mat-form-field appearance="outline" class="small-input">
         <mat-label class="small-label">CPF</mat-label>
-        <input matInput>
+        <input matInput [formControl]="cpf">
       </mat-form-field>
 
-    </div>
-    <div class="form">
       <mat-form-field appearance="outline" class="small-input">
         <mat-label class="small-label">Senha</mat-label>
-        <input matInput [type]="hide() ? 'password' : 'text'" />
+        <input matInput [formControl]="senha" [type]="hide() ? 'password' : 'text'" />
         <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide()">
           <mat-icon class="small-icon">{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
       </mat-form-field>
-     
-
     </div>
 
-    
-
-
     <div class="example-button-row">
-      <button mat-raised-button color="primary" class="login-button">
+      <button mat-raised-button color="primary" class="login-button" (click)="login()">
         <span class="login-text">Login</span>
-      
       </button>
-       
     </div>
 
     <div class="forgot-password">
@@ -45,13 +31,6 @@
     </div>
 
   </section>
-
   <section class="side-image">
-  
   </section>
-
-
-
-
-
 </main>
