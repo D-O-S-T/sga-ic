@@ -4,6 +4,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { ProfessorComponent } from './pages/professor/professor.component';
 import { AlunoComponent } from './pages/aluno/aluno.component';
 import { CoordenadorComponent } from './pages/coordenador/coordenador.component';
+import { NgModule } from '@angular/core';
 
 export const routes: Routes = [
 
