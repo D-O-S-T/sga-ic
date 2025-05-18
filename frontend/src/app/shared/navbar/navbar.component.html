@@ -1,0 +1,18 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop.value">
+
+  <mat-drawer-content>
+    <mat-form-field>
+     
+     
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Has backdrop</mat-label>
+      <mat-select #hasBackdrop>
+        <mat-option>Unset</mat-option>
+        <mat-option [value]="true">True</mat-option>
+        <mat-option [value]="false">False</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -27,7 +27,7 @@ $frontend-theme: mat.define-light-theme((
     warn: $frontend-warn,
   ),
   typography: mat.define-typography-config(),
-  density: -10,
+  density: -100,
 ));
 
 // Include theme styles for core and each component used in your app.
