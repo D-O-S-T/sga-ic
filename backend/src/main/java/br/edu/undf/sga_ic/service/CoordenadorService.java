@@ -76,6 +76,19 @@ public class CoordenadorService {
 		return coordenadorDTO;
 	}
 
+	public ResponseEntity<Retorno> deletar(Long coordenadorId) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByCoordenadorId(coordenadorId);
+
+		Coordenador coordenador = usuario.getCoordenador();
+
+		usuarioRepository.delete(usuario);
+		coordenadorRepository.delete(coordenador);
+
+		log.info(" >>> Coordenador deletado com sucesso.");
+		return retornoUtils.retornoSucesso("Coordenador deletado com sucesso.");
+	}
+
 	private List<CoordenadorResShort> mapCoordenadorToDTO(List<Usuario> usuarios) {
 		return usuarios.stream()
 				.map(usuario -> CoordenadorResShort.builder().id(usuario.getCoordenador().getId())

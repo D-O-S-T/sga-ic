@@ -3,6 +3,7 @@ package br.edu.undf.sga_ic.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,12 @@ public class CoordenadorController {
 	public CoordenadorRes findById(@PathVariable Long coordenadorId) throws CustomException {
 		log.info(" >>> Um Coordenador está tentando retornar um Coordenador pelo id.");
 		return coordenadorService.findById(coordenadorId);
+	}
+
+	@Operation(summary = "Deletar Coordenador", description = "Este endpoint serve para deletar um Coordenador.")
+	@DeleteMapping("/deletar/{coordenadorId}")
+	public ResponseEntity<Retorno> deletar(@PathVariable Long coordenadorId) throws CustomException {
+		log.info(" >>> Um Usuário está tentando deletar um Coordenador.");
+		return coordenadorService.deletar(coordenadorId);
 	}
 }
