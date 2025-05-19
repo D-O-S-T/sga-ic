@@ -77,6 +77,19 @@ public class ProfessorService {
 		return professorDTO;
 	}
 
+	public ResponseEntity<Retorno> deletar(Long professorId) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByProfessorId(professorId);
+
+		Professor professor = usuario.getProfessor();
+
+		usuarioRepository.delete(usuario);
+		professorRepository.delete(professor);
+
+		log.info(" >>> Professor deletado com sucesso.");
+		return retornoUtils.retornoSucesso("Professor deletado com sucesso.");
+	}
+
 	private List<ProfessorResShort> mapProfessorToDTO(List<Usuario> usuarios) {
 		return usuarios.stream()
 				.map(usuario -> ProfessorResShort.builder().id(usuario.getProfessor().getId())
