@@ -41,7 +41,7 @@ public class ProfessorService {
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(ProfessorAdd professorAdd) throws CustomException {
 
-		Professor professor = salvar(professorAdd);
+		Professor professor = salvar(professorAdd, null);
 
 		usuarioService.cadastrarUsuario(professor.getId(), professorAdd.cpf(), UsuarioRole.PROFESSOR);
 
@@ -90,6 +90,19 @@ public class ProfessorService {
 		return retornoUtils.retornoSucesso("Professor deletado com sucesso.");
 	}
 
+	public ResponseEntity<Retorno> editar(Long professorId, ProfessorAdd professorAdd) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByProfessorId(professorId);
+
+		usuario.setCpf(professorAdd.cpf());
+		usuarioRepository.save(usuario);
+
+		salvar(professorAdd, usuario);
+
+		log.info(" >>> Professor editado com sucesso.");
+		return retornoUtils.retornoSucesso("Professor editado com sucesso.");
+	}
+
 	private List<ProfessorResShort> mapProfessorToDTO(List<Usuario> usuarios) {
 		return usuarios.stream()
 				.map(usuario -> ProfessorResShort.builder().id(usuario.getProfessor().getId())
@@ -102,9 +115,15 @@ public class ProfessorService {
 				.collect(Collectors.toList());
 	}
 
-	public Professor salvar(ProfessorAdd professorAdd) {
+	public Professor salvar(ProfessorAdd professorAdd, Usuario usuario) {
 
-		Professor professor = new Professor();
+		Professor professor;
+
+		if (usuario == null) {
+			professor = new Professor();
+		} else {
+			professor = usuario.getProfessor();
+		}
 
 		professor.setNome(professorAdd.nome());
 		professor.setEmail(professorAdd.email());

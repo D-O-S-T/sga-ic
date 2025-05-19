@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,13 @@ public class ProfessorController {
 	public ResponseEntity<Retorno> deletar(@PathVariable Long professorId) throws CustomException {
 		log.info(" >>> Um Usuário está tentando deletar um Professor.");
 		return professorService.deletar(professorId);
+	}
+
+	@Operation(summary = "Editar Professor", description = "Este endpoint serve para editar um Professor.")
+	@PutMapping("/editar/{professorId}")
+	public ResponseEntity<Retorno> editar(@PathVariable Long professorId, @RequestBody @Valid ProfessorAdd professorAdd)
+			throws CustomException {
+		log.info(" >>> Um Usuário está tentando editar um Professor.");
+		return professorService.editar(professorId, professorAdd);
 	}
 }
