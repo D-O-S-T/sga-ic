@@ -67,8 +67,11 @@ public class AlunoService {
 
 		AlunoRes alunoDTO = AlunoRes.builder().id(aluno.getId()).nome(aluno.getNome()).cpf(usuario.getCpf())
 				.email(aluno.getEmail()).celular(aluno.getCelular()).curriculoLattes(aluno.getCurriculoLattes())
-				.fotoPerfil(aluno.getFotoPerfil() != null ? Base64.getEncoder().encodeToString(aluno.getFotoPerfil())
-						: null)
+				.fotoPerfil(
+						aluno.getFotoPerfil() != null
+								? "data:image/jpeg;base64,"
+										+ Base64.getEncoder().encodeToString(usuario.getAluno().getFotoPerfil())
+								: null)
 				.build();
 
 		log.info("Retornando Aluno pelo id com sucesso.");
@@ -76,14 +79,11 @@ public class AlunoService {
 	}
 
 	private List<AlunoResShort> mapAlunoToDTO(List<Usuario> usuarios) {
-		return usuarios.stream()
-				.map(usuario -> AlunoResShort.builder().id(usuario.getAluno().getId())
-						.nome(usuario.getAluno().getNome()).cpf(usuario.getCpf())
-						.fotoPerfil(usuario.getAluno().getFotoPerfil() != null
-								? Base64.getEncoder().encodeToString(usuario.getAluno().getFotoPerfil())
-								: null)
-						.build())
-				.collect(Collectors.toList());
+		return usuarios.stream().map(usuario -> AlunoResShort.builder().id(usuario.getAluno().getId())
+				.nome(usuario.getAluno().getNome()).cpf(usuario.getCpf())
+				.fotoPerfil(usuario.getAluno().getFotoPerfil() != null ? "data:image/jpeg;base64,"
+						+ Base64.getEncoder().encodeToString(usuario.getAluno().getFotoPerfil()) : null)
+				.build()).collect(Collectors.toList());
 	}
 
 	public Aluno salvar(AlunoAdd alunoAdd) {
