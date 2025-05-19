@@ -67,11 +67,9 @@ public class AlunoService {
 
 		AlunoRes alunoDTO = AlunoRes.builder().id(aluno.getId()).nome(aluno.getNome()).cpf(usuario.getCpf())
 				.email(aluno.getEmail()).celular(aluno.getCelular()).curriculoLattes(aluno.getCurriculoLattes())
-				.fotoPerfil(
-						aluno.getFotoPerfil() != null
-								? "data:image/jpeg;base64,"
-										+ Base64.getEncoder().encodeToString(usuario.getAluno().getFotoPerfil())
-								: null)
+				.fotoPerfil(aluno.getFotoPerfil() != null
+						? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(aluno.getFotoPerfil())
+						: null)
 				.build();
 
 		log.info("Retornando Aluno pelo id com sucesso.");

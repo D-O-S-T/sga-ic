@@ -15,6 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	List<Usuario> findByAlunoIsNotNull();
 
+	List<Usuario> findByProfessorIsNotNull();
+
+	List<Usuario> findByCoordenadorIsNotNull();
+
 	Optional<Usuario> findByAlunoId(Long alunoId);
 
 	Optional<Usuario> findByProfessorId(Long professorId);
