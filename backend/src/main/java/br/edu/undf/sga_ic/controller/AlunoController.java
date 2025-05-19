@@ -1,12 +1,18 @@
 package br.edu.undf.sga_ic.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.undf.sga_ic.dto.req.AlunoAdd;
+import br.edu.undf.sga_ic.dto.res.AlunoRes;
+import br.edu.undf.sga_ic.dto.res.AlunoResShort;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.service.AlunoService;
@@ -30,5 +36,19 @@ public class AlunoController {
 	public ResponseEntity<Retorno> registrar(@RequestBody @Valid AlunoAdd alunoAdd) throws CustomException {
 		log.info(" >>> Um Usuário está tentando registrar um novo Aluno.");
 		return alunoService.registrar(alunoAdd);
+	}
+
+	@Operation(summary = "Find All Aluno", description = "Este endpoint serve para retornar todos os Alunos registrados.")
+	@GetMapping
+	public List<AlunoResShort> findAll() throws CustomException {
+		log.info(" >>> Um Coordenador está tentando retornar todos os alunos da Aplicação.");
+		return alunoService.findAll();
+	}
+
+	@Operation(summary = "Aluno by Id", description = "Este endpoint serve para retornar um Aluno pelo Id.")
+	@GetMapping("/{alunoId}")
+	public AlunoRes findById(@PathVariable Long alunoId) throws CustomException {
+		log.info(" >>> Um Coordenador está tentando retornar um Aluno pelo id.");
+		return alunoService.findById(alunoId);
 	}
 }

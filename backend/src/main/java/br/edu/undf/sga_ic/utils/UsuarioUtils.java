@@ -26,6 +26,21 @@ public class UsuarioUtils {
 				.orElseThrow(() -> customExceptionUtils.errorAndNotFound("Usuário informado não encontrado"));
 	}
 
+	public Usuario findByAlunoId(Long alunoId) throws CustomException {
+		return usuarioRepository.findByAlunoId(alunoId)
+				.orElseThrow(() -> customExceptionUtils.errorAndNotFound("Usuário - Aluno informado não encontrado"));
+	}
+
+	public Usuario findByProfessorId(Long professorId) throws CustomException {
+		return usuarioRepository.findByProfessorId(professorId).orElseThrow(
+				() -> customExceptionUtils.errorAndNotFound("Usuário - Professor informado não encontrado"));
+	}
+
+	public Usuario findByCoordenadorId(Long coordenadorId) throws CustomException {
+		return usuarioRepository.findByCoordenadorId(coordenadorId).orElseThrow(
+				() -> customExceptionUtils.errorAndNotFound("Usuário - Coordenador informado não encontrado"));
+	}
+
 	public Usuario findByCpf(String cpf) throws CustomException {
 		return usuarioRepository.findByCpf(cpf)
 				.orElseThrow(() -> customExceptionUtils.errorAndNotFound("Usuário informado não encontrado"));
