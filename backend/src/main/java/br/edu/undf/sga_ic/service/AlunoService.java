@@ -42,7 +42,7 @@ public class AlunoService {
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(AlunoAdd alunoAdd) throws CustomException {
 
-		Aluno aluno = salvar(alunoAdd);
+		Aluno aluno = salvar(alunoAdd, null);
 
 		usuarioService.cadastrarUsuario(aluno.getId(), alunoAdd.cpf(), UsuarioRole.ALUNO);
 
@@ -90,6 +90,19 @@ public class AlunoService {
 		return retornoUtils.retornoSucesso("Aluno deletado com sucesso.");
 	}
 
+	public ResponseEntity<Retorno> editar(Long alunoId, AlunoAdd alunoAdd) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByAlunoId(alunoId);
+
+		usuario.setCpf(alunoAdd.cpf());
+		usuarioRepository.save(usuario);
+
+		salvar(alunoAdd, usuario);
+
+		log.info(" >>> Aluno editado com sucesso.");
+		return retornoUtils.retornoSucesso("Aluno editado com sucesso.");
+	}
+
 	private List<AlunoResShort> mapAlunoToDTO(List<Usuario> usuarios) {
 		return usuarios.stream().map(usuario -> AlunoResShort.builder().id(usuario.getAluno().getId())
 				.nome(usuario.getAluno().getNome()).cpf(usuario.getCpf())
@@ -98,9 +111,15 @@ public class AlunoService {
 				.build()).collect(Collectors.toList());
 	}
 
-	public Aluno salvar(AlunoAdd alunoAdd) {
+	public Aluno salvar(AlunoAdd alunoAdd, Usuario usuario) {
 
-		Aluno aluno = new Aluno();
+		Aluno aluno;
+
+		if (usuario == null) {
+			aluno = new Aluno();
+		} else {
+			aluno = usuario.getAluno();
+		}
 
 		aluno.setNome(alunoAdd.nome());
 		aluno.setEmail(alunoAdd.email());
