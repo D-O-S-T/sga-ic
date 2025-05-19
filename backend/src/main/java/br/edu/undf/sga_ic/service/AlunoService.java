@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.edu.undf.sga_ic.dto.req.AlunoAdd;
 import br.edu.undf.sga_ic.dto.res.AlunoRes;
@@ -45,7 +46,7 @@ public class AlunoService {
 
 		usuarioService.cadastrarUsuario(aluno.getId(), alunoAdd.cpf(), UsuarioRole.ALUNO);
 
-		log.info("Aluno registrado com sucesso.");
+		log.info(" >>> Aluno registrado com sucesso.");
 		return retornoUtils.retornoSucesso("Aluno registrado com sucesso.");
 	}
 
@@ -55,7 +56,7 @@ public class AlunoService {
 
 		emptyUtils.validaListaVazia(usuarios, "Não foram encontrados Alunos cadastrados.");
 
-		log.info("Retornando lista de Alunos com sucesso.");
+		log.info(" >>> Retornando lista de Alunos com sucesso.");
 		return mapAlunoToDTO(usuarios);
 	}
 
@@ -72,8 +73,21 @@ public class AlunoService {
 						: null)
 				.build();
 
-		log.info("Retornando Aluno pelo id com sucesso.");
+		log.info(" >>> Retornando Aluno pelo id com sucesso.");
 		return alunoDTO;
+	}
+
+	public ResponseEntity<Retorno> deletar(@PathVariable Long alunoId) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByAlunoId(alunoId);
+
+		Aluno aluno = usuario.getAluno();
+
+		usuarioRepository.delete(usuario);
+		alunoRepository.delete(aluno);
+
+		log.info(" >>> Aluno deletado com sucesso.");
+		return retornoUtils.retornoSucesso("Aluno deletado com sucesso.");
 	}
 
 	private List<AlunoResShort> mapAlunoToDTO(List<Usuario> usuarios) {

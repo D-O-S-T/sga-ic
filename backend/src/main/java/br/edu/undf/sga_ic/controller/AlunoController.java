@@ -3,6 +3,7 @@ package br.edu.undf.sga_ic.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,12 @@ public class AlunoController {
 	public AlunoRes findById(@PathVariable Long alunoId) throws CustomException {
 		log.info(" >>> Um Coordenador está tentando retornar um Aluno pelo id.");
 		return alunoService.findById(alunoId);
+	}
+
+	@Operation(summary = "Deletar Aluno", description = "Este endpoint serve para deletar um ALuno.")
+	@DeleteMapping("/deletar/{alunoId}")
+	public ResponseEntity<Retorno> deletar(@PathVariable Long alunoId) throws CustomException {
+		log.info(" >>> Um Usuário está tentando deletar um Aluno.");
+		return alunoService.deletar(alunoId);
 	}
 }
