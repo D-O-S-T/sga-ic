@@ -29,10 +29,18 @@ public class Arquivo {
 	private byte[] bytesArquivo;
 
 	@ManyToOne
-	@JoinColumn(name = "resposta_id", referencedColumnName = "id", nullable = true)
-	private Resposta resposta;
-
-	@ManyToOne
 	@JoinColumn(name = "atividade_id", referencedColumnName = "id", nullable = true)
 	private Atividade atividade;
+
+	@ManyToOne
+	@JoinColumn(name = "res_atividade_id", referencedColumnName = "id", nullable = true)
+	private ResAtividade resAtividade;
+
+	@ManyToOne
+	@JoinColumn(name = "relatorio_id", referencedColumnName = "id", nullable = true)
+	private Relatorio relatorio;
+
+	@ManyToOne
+	@JoinColumn(name = "res_relatorio_id", referencedColumnName = "id", nullable = true)
+	private ResRelatorio resRelatorio;
 }

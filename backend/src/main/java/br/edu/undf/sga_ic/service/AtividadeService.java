@@ -71,7 +71,7 @@ public class AtividadeService {
 		atividadeRepository.save(atividade);
 
 		if (arquivos != null && Arrays.stream(arquivos).anyMatch(a -> !a.isEmpty())) {
-			arquivoService.salvar(arquivos, atividade, null);
+			arquivoService.salvar(arquivos, atividade, null, null, null);
 		}
 
 		log.info("Atividade registrada com sucesso.");

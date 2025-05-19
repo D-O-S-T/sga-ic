@@ -5,5 +5,5 @@ import lombok.Builder;
 @Builder
 public record ProjetoRes(
 
-		Long id, String titulo, String descricao, EditalResShort edital) {
+		Long id, String titulo, String descricao) {
 }

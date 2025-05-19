@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.undf.sga_ic.dto.req.ProjetoAdd;
-import br.edu.undf.sga_ic.dto.res.EditalResShort;
 import br.edu.undf.sga_ic.dto.res.ProjetoRes;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.exception.CustomException;
@@ -68,10 +67,7 @@ public class ProjetoService {
 		Projeto projeto = projetoUtils.findById(projetoId);
 
 		ProjetoRes projetoDTO = ProjetoRes.builder().id(projeto.getId()).titulo(projeto.getTitulo())
-				.descricao(projeto.getDescricao())
-				.edital(EditalResShort.builder().titulo(projeto.getEdital().getTitulo())
-						.instituicao(projeto.getEdital().getInstituicao()).build())
-				.build();
+				.descricao(projeto.getDescricao()).build();
 
 		log.info(">>> Retornando projeto de Id: {} - com sucesso.", projeto.getId());
 		return projetoDTO;
@@ -103,14 +99,19 @@ public class ProjetoService {
 		return mapProjetosToDTO(projetos);
 	}
 
+	public List<ProjetoRes> findByEdital(Long editalId) throws CustomException {
+
+		Edital edital = editalUtils.findById(editalId);
+
+		List<Projeto> projetos = projetoRepository.findProjetoByEditalId(edital.getId());
+
+		log.info(">>> Retornando lista de projetos com sucesso para o Edital de ID: {}", edital.getId());
+		return mapProjetosToDTO(projetos);
+	}
+
 	private List<ProjetoRes> mapProjetosToDTO(List<Projeto> projetos) {
-		return projetos.stream()
-				.map(projeto -> ProjetoRes.builder().id(projeto.getId()).titulo(projeto.getTitulo())
-						.descricao(projeto.getDescricao())
-						.edital(EditalResShort.builder().titulo(projeto.getEdital().getTitulo())
-								.instituicao(projeto.getEdital().getInstituicao()).build())
-						.build())
-				.toList();
+		return projetos.stream().map(projeto -> ProjetoRes.builder().id(projeto.getId()).titulo(projeto.getTitulo())
+				.descricao(projeto.getDescricao()).build()).toList();
 	}
 
 	public void validaMaxProjetosByEdital(Edital edital) throws CustomException {

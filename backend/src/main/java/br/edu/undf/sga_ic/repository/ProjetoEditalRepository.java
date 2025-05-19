@@ -14,6 +14,8 @@ import br.edu.undf.sga_ic.model.ProjetoEdital;
 @Repository
 public interface ProjetoEditalRepository extends JpaRepository<ProjetoEdital, Long> {
 
+	ProjetoEdital findByProfessorIdAndEditalId(Long professorId, Long editalId);
+
 	boolean existsByAlunoIdAndProjetoId(Long alunoId, Long projetoId);
 
 	boolean existsByAlunoIdAndEditalId(Long alunoId, Long editalId);

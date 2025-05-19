@@ -45,17 +45,24 @@ public class ProjetoController {
 		return projetoService.findById(projetoId);
 	}
 
-	@Operation(summary = "Projetos Aluno", description = "Este endpoint serve para retornar projetos de um Aluno.")
+	@Operation(summary = "Projetos by Aluno", description = "Este endpoint serve para retornar projetos de um Aluno.")
 	@GetMapping("/aluno")
 	public List<ProjetoRes> findByAluno(HttpServletRequest request) throws CustomException {
 		log.info(" >>> Tentando retornar projetos de um Aluno.");
 		return projetoService.findByAluno(request);
 	}
 
-	@Operation(summary = "Projetos Professor", description = "Este endpoint serve para retornar projetos de um Professor.")
+	@Operation(summary = "Projetos by Professor", description = "Este endpoint serve para retornar projetos de um Professor.")
 	@GetMapping("/professor")
 	public List<ProjetoRes> findByProfessor(HttpServletRequest request) throws CustomException {
 		log.info(" >>> Tentando retornar projetos de um Professor.");
 		return projetoService.findByProfessor(request);
+	}
+
+	@Operation(summary = "Projetos by Edital", description = "Este endpoint serve para retornar projetos de um Edital.")
+	@GetMapping("/edital/{editalId}")
+	public List<ProjetoRes> findByEdital(@PathVariable Long editalId) throws CustomException {
+		log.info(" >>> Tentando retornar projetos de um Edital.");
+		return projetoService.findByEdital(editalId);
 	}
 }
