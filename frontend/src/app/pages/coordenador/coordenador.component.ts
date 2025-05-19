@@ -2,11 +2,13 @@
 import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCardModule} from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
 
 @Component({
   selector: 'app-coordenador',
   standalone: true,
-   imports: [MatCardModule, MatButtonModule],
+   imports: [MatCardModule, MatButtonModule,MatListModule, MatDividerModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './coordenador.component.html',
   styleUrl: './coordenador.component.scss'

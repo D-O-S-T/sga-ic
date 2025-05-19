@@ -1,0 +1,70 @@
+
+<div class="middle-form">
+   
+    <mat-dialog-content>
+        <div class="form">
+            
+                 <h2 mat-dialog-title>Novo Edital</h2>
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Título</mat-label>
+                <input matInput [(ngModel)]="edital.titulo">
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Quantidade de Alunos</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Quantidade de Projetos</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Quantidade de Bolsistas</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Quantidade de Professores</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Instituição</mat-label>
+                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Data de Início</mat-label>
+                <input matInput type="date" [(ngModel)]="edital.dataInicio">
+            </mat-form-field>
+        </div>
+        <div class="form">
+            <mat-form-field class="w-full" appearance="outline">
+                <mat-label>Data de Fim</mat-label>
+                <input matInput type="date" [(ngModel)]="edital.dataFim">
+            </mat-form-field>
+        </div>
+    
+    <div class="form">
+        <mat-dialog-actions align="end">
+            <button mat-button (click)="fechar()">Cancelar</button>
+            <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+        </mat-dialog-actions>
+    </div>
+    </mat-dialog-content>
+</div>
