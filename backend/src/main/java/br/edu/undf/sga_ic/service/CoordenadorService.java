@@ -41,7 +41,7 @@ public class CoordenadorService {
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(CoordenadorAdd coordenadorAdd) throws CustomException {
 
-		Coordenador coordenador = salvar(coordenadorAdd);
+		Coordenador coordenador = salvar(coordenadorAdd, null);
 
 		usuarioService.cadastrarUsuario(coordenador.getId(), coordenadorAdd.cpf(), UsuarioRole.COORDENADOR);
 
@@ -89,6 +89,19 @@ public class CoordenadorService {
 		return retornoUtils.retornoSucesso("Coordenador deletado com sucesso.");
 	}
 
+	public ResponseEntity<Retorno> editar(Long coordenadorId, CoordenadorAdd coordenadorAdd) throws CustomException {
+
+		Usuario usuario = usuarioUtils.findByCoordenadorId(coordenadorId);
+
+		usuario.setCpf(coordenadorAdd.cpf());
+		usuarioRepository.save(usuario);
+
+		salvar(coordenadorAdd, usuario);
+
+		log.info(" >>> Coordenador editado com sucesso.");
+		return retornoUtils.retornoSucesso("Coordenador editado com sucesso.");
+	}
+
 	private List<CoordenadorResShort> mapCoordenadorToDTO(List<Usuario> usuarios) {
 		return usuarios.stream()
 				.map(usuario -> CoordenadorResShort.builder().id(usuario.getCoordenador().getId())
@@ -101,9 +114,15 @@ public class CoordenadorService {
 				.collect(Collectors.toList());
 	}
 
-	public Coordenador salvar(CoordenadorAdd coordenadorAdd) {
+	public Coordenador salvar(CoordenadorAdd coordenadorAdd, Usuario usuario) {
 
-		Coordenador coordenador = new Coordenador();
+		Coordenador coordenador;
+
+		if (usuario == null) {
+			coordenador = new Coordenador();
+		} else {
+			coordenador = usuario.getCoordenador();
+		}
 
 		coordenador.setNome(coordenadorAdd.nome());
 		coordenador.setEmail(coordenadorAdd.email());

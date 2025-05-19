@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,5 +59,13 @@ public class CoordenadorController {
 	public ResponseEntity<Retorno> deletar(@PathVariable Long coordenadorId) throws CustomException {
 		log.info(" >>> Um Usuário está tentando deletar um Coordenador.");
 		return coordenadorService.deletar(coordenadorId);
+	}
+
+	@Operation(summary = "Editar Coordenador", description = "Este endpoint serve para editar um Coordenador.")
+	@PutMapping("/editar/{coordenadorId}")
+	public ResponseEntity<Retorno> editar(@PathVariable Long coordenadorId,
+			@RequestBody @Valid CoordenadorAdd coordenadorAdd) throws CustomException {
+		log.info(" >>> Um Usuário está tentando editar um Coordenador.");
+		return coordenadorService.editar(coordenadorId, coordenadorAdd);
 	}
 }
