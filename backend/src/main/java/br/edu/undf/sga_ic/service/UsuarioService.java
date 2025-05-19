@@ -40,6 +40,7 @@ public class UsuarioService {
 	private final ProfessorRepository professorRepository;
 	private final CoordenadorRepository coordenadorRepository;
 
+	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> uploadFoto(MultipartFile foto, HttpServletRequest request)
 			throws CustomException, IOException {
 
