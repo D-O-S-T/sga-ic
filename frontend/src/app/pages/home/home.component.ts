@@ -43,6 +43,17 @@ export class HomeComponent {
    cpf = new FormControl('', [Validators.required, Validators.pattern(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/)]);
   senha = new FormControl('', [Validators.required]);
   errorMessage = '';
+   private passwordHidden = true; 
+
+   
+  hide(): boolean {
+    return this.passwordHidden;
+  }
+
+  clickEvent(event: Event): void {
+    event.preventDefault(); // previne efeitos indesejados do botão
+    this.passwordHidden = !this.passwordHidden;
+  }
 
   constructor(private homeService: HomeService) {}
 
