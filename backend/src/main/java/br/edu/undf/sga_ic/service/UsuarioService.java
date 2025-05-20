@@ -1,13 +1,6 @@
 package br.edu.undf.sga_ic.service;
 
-import java.io.IOException;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
+import br.edu.undf.sga_ic.dto.res.Perfil;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.enums.UsuarioRole;
 import br.edu.undf.sga_ic.exception.CustomException;
@@ -24,104 +17,148 @@ import br.edu.undf.sga_ic.utils.UsuarioUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.Base64;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class UsuarioService {
 
-	private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-	private final UsuarioUtils usuarioUtils;
-	private final RetornoUtils retornoUtils;
+    private final UsuarioUtils usuarioUtils;
+    private final RetornoUtils retornoUtils;
 
-	private final AlunoRepository alunoRepository;
-	private final UsuarioRepository usuarioRepository;
-	private final ProfessorRepository professorRepository;
-	private final CoordenadorRepository coordenadorRepository;
+    private final AlunoRepository alunoRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final ProfessorRepository professorRepository;
+    private final CoordenadorRepository coordenadorRepository;
 
-	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public ResponseEntity<Retorno> uploadFoto(MultipartFile foto, HttpServletRequest request)
-			throws CustomException, IOException {
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+    public ResponseEntity<Retorno> uploadFoto(MultipartFile foto, HttpServletRequest request)
+            throws CustomException, IOException {
 
-		Usuario usuario = usuarioUtils.findByToken(request);
+        Usuario usuario = usuarioUtils.findByToken(request);
 
-		switch (usuario.getUsuarioRole()) {
-		case ALUNO:
+        switch (usuario.getUsuarioRole()) {
+            case ALUNO:
 
-			Aluno aluno = usuario.getAluno();
+                Aluno aluno = usuario.getAluno();
 
-			aluno.setFotoPerfil(foto.getBytes());
+                aluno.setFotoPerfil(foto.getBytes());
 
-			alunoRepository.save(aluno);
+                alunoRepository.save(aluno);
 
-			break;
-		case PROFESSOR:
+                break;
+            case PROFESSOR:
 
-			Professor professor = usuario.getProfessor();
+                Professor professor = usuario.getProfessor();
 
-			professor.setFotoPerfil(foto.getBytes());
+                professor.setFotoPerfil(foto.getBytes());
 
-			professorRepository.save(professor);
+                professorRepository.save(professor);
 
-			break;
-		case COORDENADOR:
+                break;
+            case COORDENADOR:
 
-			Coordenador coordenador = usuario.getCoordenador();
+                Coordenador coordenador = usuario.getCoordenador();
 
-			coordenador.setFotoPerfil(foto.getBytes());
+                coordenador.setFotoPerfil(foto.getBytes());
 
-			coordenadorRepository.save(coordenador);
+                coordenadorRepository.save(coordenador);
 
-			break;
-		}
+                break;
+        }
 
-		log.info("Usuário alterou sua foto com sucesso.");
-		return retornoUtils.retornoSucesso("Usuário alterou sua foto com sucesso.");
-	}
+        log.info("Usuário alterou sua foto com sucesso.");
+        return retornoUtils.retornoSucesso("Usuário alterou sua foto com sucesso.");
+    }
 
-	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public void cadastrarUsuario(Long id, String cpf, UsuarioRole usuarioRole) throws CustomException {
+    public Perfil getPerfil(HttpServletRequest request)
+            throws CustomException {
 
-		Usuario usuario = new Usuario();
+        Usuario usuario = usuarioUtils.findByToken(request);
 
-		switch (usuarioRole) {
-		case ALUNO:
+        Perfil perfil = switch (usuario.getUsuarioRole()) {
+            case ALUNO -> {
 
-			Aluno aluno = alunoRepository.findById(id).orElse(null);
+                Aluno aluno = usuario.getAluno();
 
-			usuario.setCpf(cpf);
-			usuario.setAluno(aluno);
-			usuario.setUsuarioRole(UsuarioRole.ALUNO);
-			usuario.setSenhaHash(passwordEncoder.encode("12345"));
+                yield Perfil.builder().id(aluno.getId()).nome(aluno.getNome()).fotoPerfil(aluno.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(aluno.getFotoPerfil())
+                        : null).build();
+            }
+            case PROFESSOR -> {
 
-			usuarioRepository.save(usuario);
+                Professor professor = usuario.getProfessor();
 
-			break;
-		case PROFESSOR:
+                yield Perfil.builder().id(professor.getId()).nome(professor.getNome()).fotoPerfil(professor.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(professor.getFotoPerfil())
+                        : null).build();
+            }
+            case COORDENADOR -> {
 
-			Professor professor = professorRepository.findById(id).orElse(null);
+                Coordenador coordenador = usuario.getCoordenador();
 
-			usuario.setCpf(cpf);
-			usuario.setProfessor(professor);
-			usuario.setUsuarioRole(UsuarioRole.PROFESSOR);
-			usuario.setSenhaHash(passwordEncoder.encode("12345"));
+                yield Perfil.builder().id(coordenador.getId()).nome(coordenador.getNome()).fotoPerfil(coordenador.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coordenador.getFotoPerfil())
+                        : null).build();
+            }
+        };
 
-			usuarioRepository.save(usuario);
+        log.info("Retornando perfil de Uusário com sucesso.");
+        return perfil;
+    }
 
-			break;
-		case COORDENADOR:
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+    public void cadastrarUsuario(Long id, String cpf, UsuarioRole usuarioRole) {
 
-			Coordenador coordenador = coordenadorRepository.findById(id).orElse(null);
+        Usuario usuario = new Usuario();
 
-			usuario.setCpf(cpf);
-			usuario.setCoordenador(coordenador);
-			usuario.setUsuarioRole(UsuarioRole.COORDENADOR);
-			usuario.setSenhaHash(passwordEncoder.encode("12345"));
+        switch (usuarioRole) {
+            case ALUNO:
 
-			usuarioRepository.save(usuario);
+                Aluno aluno = alunoRepository.findById(id).orElse(null);
 
-			break;
-		}
-	}
+                usuario.setCpf(cpf);
+                usuario.setAluno(aluno);
+                usuario.setUsuarioRole(UsuarioRole.ALUNO);
+                usuario.setSenhaHash(passwordEncoder.encode("12345"));
+
+                usuarioRepository.save(usuario);
+
+                break;
+            case PROFESSOR:
+
+                Professor professor = professorRepository.findById(id).orElse(null);
+
+                usuario.setCpf(cpf);
+                usuario.setProfessor(professor);
+                usuario.setUsuarioRole(UsuarioRole.PROFESSOR);
+                usuario.setSenhaHash(passwordEncoder.encode("12345"));
+
+                usuarioRepository.save(usuario);
+
+                break;
+            case COORDENADOR:
+
+                Coordenador coordenador = coordenadorRepository.findById(id).orElse(null);
+
+                usuario.setCpf(cpf);
+                usuario.setCoordenador(coordenador);
+                usuario.setUsuarioRole(UsuarioRole.COORDENADOR);
+                usuario.setSenhaHash(passwordEncoder.encode("12345"));
+
+                usuarioRepository.save(usuario);
+
+                break;
+        }
+    }
 }
