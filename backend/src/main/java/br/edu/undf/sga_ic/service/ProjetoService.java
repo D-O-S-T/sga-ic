@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.edu.undf.sga_ic.dto.req.ProjetoAdd;
 import br.edu.undf.sga_ic.dto.res.ProjetoRes;
@@ -107,6 +108,34 @@ public class ProjetoService {
 
 		log.info(">>> Retornando lista de projetos com sucesso para o Edital de ID: {}", edital.getId());
 		return mapProjetosToDTO(projetos);
+	}
+
+	public ResponseEntity<Retorno> deletar(@PathVariable Long projetoId) throws CustomException {
+
+		Projeto projeto = projetoUtils.findById(projetoId);
+
+		projetoRepository.delete(projeto);
+
+		log.info(" >>> Projeto deletado com sucesso.");
+		return retornoUtils.retornoSucesso("Projeto deletado com sucesso.");
+	}
+
+	public ResponseEntity<Retorno> editar(Long projetoId, ProjetoAdd projetoAdd) throws CustomException {
+
+		Projeto projeto = projetoUtils.findById(projetoId);
+
+		Edital edital = editalUtils.findById(projetoAdd.editalId());
+
+		validaMaxProjetosByEdital(edital);
+
+		projeto.setEdital(edital);
+		projeto.setTitulo(projetoAdd.titulo());
+		projeto.setDescricao(projetoAdd.descricao());
+
+		projetoRepository.save(projeto);
+
+		log.info(" >>> Projeto editado com sucesso.");
+		return retornoUtils.retornoSucesso("Projeto editado com sucesso.");
 	}
 
 	private List<ProjetoRes> mapProjetosToDTO(List<Projeto> projetos) {

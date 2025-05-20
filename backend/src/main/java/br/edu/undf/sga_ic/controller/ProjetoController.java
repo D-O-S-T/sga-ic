@@ -3,9 +3,11 @@ package br.edu.undf.sga_ic.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -64,5 +66,20 @@ public class ProjetoController {
 	public List<ProjetoRes> findByEdital(@PathVariable Long editalId) throws CustomException {
 		log.info(" >>> Tentando retornar projetos de um Edital.");
 		return projetoService.findByEdital(editalId);
+	}
+
+	@Operation(summary = "Deletar Projeto", description = "Este endpoint serve para deletar um Projeto.")
+	@DeleteMapping("/deletar/{projetoId}")
+	public ResponseEntity<Retorno> deletar(@PathVariable Long projetoId) throws CustomException {
+		log.info(" >>> Um Usuário está tentando deletar um Projeto.");
+		return projetoService.deletar(projetoId);
+	}
+
+	@Operation(summary = "Editar Projeto", description = "Este endpoint serve para editar um Projeto.")
+	@PutMapping("/editar/{projetoId}")
+	public ResponseEntity<Retorno> editar(@PathVariable Long projetoId, @RequestBody @Valid ProjetoAdd projetoAdd)
+			throws CustomException {
+		log.info(" >>> Um Usuário está tentando editar um Projeto.");
+		return projetoService.editar(projetoId, projetoAdd);
 	}
 }
