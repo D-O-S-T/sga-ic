@@ -57,8 +57,8 @@ public class JwtService {
 	}
 
 	public ResponseCookie createCookie(String cookieName, String jwtValue, long maxAge) {
-		return ResponseCookie.from(cookieName, jwtValue).path("/").maxAge(maxAge).httpOnly(true).secure(true)
-				.sameSite("Strict").build();
+		return ResponseCookie.from(cookieName, jwtValue).path("/").maxAge(maxAge).httpOnly(true).secure(false)
+				.sameSite("Lax").build();
 	}
 
 	public String generateTokenFromUserDetails(Long usuarioId, UsuarioRole usuarioRole) {

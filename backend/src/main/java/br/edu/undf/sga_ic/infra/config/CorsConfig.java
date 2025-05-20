@@ -2,6 +2,7 @@ package br.edu.undf.sga_ic.infra.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -17,7 +18,8 @@ public class CorsConfig {
 						.allowedOrigins("http://localhost:4200") // Substitua pelo endereço do Angular
 						.allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH") // Métodos permitidos
 						.allowedHeaders("*") // Permite todos os cabeçalhos
-						.allowCredentials(true); // Permite envio de cookies e credenciais
+						.allowCredentials(true) // Permite envio de cookies e credenciais
+						.exposedHeaders(HttpHeaders.SET_COOKIE);
 			}
 		};
 	}

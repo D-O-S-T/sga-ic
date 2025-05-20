@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 export class HomeService {
   private readonly API_URL = 'http://localhost:8080/sga-ic/api/auth/login';
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   login(cpf: string, senha: string): void {
-    this.http.post<string>(this.API_URL, { cpf, senha }).subscribe({
+    this.http.post<string>(this.API_URL, { cpf, senha }, { withCredentials: true }).subscribe({
       next: (perfil) => {
         switch (perfil) {
           case 'ALUNO':
