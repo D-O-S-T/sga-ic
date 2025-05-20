@@ -4,21 +4,48 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 
 @Component({
   selector: 'app-formulario-aluno',
   standalone: true,
-  imports: [FormsModule, MatFormFieldModule, MatButtonModule, MatCardModule],
+  imports: [FormsModule, MatFormFieldModule, MatButtonModule, MatCardModule, NgxMaskDirective],
+  providers: [provideNgxMask()],
   templateUrl: './formulario-aluno.component.html',
   styleUrl: './formulario-aluno.component.scss',
 })
 export class FormularioAlunoComponent {
-  cpf = '';
+ cpf: string = '';
+
+onCpfChange(value: string) {
+  this.cpf = this.formatarCPF(value);
+}
+
+formatarCPF(cpf: string): string {
+  cpf = cpf.replace(/\D/g, ''); // Remove tudo que não é dígito
+  if (cpf.length > 11) cpf = cpf.slice(0, 11); // Limita a 11 dígitos
+
+  // Aplica a máscara: 000.000.000-00
+  if (cpf.length > 9) {
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  } else if (cpf.length > 6) {
+    return cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+  } else if (cpf.length > 3) {
+    return cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+  } else {
+    return cpf;
+  }
+}
+
   nome = '';
   email = '';
   descricao = '';
   curriculoLattes = '';
-  celular = '';
+  
+  celular: string = '';
+
+
+
 
   constructor(private http: HttpClient) {}
 

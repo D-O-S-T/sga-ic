@@ -63,10 +63,6 @@ export class HomeComponent {
   }
 
   login() {
-    if (this.cpf.invalid || this.senha.invalid) {
-      this.errorMessage = 'CPF e senha são obrigatórios e devem ser válidos';
-      return;
-    }
 
     const cpfFormatado = this.cpf.value!;
     const senha = this.senha.value!;
