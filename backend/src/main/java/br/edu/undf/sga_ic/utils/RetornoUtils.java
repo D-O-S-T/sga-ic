@@ -36,18 +36,18 @@ public class RetornoUtils {
 
 	public ResponseEntity<Retorno> retornoCustomizado(String message, SeverityStatus severityStatus,
 			HttpStatus httpStatus) {
-		Retorno retorno = mapearRetorno(message, SeverityStatus.SUCCESS);
+		Retorno retorno = mapearRetorno(message, severityStatus);
 		log.info(" >>> Mensagem Customizada: {}", message);
 		return ResponseEntity.status(httpStatus).body(retorno);
 	}
 
 	public ResponseEntity<UsuarioRole> retornoSucessoLoginComToken(UsuarioRole usuarioRole, String cookie) {
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(usuarioRole);
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie).body(usuarioRole);
 	}
 
 	public ResponseEntity<Retorno> retornoSucessoLogoutComToken(String message, String cookie) {
 		Retorno retorno = mapearRetorno(message, SeverityStatus.SUCCESS);
-		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(retorno);
+		return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie).body(retorno);
 	}
 
 	private Retorno mapearRetorno(String message, SeverityStatus severityStatus) {

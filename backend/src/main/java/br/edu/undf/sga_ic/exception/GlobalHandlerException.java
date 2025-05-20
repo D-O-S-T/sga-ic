@@ -1,5 +1,6 @@
 package br.edu.undf.sga_ic.exception;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,7 +40,7 @@ public class GlobalHandlerException {
 	public ResponseEntity<Retorno> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
 		String message = ex.getBindingResult().getFieldErrors().stream().findFirst()
-				.map(error -> error.getDefaultMessage()).orElse("Dados inválidos");
+				.map(DefaultMessageSourceResolvable::getDefaultMessage).orElse("Dados inválidos");
 
 		return retornoUtils.retornoBadRequest(message);
 	}
