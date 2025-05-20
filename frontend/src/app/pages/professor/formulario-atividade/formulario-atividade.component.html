@@ -1,10 +1,11 @@
 <form (ngSubmit)="uploadFile()" #formUpload="ngForm" class="form-upload">
- <div class="background">
 
- 
-    <div class="form-group">
-    <label for="titulo">Título</label>
+  <h3>Cadastre atividade</h3>
+  <mat-form-field appearance="outline" class="full-width">
+    
+    <mat-label>Título</mat-label>
     <input
+      matInput
       id="titulo"
       name="titulo"
       type="text"
@@ -12,19 +13,21 @@
       required
       placeholder="Digite o título"
     />
-  </div>
+  </mat-form-field>
 
-  <div class="form-group">
-    <label for="descricao">Descrição</label>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Descrição</mat-label>
     <textarea
+      matInput
       id="descricao"
       name="descricao"
       [(ngModel)]="descricao"
       required
       placeholder="Digite a descrição"
     ></textarea>
-  </div>
+  </mat-form-field>
 
+  <!-- Input de data com HTML padrão -->
   <div class="form-group">
     <label for="dataAbertura">Data de Abertura</label>
     <input
@@ -47,9 +50,10 @@
     />
   </div>
 
-  <div class="form-group">
-    <label for="projetoId">Projeto ID</label>
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Projeto ID</mat-label>
     <input
+      matInput
       id="projetoId"
       name="projetoId"
       type="number"
@@ -57,19 +61,20 @@
       required
       placeholder="ID do projeto"
     />
-  </div>
+  </mat-form-field>
 
-  <div class="form-group">
-    <label for="arquivo">Arquivo</label>
+  <div class="file-upload">
+   <button mat-raised-button color="primary" type="submit" class="submit-btn">Escolher Arquivo</button>
     <input
       id="arquivo"
       type="file"
       (change)="onFileSelected($event)"
       required
+      hidden
     />
   </div>
 
-  <button type="submit" [disabled]="formUpload.invalid">Enviar</button>
-</div>
+  <button mat-raised-button color="primary" type="submit" class="submit-btn">
+    Enviar
+  </button>
 </form>
-

@@ -1,12 +1,22 @@
-import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Optional } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
-
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormField, MatFormFieldModule, MatLabel } from '@angular/material/form-field';
+import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDatepickerModule, MatDatepickerToggle } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClient } from '@angular/common/http';
+import { MatButton } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
 
 @Component({
   selector: 'app-formulario-atividade',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule,MatFormField,MatInput,MatLabel,MatDatepickerModule, MatNativeDateModule,MatDatepickerToggle,MatIconModule,MatButtonModule,MatCardModule,MatDialogModule],
   templateUrl: './formulario-atividade.component.html',
   styleUrl: './formulario-atividade.component.scss'
 })
@@ -42,26 +52,20 @@ export class FormularioAtividadeComponent {
     formData.append('projetoId', this.projetoId.toString());
     formData.append('arquivos', this.selectedFile, this.selectedFile.name);
 
-    this.http.post('http://localhost:8080/sga-ic/api/atividade/registrar', formData).subscribe({
+    this.http.post('http://localhost:8080/sga-ic/api/atividade/registrar', formData,{ withCredentials: true }).subscribe({
       next: (res) => {
         console.log('Dados enviados com sucesso', res);
         alert('Upload realizado com sucesso!');
-        this.resetForm();
+        
       },
       error: (err) => {
         console.error('Erro ao enviar dados', err);
         alert('Erro ao enviar dados. Tente novamente.');
       },
+     
     });
   }
 
-  resetForm() {
-    this.titulo = '';
-    this.descricao = '';
-    this.dataAbertura = '';
-    this.dataEncerramento = '';
-    this.projetoId = 0;
-    this.selectedFile = null;
-  }
+  
 
 }
