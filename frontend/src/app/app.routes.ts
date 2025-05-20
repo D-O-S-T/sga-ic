@@ -11,7 +11,7 @@ import { FormularioRelatorioComponent } from './pages/coordenador/formulario-rel
 import { FormularioAlunoComponent } from './pages/coordenador/formulario-aluno/formulario-aluno.component';
 import{ProjetosComponent} from './pages/coordenador/projetos/projetos.component';
 import{ FormularioProfessorComponent } from './pages/coordenador/formulario-professor/formulario-professor.component';
-
+import { FormularioCoordenadorComponent } from './pages/coordenador/form-coordenador/formulario-coordenador.component';
 
 export const routes: Routes = [
 
@@ -26,6 +26,7 @@ export const routes: Routes = [
     {path: 'form-relatorio', component: FormularioRelatorioComponent},
     {path: 'form-aluno', component: FormularioAlunoComponent},
     {path: 'form-professor', component: FormularioProfessorComponent},
+    {path: 'form-coordenador', component: FormularioCoordenadorComponent},
  
    
     
