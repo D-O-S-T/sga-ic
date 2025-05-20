@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Slf4j
 @RestController
@@ -30,7 +30,7 @@ public class RelatorioController {
     @Operation(summary = "Registrar Relatorio", description = "Este endpoint serve para registrar um novo Relatorio.")
     @PostMapping("/registrar")
     public ResponseEntity<Retorno> registrar(@RequestParam String titulo, @RequestParam String descricao,
-                                             @RequestParam LocalDateTime dataAbertura, @RequestParam LocalDateTime dataEncerramento,
+                                             @RequestParam LocalDate dataAbertura, @RequestParam LocalDate dataEncerramento,
                                              @RequestParam Long editalId, @RequestParam(required = false) MultipartFile[] arquivos, HttpServletRequest request)
             throws CustomException, IOException {
         log.info(" >>> Um Usuário está tentando registrar um novo Relatorio.");
