@@ -1,0 +1,75 @@
+<form (ngSubmit)="uploadFile()" #formUpload="ngForm" class="form-upload">
+ <div class="background">
+
+ 
+    <div class="form-group">
+    <label for="titulo">Título</label>
+    <input
+      id="titulo"
+      name="titulo"
+      type="text"
+      [(ngModel)]="titulo"
+      required
+      placeholder="Digite o título"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea
+      id="descricao"
+      name="descricao"
+      [(ngModel)]="descricao"
+      required
+      placeholder="Digite a descrição"
+    ></textarea>
+  </div>
+
+  <div class="form-group">
+    <label for="dataAbertura">Data de Abertura</label>
+    <input
+      id="dataAbertura"
+      name="dataAbertura"
+      type="date"
+      [(ngModel)]="dataAbertura"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="dataEncerramento">Data de Encerramento</label>
+    <input
+      id="dataEncerramento"
+      name="dataEncerramento"
+      type="date"
+      [(ngModel)]="dataEncerramento"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="projetoId">Projeto ID</label>
+    <input
+      id="projetoId"
+      name="projetoId"
+      type="number"
+      [(ngModel)]="projetoId"
+      required
+      placeholder="ID do projeto"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="arquivo">Arquivo</label>
+    <input
+      id="arquivo"
+      type="file"
+      (change)="onFileSelected($event)"
+      required
+    />
+  </div>
+
+  <button type="submit" [disabled]="formUpload.invalid">Enviar</button>
+</div>
+</form>
+
