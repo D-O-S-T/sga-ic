@@ -1,217 +1,215 @@
 package br.edu.undf.sga_ic.service;
 
-import java.math.BigDecimal;
-
+import br.edu.undf.sga_ic.dto.req.ProjetoAlunoAdd;
+import br.edu.undf.sga_ic.dto.req.ProjetoProfessorAdd;
+import br.edu.undf.sga_ic.dto.res.Retorno;
+import br.edu.undf.sga_ic.exception.CustomException;
+import br.edu.undf.sga_ic.model.*;
+import br.edu.undf.sga_ic.repository.ProjetoEditalRepository;
+import br.edu.undf.sga_ic.utils.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import br.edu.undf.sga_ic.dto.req.ProjetoAlunoAdd;
-import br.edu.undf.sga_ic.dto.req.ProjetoProfessorAdd;
-import br.edu.undf.sga_ic.dto.res.Retorno;
-import br.edu.undf.sga_ic.exception.CustomException;
-import br.edu.undf.sga_ic.model.Aluno;
-import br.edu.undf.sga_ic.model.Edital;
-import br.edu.undf.sga_ic.model.Professor;
-import br.edu.undf.sga_ic.model.Projeto;
-import br.edu.undf.sga_ic.model.ProjetoEdital;
-import br.edu.undf.sga_ic.repository.ProjetoEditalRepository;
-import br.edu.undf.sga_ic.utils.AlunoUtils;
-import br.edu.undf.sga_ic.utils.CustomExceptionUtils;
-import br.edu.undf.sga_ic.utils.ProfessorUtils;
-import br.edu.undf.sga_ic.utils.ProjetoUtils;
-import br.edu.undf.sga_ic.utils.RetornoUtils;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.math.BigDecimal;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProjetoEditalService {
 
-	private final AlunoUtils alunoUtils;
-	private final RetornoUtils retornoUtils;
-	private final ProjetoUtils projetoUtils;
-	private final ProfessorUtils professorUtils;
-	private final CustomExceptionUtils customExceptionUtils;
+    private final AlunoUtils alunoUtils;
+    private final RetornoUtils retornoUtils;
+    private final ProjetoUtils projetoUtils;
+    private final ProfessorUtils professorUtils;
+    private final CustomExceptionUtils customExceptionUtils;
 
-	private final ProjetoEditalRepository projetoEditalRepository;
+    private final ProjetoEditalRepository projetoEditalRepository;
+    private final UsuarioUtils usuarioUtils;
 
-	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public ResponseEntity<Retorno> registrarAluno(@RequestBody ProjetoAlunoAdd projetoAlunoAdd) throws CustomException {
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+    public ResponseEntity<Retorno> registrarAluno(@RequestBody ProjetoAlunoAdd projetoAlunoAdd) throws CustomException {
 
-		Aluno aluno = alunoUtils.findById(projetoAlunoAdd.alunoId());
+        Aluno aluno = alunoUtils.findById(projetoAlunoAdd.alunoId());
 
-		Projeto projeto = projetoUtils.findById(projetoAlunoAdd.projetoId());
+        Usuario usuario = usuarioUtils.findByAlunoId(projetoAlunoAdd.alunoId());
 
-		Edital edital = projeto.getEdital();
+        Projeto projeto = projetoUtils.findById(projetoAlunoAdd.projetoId());
 
-		validaAlunoJaRegistradoEdital(aluno, edital);
+        Edital edital = projeto.getEdital();
 
-		validaAlunoJaRegistrado(aluno, projeto);
+        validaAlunoJaRegistradoEdital(aluno, edital);
 
-		validaQtdTotalAlunoPermitido(edital, projeto);
+        validaAlunoJaRegistrado(aluno, projeto);
 
-		validaQtdBolsistaPermitido(edital, projeto, projetoAlunoAdd.isBolsista());
+        validaQtdTotalAlunoPermitido(edital, projeto);
 
-		validaQtdNaoBolsistaPermitido(edital, projeto, projetoAlunoAdd.isBolsista());
+        validaQtdBolsistaPermitido(edital, projeto, projetoAlunoAdd.isBolsista());
 
-		ProjetoEdital projetoEdital = new ProjetoEdital();
+        validaQtdNaoBolsistaPermitido(edital, projeto, projetoAlunoAdd.isBolsista());
 
-		projetoEdital.setAluno(aluno);
-		projetoEdital.setEdital(edital);
-		projetoEdital.setProfessor(null);
-		projetoEdital.setProjeto(projeto);
-		projetoEdital.setIsBolsista(projetoAlunoAdd.isBolsista());
+        ProjetoEdital projetoEdital = new ProjetoEdital();
 
-		projetoEditalRepository.save(projetoEdital);
+        projetoEdital.setAluno(aluno);
+        projetoEdital.setEdital(edital);
+        projetoEdital.setProfessor(null);
+        projetoEdital.setProjeto(projeto);
+        projetoEdital.setUsuario(usuario);
+        projetoEdital.setIsBolsista(projetoAlunoAdd.isBolsista());
 
-		String msg = String.format("Atribuindo aluno '%s' ao projeto '%s' com sucesso!", aluno.getNome(),
-				projeto.getTitulo());
+        projetoEditalRepository.save(projetoEdital);
 
-		log.info(msg);
-		return retornoUtils.retornoSucesso(msg);
-	}
+        String msg = String.format("Atribuindo aluno '%s' ao projeto '%s' com sucesso!", aluno.getNome(),
+                projeto.getTitulo());
 
-	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public ResponseEntity<Retorno> registrarProfessor(ProjetoProfessorAdd projetoProfessorAdd) throws CustomException {
+        log.info(msg);
+        return retornoUtils.retornoSucesso(msg);
+    }
 
-		Professor professor = professorUtils.findById(projetoProfessorAdd.professorId());
+    @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
+    public ResponseEntity<Retorno> registrarProfessor(ProjetoProfessorAdd projetoProfessorAdd) throws CustomException {
 
-		Projeto projeto = projetoUtils.findById(projetoProfessorAdd.projetoId());
+        Professor professor = professorUtils.findById(projetoProfessorAdd.professorId());
 
-		Edital edital = projeto.getEdital();
+        Usuario usuario = usuarioUtils.findByProfessorId(projetoProfessorAdd.professorId());
 
-		validaProfessorJaRegistradoEdital(professor, edital);
+        Projeto projeto = projetoUtils.findById(projetoProfessorAdd.projetoId());
 
-		validaProfessorJaRegistrado(professor, projeto);
+        Edital edital = projeto.getEdital();
 
-		validaQtdTotalProfessorPermitido(edital, projeto);
+        validaProfessorJaRegistradoEdital(professor, edital);
 
-		ProjetoEdital projetoEdital = new ProjetoEdital();
+        validaProfessorJaRegistrado(professor, projeto);
 
-		projetoEdital.setProfessor(professor);
-		projetoEdital.setEdital(edital);
-		projetoEdital.setProjeto(projeto);
-		projetoEdital.setIsBolsista(null);
-		projetoEdital.setAluno(null);
+        validaQtdTotalProfessorPermitido(edital, projeto);
 
-		projetoEditalRepository.save(projetoEdital);
+        ProjetoEdital projetoEdital = new ProjetoEdital();
 
-		String msg = String.format("Atribuindo professor '%s' ao projeto '%s' com sucesso!", professor.getNome(),
-				projeto.getTitulo());
+        projetoEdital.setUsuario(usuario);
+        projetoEdital.setProfessor(professor);
+        projetoEdital.setEdital(edital);
+        projetoEdital.setProjeto(projeto);
+        projetoEdital.setIsBolsista(null);
+        projetoEdital.setAluno(null);
 
-		log.info(msg);
-		return retornoUtils.retornoSucesso(msg);
-	}
+        projetoEditalRepository.save(projetoEdital);
 
-	public void validaQtdNaoBolsistaPermitido(Edital edital, Projeto projeto, Boolean isBolsista)
-			throws CustomException {
+        String msg = String.format("Atribuindo professor '%s' ao projeto '%s' com sucesso!", professor.getNome(),
+                projeto.getTitulo());
 
-		if (!Boolean.TRUE.equals(isBolsista)) {
-			BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndProfessorIsNull(projeto.getId());
-			BigDecimal bolsistas = projetoEditalRepository
-					.countByProjetoIdAndProfessorIsNullAndIsBolsistaTrue(projeto.getId());
-			BigDecimal naoBolsistas = totalCadastrados.subtract(bolsistas);
-			BigDecimal limiteNaoBolsista = edital.getQtdAlunos().subtract(edital.getQtdBolsistas());
+        log.info(msg);
+        return retornoUtils.retornoSucesso(msg);
+    }
 
-			if (naoBolsistas.compareTo(limiteNaoBolsista) >= 0) {
-				String msg = String.format(
-						"O edital '%s' permite até %s alunos não bolsistas por projeto. O projeto '%s' já possui %s.",
-						edital.getTitulo(), limiteNaoBolsista, projeto.getTitulo(), naoBolsistas);
+    public void validaQtdNaoBolsistaPermitido(Edital edital, Projeto projeto, Boolean isBolsista)
+            throws CustomException {
 
-				log.info(msg);
-				throw customExceptionUtils.errorAndBadRequest(msg);
-			}
-		}
-	}
+        if (!Boolean.TRUE.equals(isBolsista)) {
+            BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndProfessorIsNull(projeto.getId());
+            BigDecimal bolsistas = projetoEditalRepository
+                    .countByProjetoIdAndProfessorIsNullAndIsBolsistaTrue(projeto.getId());
+            BigDecimal naoBolsistas = totalCadastrados.subtract(bolsistas);
+            BigDecimal limiteNaoBolsista = edital.getQtdAlunos().subtract(edital.getQtdBolsistas());
 
-	public void validaQtdBolsistaPermitido(Edital edital, Projeto projeto, Boolean isBolsista) throws CustomException {
+            if (naoBolsistas.compareTo(limiteNaoBolsista) >= 0) {
+                String msg = String.format(
+                        "O edital '%s' permite até %s alunos não bolsistas por projeto. O projeto '%s' já possui %s.",
+                        edital.getTitulo(), limiteNaoBolsista, projeto.getTitulo(), naoBolsistas);
 
-		if (Boolean.TRUE.equals(isBolsista)) {
-			BigDecimal bolsistas = projetoEditalRepository
-					.countByProjetoIdAndProfessorIsNullAndIsBolsistaTrue(projeto.getId());
+                log.info(msg);
+                throw customExceptionUtils.errorAndBadRequest(msg);
+            }
+        }
+    }
 
-			if (bolsistas.compareTo(edital.getQtdBolsistas()) >= 0) {
-				String msg = String.format(
-						"O edital '%s' permite até %s bolsistas por projeto. O projeto '%s' já possui %s.",
-						edital.getTitulo(), edital.getQtdBolsistas(), projeto.getTitulo(), bolsistas);
+    public void validaQtdBolsistaPermitido(Edital edital, Projeto projeto, Boolean isBolsista) throws CustomException {
 
-				log.info(msg);
-				throw customExceptionUtils.errorAndBadRequest(msg);
-			}
-		}
-	}
+        if (Boolean.TRUE.equals(isBolsista)) {
+            BigDecimal bolsistas = projetoEditalRepository
+                    .countByProjetoIdAndProfessorIsNullAndIsBolsistaTrue(projeto.getId());
 
-	public void validaQtdTotalAlunoPermitido(Edital edital, Projeto projeto) throws CustomException {
+            if (bolsistas.compareTo(edital.getQtdBolsistas()) >= 0) {
+                String msg = String.format(
+                        "O edital '%s' permite até %s bolsistas por projeto. O projeto '%s' já possui %s.",
+                        edital.getTitulo(), edital.getQtdBolsistas(), projeto.getTitulo(), bolsistas);
 
-		BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndProfessorIsNull(projeto.getId());
+                log.info(msg);
+                throw customExceptionUtils.errorAndBadRequest(msg);
+            }
+        }
+    }
 
-		if (totalCadastrados.compareTo(edital.getQtdAlunos()) >= 0) {
-			String msg = String.format("O edital '%s' permite até %s alunos por projeto. O projeto '%s' já possui %s.",
-					edital.getTitulo(), edital.getQtdAlunos(), projeto.getTitulo(), totalCadastrados);
+    public void validaQtdTotalAlunoPermitido(Edital edital, Projeto projeto) throws CustomException {
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+        BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndProfessorIsNull(projeto.getId());
 
-	public void validaAlunoJaRegistrado(Aluno aluno, Projeto projeto) throws CustomException {
+        if (totalCadastrados.compareTo(edital.getQtdAlunos()) >= 0) {
+            String msg = String.format("O edital '%s' permite até %s alunos por projeto. O projeto '%s' já possui %s.",
+                    edital.getTitulo(), edital.getQtdAlunos(), projeto.getTitulo(), totalCadastrados);
 
-		if (projetoEditalRepository.existsByAlunoIdAndProjetoId(aluno.getId(), projeto.getId())) {
-			String msg = String.format("O aluno '%s' já está registrado no projeto '%s'.", aluno.getNome(),
-					projeto.getTitulo());
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+    public void validaAlunoJaRegistrado(Aluno aluno, Projeto projeto) throws CustomException {
 
-	public void validaAlunoJaRegistradoEdital(Aluno aluno, Edital edital) throws CustomException {
+        if (projetoEditalRepository.existsByAlunoIdAndProjetoId(aluno.getId(), projeto.getId())) {
+            String msg = String.format("O aluno '%s' já está registrado no projeto '%s'.", aluno.getNome(),
+                    projeto.getTitulo());
 
-		if (projetoEditalRepository.existsByAlunoIdAndEditalId(aluno.getId(), edital.getId())) {
-			String msg = String.format("O aluno '%s' já está registrado em um projeto do edital '%s'.", aluno.getNome(),
-					edital.getTitulo());
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+    public void validaAlunoJaRegistradoEdital(Aluno aluno, Edital edital) throws CustomException {
 
-	public void validaQtdTotalProfessorPermitido(Edital edital, Projeto projeto) throws CustomException {
+        if (projetoEditalRepository.existsByAlunoIdAndEditalId(aluno.getId(), edital.getId())) {
+            String msg = String.format("O aluno '%s' já está registrado em um projeto do edital '%s'.", aluno.getNome(),
+                    edital.getTitulo());
 
-		BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndAlunoIsNull(projeto.getId());
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 
-		if (totalCadastrados.compareTo(edital.getQtdProfessores()) >= 0) {
-			String msg = String.format(
-					"O edital '%s' permite até %s professores por projeto. O projeto '%s' já possui %s.",
-					edital.getTitulo(), edital.getQtdProfessores(), projeto.getTitulo(), totalCadastrados);
+    public void validaQtdTotalProfessorPermitido(Edital edital, Projeto projeto) throws CustomException {
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+        BigDecimal totalCadastrados = projetoEditalRepository.countByProjetoIdAndAlunoIsNull(projeto.getId());
 
-	public void validaProfessorJaRegistrado(Professor professor, Projeto projeto) throws CustomException {
+        if (totalCadastrados.compareTo(edital.getQtdProfessores()) >= 0) {
+            String msg = String.format(
+                    "O edital '%s' permite até %s professores por projeto. O projeto '%s' já possui %s.",
+                    edital.getTitulo(), edital.getQtdProfessores(), projeto.getTitulo(), totalCadastrados);
 
-		if (projetoEditalRepository.existsByProfessorIdAndProjetoId(professor.getId(), projeto.getId())) {
-			String msg = String.format("O professor '%s' já está registrado no projeto '%s'.", professor.getNome(),
-					projeto.getTitulo());
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+    public void validaProfessorJaRegistrado(Professor professor, Projeto projeto) throws CustomException {
 
-	public void validaProfessorJaRegistradoEdital(Professor professor, Edital edital) throws CustomException {
+        if (projetoEditalRepository.existsByProfessorIdAndProjetoId(professor.getId(), projeto.getId())) {
+            String msg = String.format("O professor '%s' já está registrado no projeto '%s'.", professor.getNome(),
+                    projeto.getTitulo());
 
-		if (projetoEditalRepository.existsByProfessorIdAndEditalId(professor.getId(), edital.getId())) {
-			String msg = String.format("O professor '%s' já está registrado em um projeto do edital '%s'.",
-					professor.getNome(), edital.getTitulo());
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 
-			log.info(msg);
-			throw customExceptionUtils.errorAndBadRequest(msg);
-		}
-	}
+    public void validaProfessorJaRegistradoEdital(Professor professor, Edital edital) throws CustomException {
+
+        if (projetoEditalRepository.existsByProfessorIdAndEditalId(professor.getId(), edital.getId())) {
+            String msg = String.format("O professor '%s' já está registrado em um projeto do edital '%s'.",
+                    professor.getNome(), edital.getTitulo());
+
+            log.info(msg);
+            throw customExceptionUtils.errorAndBadRequest(msg);
+        }
+    }
 }

@@ -1,13 +1,6 @@
 package br.edu.undf.sga_ic.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -19,15 +12,15 @@ public class ProjetoEdital {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = true)
+	@Column
 	private Boolean isBolsista;
 
 	@ManyToOne
-	@JoinColumn(name = "aluno_id", referencedColumnName = "id", nullable = true)
+	@JoinColumn(name = "aluno_id", referencedColumnName = "id")
 	private Aluno aluno;
 
 	@ManyToOne
-	@JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = true)
+	@JoinColumn(name = "usuario_id", referencedColumnName = "id", nullable = false)
 	private Usuario usuario;
 	
 	@ManyToOne
@@ -39,6 +32,6 @@ public class ProjetoEdital {
 	private Projeto projeto;
 
 	@ManyToOne
-	@JoinColumn(name = "professor_id", referencedColumnName = "id", nullable = true)
+	@JoinColumn(name = "professor_id", referencedColumnName = "id")
 	private Professor professor;
 }
