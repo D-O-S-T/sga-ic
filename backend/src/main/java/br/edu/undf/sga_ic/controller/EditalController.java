@@ -3,9 +3,11 @@ package br.edu.undf.sga_ic.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,5 +52,20 @@ public class EditalController {
 	public EditalRes findById(@PathVariable Long editalId) throws CustomException {
 		log.info(" >>> Um Coordenador está tentando retornar um Edital pelo id.");
 		return editalService.findById(editalId);
+	}
+
+	@Operation(summary = "Deletar Edital", description = "Este endpoint serve para deletar um Edital.")
+	@DeleteMapping("/deletar/{editalId}")
+	public ResponseEntity<Retorno> deletar(@PathVariable Long editalId) throws CustomException {
+		log.info(" >>> Um Usuário está tentando deletar um Edital.");
+		return editalService.deletar(editalId);
+	}
+
+	@Operation(summary = "Editar Edital", description = "Este endpoint serve para editar um Edital.")
+	@PutMapping("/editar/{editalId}")
+	public ResponseEntity<Retorno> editar(@PathVariable Long editalId, @RequestBody @Valid EditalAdd editalAdd)
+			throws CustomException {
+		log.info(" >>> Um Usuário está tentando editar um Edital.");
+		return editalService.editar(editalId, editalAdd);
 	}
 }

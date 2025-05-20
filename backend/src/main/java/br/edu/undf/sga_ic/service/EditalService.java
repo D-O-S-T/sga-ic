@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import br.edu.undf.sga_ic.dto.req.EditalAdd;
 import br.edu.undf.sga_ic.dto.res.EditalRes;
@@ -73,6 +74,36 @@ public class EditalService {
 
 		log.info(">>> Retornando edital pelo id com sucesso.");
 		return editalDTO;
+	}
+
+	public ResponseEntity<Retorno> deletar(@PathVariable Long editalId) throws CustomException {
+
+		Edital edital = editalUtils.findById(editalId);
+
+		editalRepository.delete(edital);
+
+		log.info(" >>> Edital deletado com sucesso.");
+		return retornoUtils.retornoSucesso("Edital deletado com sucesso.");
+	}
+
+	public ResponseEntity<Retorno> editar(Long editalId, EditalAdd editalAdd) throws CustomException {
+
+		Edital edital = editalUtils.findById(editalId);
+
+		edital.setDtFim(editalAdd.dtFim());
+		edital.setTitulo(editalAdd.titulo());
+		edital.setDtInicio(editalAdd.dtInicio());
+		edital.setDescricao(editalAdd.descricao());
+		edital.setQtdAlunos(editalAdd.qtdAlunos());
+		edital.setQtdProjetos(editalAdd.qtdProjetos());
+		edital.setInstituicao(editalAdd.instituicao());
+		edital.setQtdBolsistas(editalAdd.qtdBolsistas());
+		edital.setQtdProfessores(editalAdd.qtdProfessores());
+
+		editalRepository.save(edital);
+
+		log.info(" >>> Edital editado com sucesso.");
+		return retornoUtils.retornoSucesso("Edital editado com sucesso.");
 	}
 
 	private List<EditalResShort> mapEditaisToDTO(List<Edital> editais) {
