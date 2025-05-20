@@ -7,7 +7,8 @@ import { CoordenadorComponent } from './pages/coordenador/coordenador.component'
 import { NgModule } from '@angular/core';
 import{FormularioEditalComponent} from './pages/coordenador/formulario-edital/formulario-edital.component';
 import { FormularioAtividadeComponent } from './pages/professor/formulario-atividade/formulario-atividade.component';
-
+import { FormularioRelatorioComponent } from './pages/coordenador/formulario-relatorio/formulario-relatorio.component';
+import { FormularioAlunoComponent } from './pages/coordenador/formulario-aluno/formulario-aluno.component';
 import{ProjetosComponent} from './pages/coordenador/projetos/projetos.component';
 
 
@@ -21,7 +22,9 @@ export const routes: Routes = [
     { path: 'navbar', component: NavbarComponent },
     {path: 'projetos', component: ProjetosComponent},
     {path: '', component: FormularioEditalComponent},
-    {path: 'atividade', component: FormularioAtividadeComponent},
+    {path: 'form-atividade', component: FormularioAtividadeComponent},
+    {path: 'form-relatorio', component: FormularioRelatorioComponent},
+    {path: 'form-aluno', component: FormularioAlunoComponent},
  
    
     

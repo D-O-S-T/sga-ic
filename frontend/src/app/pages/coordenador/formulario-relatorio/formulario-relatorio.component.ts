@@ -4,23 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatFormField } from '@angular/material/form-field';
-import { MatLabel } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-formulario-atividade',
+  selector: 'app-relatorio-atividade',
   standalone: true,
-  imports: [FormsModule,MatFormField,MatLabel, MatCardModule, MatButtonModule, MatFormFieldModule],
-  templateUrl: './formulario-atividade.component.html',
-  styleUrl: './formulario-atividade.component.scss'
+  imports: [FormsModule, MatCardModule, MatButtonModule, MatFormFieldModule],
+  templateUrl: './formulario-relatorio.component.html',
+  styleUrl: './formulario-relatorio.component.scss'
 })
-export class FormularioAtividadeComponent {
+export class FormularioRelatorioComponent {
 
-   titulo = '';
+  titulo = '';
   descricao = '';
   dataAbertura = '';
   dataEncerramento = '';
-  projetoId!: number;
+  editalId!: number;
   selectedFile: File | null = null;
 
   constructor(private http: HttpClient) {}
@@ -43,10 +41,10 @@ export class FormularioAtividadeComponent {
     formData.append('descricao', this.descricao);
     formData.append('dataAbertura', this.dataAbertura);
     formData.append('dataEncerramento', this.dataEncerramento);
-    formData.append('projetoId', this.projetoId.toString());
-    formData.append('arquivos', this.selectedFile, this.selectedFile.name);
+    formData.append('editalId', this.editalId.toString());
+    formData.append('arquivo', this.selectedFile, this.selectedFile.name);
 
-    this.http.post('http://localhost:8080/sga-ic/api/atividade/registrar', formData,{ withCredentials: true }).subscribe({
+    this.http.post('http://localhost:8080/sga-ic/api/relatorio/registrar', formData, { withCredentials: true }).subscribe({
       next: (res) => {
         console.log('Dados enviados com sucesso', res);
         alert('Upload realizado com sucesso!');
@@ -64,8 +62,7 @@ export class FormularioAtividadeComponent {
     this.descricao = '';
     this.dataAbertura = '';
     this.dataEncerramento = '';
-    this.projetoId = 0;
+    this.editalId = 0;
     this.selectedFile = null;
   }
-
 }
