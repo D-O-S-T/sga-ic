@@ -1,70 +1,68 @@
 
-<div class="middle-form">
-   
-    <mat-dialog-content>
-        <div class="form">
-            
-                 <h2 mat-dialog-title>Novo Edital</h2>
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Título</mat-label>
-                <input matInput [(ngModel)]="edital.titulo">
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Descrição</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Quantidade de Alunos</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Quantidade de Projetos</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Quantidade de Bolsistas</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Quantidade de Professores</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
+<main>
 
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Instituição</mat-label>
-                <textarea matInput [(ngModel)]="edital.descricao"></textarea>
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Data de Início</mat-label>
-                <input matInput type="date" [(ngModel)]="edital.dataInicio">
-            </mat-form-field>
-        </div>
-        <div class="form">
-            <mat-form-field class="w-full" appearance="outline">
-                <mat-label>Data de Fim</mat-label>
-                <input matInput type="date" [(ngModel)]="edital.dataFim">
-            </mat-form-field>
-        </div>
-    
-    <div class="form">
-        <mat-dialog-actions align="end">
-            <button mat-button (click)="fechar()">Cancelar</button>
-            <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
-        </mat-dialog-actions>
-    </div>
-    </mat-dialog-content>
+<div class="form">
+    <h2 mat-dialog-title>Cadastro de Edital</h2>
+<mat-dialog-content class = "mat-typography">
+  <form class="edital-form">
+    <mat-form-field appearance="outline">
+      <mat-label>Título</mat-label>
+      <input matInput placeholder="Título" [(ngModel)]="edital.titulo" name="titulo">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Descrição</mat-label>
+      <textarea matInput rows="3" [(ngModel)]="edital.descricao" name="descricao"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data de Início</mat-label>
+      <input matInput [matDatepicker]="inicioPicker" [(ngModel)]="edital.dtInicio" name="dtInicio">
+      <mat-datepicker-toggle matSuffix [for]="inicioPicker"></mat-datepicker-toggle>
+      <mat-datepicker #inicioPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Data de Fim</mat-label>
+      <input matInput [matDatepicker]="fimPicker" [(ngModel)]="edital.dtFim" name="dtFim">
+      <mat-datepicker-toggle matSuffix [for]="fimPicker"></mat-datepicker-toggle>
+      <mat-datepicker #fimPicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Instituição</mat-label>
+      <input matInput [(ngModel)]="edital.instituicao" name="instituicao">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade de Alunos</mat-label>
+      <input matInput type="number" [(ngModel)]="edital.qtdAlunos" name="qtdAlunos" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade de Projetos</mat-label>
+      <input matInput type="number" [(ngModel)]="edital.qtdProjetos" name="qtdProjetos" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade de Bolsistas</mat-label>
+      <input matInput type="number" [(ngModel)]="edital.qtdBolsistas" name="qtdBolsistas" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Quantidade de Professores</mat-label>
+      <input matInput type="number" [(ngModel)]="edital.qtdProfessores" name="qtdProfessores" min="0">
+    </mat-form-field>
+  </form>
+
+  <mat-dialog-actions >
+  <button mat-button (click)="fechar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
+</mat-dialog-actions>
+
+</mat-dialog-content>
+
+
+
 </div>
+</main>
