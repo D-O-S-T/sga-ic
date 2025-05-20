@@ -1,10 +1,8 @@
 package br.edu.undf.sga_ic.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.edu.undf.sga_ic.dto.req.ProjetoAlunoAdd;
 import br.edu.undf.sga_ic.dto.req.ProjetoProfessorAdd;
@@ -37,5 +35,12 @@ public class ProjetoEditalController {
 		log.info("Tentativa de vincular o professor de id: " + projetoProfessorAdd.professorId()
 				+ " - ao projeto de id: " + projetoProfessorAdd.projetoId());
 		return projetoEditalService.registrarProfessor(projetoProfessorAdd);
+	}
+
+	@Operation(summary = "Retirar Aluno", description = "Este endpoint serve para retirar um Aluno de um projeto.")
+	@DeleteMapping("/retirar/{projetoEditalId}")
+	public ResponseEntity<Retorno> retirar(@PathVariable Long projetoEditalId) throws CustomException {
+		log.info(" >>> Um Usuário está retirar um Aluno de um projeto.");
+		return projetoEditalService.retirar(projetoEditalId);
 	}
 }

@@ -25,6 +25,7 @@ public class ProjetoEditalService {
     private final RetornoUtils retornoUtils;
     private final ProjetoUtils projetoUtils;
     private final ProfessorUtils professorUtils;
+    private final ProjetoEditalUtils projetoEditalUtils;
     private final CustomExceptionUtils customExceptionUtils;
 
     private final ProjetoEditalRepository projetoEditalRepository;
@@ -102,6 +103,16 @@ public class ProjetoEditalService {
 
         log.info(msg);
         return retornoUtils.retornoSucesso(msg);
+    }
+
+    public ResponseEntity<Retorno> retirar(Long projetoEditalId) throws CustomException {
+
+        ProjetoEdital projetoEdital = projetoEditalUtils.findById(projetoEditalId);
+
+        projetoEditalRepository.delete(projetoEdital);
+
+        log.info(" >>> Usuário retirado do Projeto com sucesso.");
+        return retornoUtils.retornoSucesso("Usuário retirado do Projeto com sucesso.");
     }
 
     public void validaQtdNaoBolsistaPermitido(Edital edital, Projeto projeto, Boolean isBolsista)
