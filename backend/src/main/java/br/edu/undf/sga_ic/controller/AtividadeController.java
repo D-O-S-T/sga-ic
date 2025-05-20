@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import br.edu.undf.sga_ic.dto.res.AtividadeRes;
+import br.edu.undf.sga_ic.dto.res.AtividadeResBig;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.service.AtividadeService;
@@ -44,9 +45,16 @@ public class AtividadeController {
 	}
 
 	@Operation(summary = "Atividade by Projeto", description = "Este endpoint serve para retornar Atividades de um projeto.")
-	@GetMapping("/{projetoId}")
+	@GetMapping("projeto/{projetoId}")
 	public List<AtividadeRes> findByprojeto(@PathVariable Long projetoId) throws CustomException {
 		log.info(" >>> Um usuário está tentando retornar as Atividades de um Projeto..");
 		return atividadeService.findByprojeto(projetoId);
+	}
+
+	@Operation(summary = "Atividade by Id", description = "Este endpoint serve para retornar um Atividade pelo Id.")
+	@GetMapping("/{atividadeId}")
+	public AtividadeResBig findById(@PathVariable Long atividadeId) throws CustomException {
+		log.info(" >>> Um usuário está tentando retornar um Atividade pelo id.");
+		return atividadeService.findById(atividadeId);
 	}
 }

@@ -1,11 +1,15 @@
 package br.edu.undf.sga_ic.service;
 
 import java.io.IOException;
+import java.util.Base64;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.edu.undf.sga_ic.dto.res.ArquivoRes;
 import br.edu.undf.sga_ic.model.Arquivo;
 import br.edu.undf.sga_ic.model.Atividade;
 import br.edu.undf.sga_ic.model.Relatorio;
@@ -46,5 +50,26 @@ public class ArquivoService {
 
 			arquivoRepository.save(novoArquivo);
 		}
+	}
+
+	public List<ArquivoRes> findArquivosByAtividade(Long atividadeId) {
+
+		List<Arquivo> arquivos = arquivoRepository.findByAtividadeId(atividadeId);
+
+		return mapArquivoToDTO(arquivos);
+	}
+
+	public List<ArquivoRes> findArquivosByResposta(Long resAtividadeId) {
+		List<Arquivo> arquivos = arquivoRepository.findByResAtividadeId(resAtividadeId);
+		return mapArquivoToDTO(arquivos);
+	}
+
+	private List<ArquivoRes> mapArquivoToDTO(List<Arquivo> arquivos) {
+		return arquivos.stream()
+				.map(arquivo -> ArquivoRes.builder().id(arquivo.getId()).nomeArquivo(arquivo.getNomeArquivo())
+						.arquivo("data:" + arquivo.getTipoArquivo() + ";base64,"
+								+ Base64.getEncoder().encodeToString(arquivo.getBytesArquivo()))
+						.build())
+				.collect(Collectors.toList());
 	}
 }

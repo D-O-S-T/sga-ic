@@ -4,21 +4,29 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
+import br.edu.undf.sga_ic.dto.res.AlunoShort;
+import br.edu.undf.sga_ic.dto.res.ArquivoRes;
 import br.edu.undf.sga_ic.dto.res.AtividadeRes;
+import br.edu.undf.sga_ic.dto.res.AtividadeResBig;
+import br.edu.undf.sga_ic.dto.res.ProfessorShort;
+import br.edu.undf.sga_ic.dto.res.ResAtividadeResBig;
 import br.edu.undf.sga_ic.dto.res.Retorno;
-import br.edu.undf.sga_ic.enums.AtividadeStatus;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.model.Atividade;
 import br.edu.undf.sga_ic.model.Professor;
 import br.edu.undf.sga_ic.model.Projeto;
 import br.edu.undf.sga_ic.model.Usuario;
 import br.edu.undf.sga_ic.repository.AtividadeRepository;
+import br.edu.undf.sga_ic.repository.ResAtividadeRepository;
+import br.edu.undf.sga_ic.utils.AtividadeUtils;
 import br.edu.undf.sga_ic.utils.DateUtils;
 import br.edu.undf.sga_ic.utils.EmptyUtils;
 import br.edu.undf.sga_ic.utils.ProjetoUtils;
@@ -38,10 +46,12 @@ public class AtividadeService {
 	private final RetornoUtils retornoUtils;
 	private final UsuarioUtils usuarioUtils;
 	private final ProjetoUtils projetoUtils;
+	private final AtividadeUtils atividadeUtils;
 
 	private final ArquivoService arquivoService;
 
 	private final AtividadeRepository atividadeRepository;
+	private final ResAtividadeRepository resAtividadeRepository;
 
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
 	public ResponseEntity<Retorno> registrar(String titulo, String descricao, LocalDateTime dataAbertura,
@@ -54,9 +64,6 @@ public class AtividadeService {
 
 		Projeto projeto = projetoUtils.findById(projetoId);
 
-		AtividadeStatus atividadeStatus = dataAbertura.isAfter(LocalDateTime.now()) ? AtividadeStatus.AGUARDANDO
-				: AtividadeStatus.ABERTA;
-
 		Atividade atividade = new Atividade();
 
 		atividade.setTitulo(titulo);
@@ -66,7 +73,6 @@ public class AtividadeService {
 		atividade.setDataAbertura(dataAbertura);
 		atividade.setDataEncerramento(dataEncerramento);
 		atividade.setDataRegistro(LocalDateTime.now());
-		atividade.setAtividadeStatus(atividadeStatus);
 
 		atividadeRepository.save(atividade);
 
@@ -90,14 +96,43 @@ public class AtividadeService {
 		return mapAtividadesToDTO(atividades);
 	}
 
+	public AtividadeResBig findById(@PathVariable Long atividadeId) throws CustomException {
+
+		Atividade atividade = atividadeUtils.findById(atividadeId);
+
+		ProfessorShort professorDTO = ProfessorShort.builder().id(atividade.getProfessor().getId())
+				.nome(atividade.getProfessor().getNome()).build();
+
+		List<ArquivoRes> arquivosAtividade = arquivoService.findArquivosByAtividade(atividadeId);
+
+		List<ResAtividadeResBig> respostasDTO = resAtividadeRepository.findByAtividadeId(atividadeId).stream()
+				.map(res -> {
+
+					AlunoShort alunoDTO = AlunoShort.builder().id(res.getAluno().getId()).nome(res.getAluno().getNome())
+							.build();
+
+					List<ArquivoRes> arquivosResposta = arquivoService.findArquivosByResposta(res.getId());
+
+					return ResAtividadeResBig.builder().id(res.getId()).descricao(res.getDescricao()).aluno(alunoDTO)
+							.arquivosResposta(arquivosResposta).build();
+
+				}).collect(Collectors.toList());
+
+		return AtividadeResBig.builder().id(atividade.getId()).titulo(atividade.getTitulo())
+				.descricao(atividade.getDescricao())
+				.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
+				.dataAbertura(dateUtils.formatarDataHora(atividade.getDataAbertura()))
+				.dataEncerramento(dateUtils.formatarDataHora(atividade.getDataEncerramento())).professor(professorDTO)
+				.arquivosAtividade(arquivosAtividade).repostas(respostasDTO).build();
+	}
+
 	private List<AtividadeRes> mapAtividadesToDTO(List<Atividade> atividades) {
 		return atividades.stream()
 				.map(atividade -> AtividadeRes.builder().id(atividade.getId()).titulo(atividade.getTitulo())
 						.descricao(atividade.getDescricao())
 						.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
 						.dataAbertura(dateUtils.formatarDataHora(atividade.getDataAbertura()))
-						.dataEncerramento(dateUtils.formatarDataHora(atividade.getDataEncerramento()))
-						.atividadeStatus(atividade.getAtividadeStatus()).build())
+						.dataEncerramento(dateUtils.formatarDataHora(atividade.getDataEncerramento())).build())
 				.toList();
 	}
 }

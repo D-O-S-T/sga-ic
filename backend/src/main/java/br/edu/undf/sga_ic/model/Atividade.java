@@ -2,11 +2,8 @@ package br.edu.undf.sga_ic.model;
 
 import java.time.LocalDateTime;
 
-import br.edu.undf.sga_ic.enums.AtividadeStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -38,10 +35,6 @@ public class Atividade {
 
 	@Column(nullable = false)
 	private LocalDateTime dataEncerramento;
-
-	@Column(nullable = false)
-	@Enumerated(EnumType.STRING)
-	private AtividadeStatus atividadeStatus;
 
 	@ManyToOne
 	@JoinColumn(name = "professor_id", referencedColumnName = "id", nullable = false)
