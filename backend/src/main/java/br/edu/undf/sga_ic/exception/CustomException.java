@@ -1,26 +1,23 @@
 package br.edu.undf.sga_ic.exception;
 
+import br.edu.undf.sga_ic.enums.SeverityStatus;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-import br.edu.undf.sga_ic.enums.SeverityStatus;
+import java.io.Serial;
 
+@Getter
 public class CustomException extends Exception {
-	private static final long serialVersionUID = 1L;
 
-	HttpStatus httpStatus;
-	SeverityStatus severityStatus;
+    @Serial
+    private static final long serialVersionUID = 1L;
 
-	public CustomException(String message, SeverityStatus severityStatus, HttpStatus httpStatus) {
-		super(message);
-		this.httpStatus = httpStatus;
-		this.severityStatus = severityStatus;
-	}
+    HttpStatus httpStatus;
+    SeverityStatus severityStatus;
 
-	public HttpStatus getHttpStatus() {
-		return httpStatus;
-	}
-
-	public SeverityStatus getSeverityStatus() {
-		return severityStatus;
-	}
+    public CustomException(String message, SeverityStatus severityStatus, HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
+        this.severityStatus = severityStatus;
+    }
 }

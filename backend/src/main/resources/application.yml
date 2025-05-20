@@ -21,5 +21,5 @@ spring:
 
 jwt:
   secret: 7/M4mQ2KiZFLDgCPxXEO060N+IK64PrqU5O2foVfyzs= 
-  expirationMs: 600000  
+  expirationMs: 99999999999999
   jwtCookieName: sgaicjwt
