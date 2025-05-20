@@ -1,5 +1,6 @@
 package br.edu.undf.sga_ic.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -31,10 +32,10 @@ public class Atividade {
 	private LocalDateTime dataRegistro;
 
 	@Column(nullable = false)
-	private LocalDateTime dataAbertura;
+	private LocalDate dataAbertura;
 
 	@Column(nullable = false)
-	private LocalDateTime dataEncerramento;
+	private LocalDate dataEncerramento;
 
 	@ManyToOne
 	@JoinColumn(name = "professor_id", referencedColumnName = "id", nullable = false)

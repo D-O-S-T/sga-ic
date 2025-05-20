@@ -1,6 +1,7 @@
 package br.edu.undf.sga_ic.service;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +55,8 @@ public class AtividadeService {
 	private final ResAtividadeRepository resAtividadeRepository;
 
 	@Transactional(rollbackFor = { Exception.class, RuntimeException.class })
-	public ResponseEntity<Retorno> registrar(String titulo, String descricao, LocalDateTime dataAbertura,
-			LocalDateTime dataEncerramento, Long projetoId, MultipartFile[] arquivos, HttpServletRequest request)
+	public ResponseEntity<Retorno> registrar(String titulo, String descricao, LocalDate dataAbertura,
+			LocalDate dataEncerramento, Long projetoId, MultipartFile[] arquivos, HttpServletRequest request)
 			throws CustomException, IOException {
 
 		Usuario usuario = usuarioUtils.findByToken(request);
@@ -121,9 +122,8 @@ public class AtividadeService {
 		return AtividadeResBig.builder().id(atividade.getId()).titulo(atividade.getTitulo())
 				.descricao(atividade.getDescricao())
 				.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
-				.dataAbertura(dateUtils.formatarDataHora(atividade.getDataAbertura()))
-				.dataEncerramento(dateUtils.formatarDataHora(atividade.getDataEncerramento())).professor(professorDTO)
-				.arquivosAtividade(arquivosAtividade).repostas(respostasDTO).build();
+				.dataAbertura(atividade.getDataAbertura()).dataEncerramento(atividade.getDataEncerramento())
+				.professor(professorDTO).arquivosAtividade(arquivosAtividade).repostas(respostasDTO).build();
 	}
 
 	private List<AtividadeRes> mapAtividadesToDTO(List<Atividade> atividades) {
@@ -131,8 +131,8 @@ public class AtividadeService {
 				.map(atividade -> AtividadeRes.builder().id(atividade.getId()).titulo(atividade.getTitulo())
 						.descricao(atividade.getDescricao())
 						.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
-						.dataAbertura(dateUtils.formatarDataHora(atividade.getDataAbertura()))
-						.dataEncerramento(dateUtils.formatarDataHora(atividade.getDataEncerramento())).build())
+						.dataAbertura(atividade.getDataAbertura()).dataEncerramento(atividade.getDataEncerramento())
+						.build())
 				.toList();
 	}
 }

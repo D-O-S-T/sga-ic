@@ -1,7 +1,7 @@
 package br.edu.undf.sga_ic.controller;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -36,7 +36,7 @@ public class AtividadeController {
 	@Operation(summary = "Registrar Atividade", description = "Este endpoint serve para registrar uma nova Atividade.")
 	@PostMapping("/registrar")
 	public ResponseEntity<Retorno> registrar(@RequestParam String titulo, @RequestParam String descricao,
-			@RequestParam LocalDateTime dataAbertura, @RequestParam LocalDateTime dataEncerramento,
+			@RequestParam LocalDate dataAbertura, @RequestParam LocalDate dataEncerramento,
 			@RequestParam Long projetoId, @RequestParam MultipartFile[] arquivos, HttpServletRequest request)
 			throws CustomException, IOException {
 		log.info(" >>> Um Professor está tentando registrar uma nova Atividade.");
