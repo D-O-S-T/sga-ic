@@ -1,7 +1,36 @@
-.middle-form{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
+
+/* Ocupa toda a tela */
+
+main{
+    background-image: url('../../../../assets/images/background-light.png');
+}
+.form {
+  display: flex;
+  justify-content: center;   /* centraliza horizontal */
+  align-items: center;       /* centraliza vertical */
+  flex-direction: column;
+  gap: 1rem;
+  width: 40%;
+  height: 100vh;             /* altura total da viewport */
+  margin: 0 auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.4); /* fundo branco com opacidade */
+}
+
+
+mat-card {
+  padding: 1rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(98, 20, 20, 0.1);
+}
+
+.form-grid {
+ 
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
 }
