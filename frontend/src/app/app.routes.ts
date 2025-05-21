@@ -14,23 +14,31 @@ import { FormularioProfessorComponent } from './pages/coordenador/formulario-pro
 import { FormularioCoordenadorComponent } from './pages/coordenador/form-coordenador/formulario-coordenador.component';
 import { AlunoListComponent } from './pages/coordenador/listar-alunos/listar-alunos.component';
 import { EditalListComponent } from './pages/coordenador/listar-editais/listar-editais.component';
+import { ProfessorListComponent } from './pages/coordenador/listar-professores/listar-professores.component';
 
 export const routes: Routes = [
 
     { path: 'home', component: HomeComponent },
+
     { path: 'aluno', component: AlunoComponent },
-    { path: 'professor', component: ProfessorComponent },
-    { path: 'coordenador', component: CoordenadorComponent },
-    { path: 'navbar', component: NavbarComponent },
-    { path: 'projetos', component: ProjetosComponent },
-    { path: 'form-edital', component: FormularioEditalComponent },
-    { path: 'form-edital/:id**', component: FormularioEditalComponent },
-    { path: 'form-atividade', component: FormularioAtividadeComponent },
-    { path: 'form-relatorio', component: FormularioRelatorioComponent },
+    { path: 'listar-alunos', component: AlunoListComponent },
     { path: 'form-aluno', component: FormularioAlunoComponent },
     { path: 'form-aluno/:id', component: FormularioAlunoComponent },
+
+    { path: 'professor', component: ProfessorComponent },
+    { path: 'listar-professores', component: ProfessorListComponent },
     { path: 'form-professor', component: FormularioProfessorComponent },
+    { path: 'form-professor/:id', component: FormularioProfessorComponent },
+
+    { path: 'coordenador', component: CoordenadorComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
-    { path: 'listar-alunos', component: AlunoListComponent },
+
+    { path: 'form-edital', component: FormularioEditalComponent },
+    { path: 'form-edital/:id**', component: FormularioEditalComponent },
     { path: 'listar-editais', component: EditalListComponent },
+
+    { path: 'navbar', component: NavbarComponent },
+    { path: 'projetos', component: ProjetosComponent },
+    { path: 'form-atividade', component: FormularioAtividadeComponent },
+    { path: 'form-relatorio', component: FormularioRelatorioComponent },
 ];

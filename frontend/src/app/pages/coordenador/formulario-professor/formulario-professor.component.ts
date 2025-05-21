@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+interface Professor {
+  id: number;
+  cpf: string;
+  nome: string;
+  email: string;
+  descricao: string;
+  curriculoLattes: string;
+  celular: string;
+}
 
 @Component({
   selector: 'app-formulario-professor',
@@ -15,22 +29,61 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   styleUrl: './formulario-professor.component.scss',
 })
 export class FormularioProfessorComponent {
-  cpf: string = '';
+
+  @ViewChild('formProfessor') formProfessor!: NgForm;
+
+  id?: number;
+
+  cpf = '';
   nome = '';
   email = '';
-  descricao = '';
   curriculoLattes = '';
-  celular: string = '';
+  celular = '';
 
-  constructor(private http: HttpClient) {}
+  ngOnInit(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.id = +idParam;
+      this.carregarAluno(this.id);
+    }
+  }
+
+  private carregarAluno(id: number) {
+    this.http.get<Professor>(`http://localhost:8080/sga-ic/api/professor/${id}`, { withCredentials: true })
+      .subscribe({
+        next: (professor) => this.zone.run(() => {
+          // 1. Atualiza o modelo
+          this.cpf = this.formatarCPF(professor.cpf);
+          this.nome = professor.nome;
+          this.email = professor.email;
+          this.curriculoLattes = professor.curriculoLattes;
+          this.celular = professor.celular;
+
+          // 2. Empurra os valores para os controles do NgForm
+          this.formProfessor.form.patchValue({
+            cpf: this.cpf,
+            nome: this.nome,
+            email: this.email,
+            curriculoLattes: this.curriculoLattes,
+            celular: this.celular,
+          });
+
+          // 3. (Opcional) Mantém o formulário “pristine”
+          this.formProfessor.form.markAsPristine();
+        }),
+        error: err => console.error('Falha ao carregar aluno', err)
+      });
+  }
 
   onCpfChange(value: string) {
     this.cpf = this.formatarCPF(value);
   }
 
   formatarCPF(cpf: string): string {
-    cpf = cpf.replace(/\D/g, '');
-    if (cpf.length > 11) cpf = cpf.slice(0, 11);
+    cpf = cpf.replace(/\D/g, ''); // Remove tudo que não é dígito
+    if (cpf.length > 11) cpf = cpf.slice(0, 11); // Limita a 11 dígitos
+
+    // Aplica a máscara: 000.000.000-00
     if (cpf.length > 9) {
       return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     } else if (cpf.length > 6) {
@@ -42,36 +95,42 @@ export class FormularioProfessorComponent {
     }
   }
 
-  cadastrarProfessor() {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone
+  ) { }
+
+  cadastrarProfessor(): void {
     const professorData = {
-      cpf: this.cpf,
+      cpf: this.formatarCPF(this.cpf),
       nome: this.nome,
       email: this.email,
-      descricao: this.descricao,
       curriculoLattes: this.curriculoLattes,
       celular: this.celular,
     };
 
-    this.http
-      .post('http://localhost:8080/sga-ic/api/professor/registrar', professorData, { withCredentials: true })
-      .subscribe({
-        next: (res) => {
-          console.log('Professor cadastrado com sucesso!', res);
-          alert('Professor cadastrado!');
-          this.resetForm();
-        },
-        error: (err) => {
-          console.error('Erro ao cadastrar professor', err);
-          alert('Erro ao cadastrar professor. Verifique os dados.');
-        },
-      });
+    const req$ = this.id
+      ? this.http.put(`http://localhost:8080/sga-ic/api/professor/editar/${this.id}`, professorData, { withCredentials: true })
+      : this.http.post('http://localhost:8080/sga-ic/api/professor/registrar', professorData, { withCredentials: true });
+
+    req$.subscribe({
+      next: () => {
+        alert(`Professor ${this.id ? 'atualizado' : 'salvo'} com sucesso!`);
+        if (!this.id) this.resetForm(); // em edição você pode redirecionar, se quiser
+      },
+      error: (err) => {
+        console.error('Erro ao salvar professor', err);
+        alert('Erro ao salvar professor. Verifique os dados.');
+      },
+    });
   }
 
   resetForm() {
     this.cpf = '';
     this.nome = '';
     this.email = '';
-    this.descricao = '';
     this.curriculoLattes = '';
     this.celular = '';
   }

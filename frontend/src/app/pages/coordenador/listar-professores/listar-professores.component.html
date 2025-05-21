@@ -1,0 +1,32 @@
+<div class="tabela-container">
+    <h2>Lista de Professores</h2>
+    <button mat-icon-button color="accent" [routerLink]="['/form-professor']" aria-label="Adicionar edital">
+        <mat-icon>add</mat-icon>
+    </button>
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Foto de Perfil</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let professor of professores">
+                <td>{{ professor.nome }}</td>
+                <td>{{ professor.cpf }}</td>
+                <td>
+                    <img *ngIf="professor.fotoPerfil; else semFoto" [src]="professor.fotoPerfil" alt="Foto do professor"
+                        class="foto-perfil">
+                    <ng-template #semFoto>
+                        <span class="sem-foto">Sem foto</span>
+                    </ng-template>
+                </td>
+                <button (click)="editarProfessor(professor.id)">Editar</button>
+                <button (click)="deletarProfessor(professor.id)">Excluir</button>
+            </tr>
+        </tbody>
+    </table>
+    <p>Total de professores: {{ professores.length }}</p>
+</div>
