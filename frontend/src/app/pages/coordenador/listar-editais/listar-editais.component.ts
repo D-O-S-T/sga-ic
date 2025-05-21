@@ -18,7 +18,7 @@ interface Edital {
   templateUrl: './listar-editais.component.html',
   styleUrls: ['./listar-editais.component.scss'],
   standalone: true,
-  imports: [CommonModule, HttpClientModule,RouterModule, MatIcon],
+  imports: [CommonModule, HttpClientModule, RouterModule, MatIcon],
 })
 export class EditalListComponent implements OnInit {
 
@@ -59,5 +59,4 @@ export class EditalListComponent implements OnInit {
   editarEdital(id: number): void {
     this.router.navigate([`/form-edital/${id}`]);
   }
-
 }

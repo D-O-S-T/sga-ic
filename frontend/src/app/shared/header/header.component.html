@@ -1,0 +1,13 @@
+<!-- header.component.html -->
+<header class="header-container">
+    <!-- caminho absoluto corrige o 404 -->
+    <img src="../../../assets/logo-grande.png" alt="Logo" class="logo" />
+
+    <div *ngIf="usuario" class="user-info">
+        <strong>{{ usuario.nome }}</strong>
+
+        <!-- mostre a foto ou o placeholder se já tiver falhado antes -->
+        <img [src]="usuario.fotoPerfil || '../../../assets\images\perfil-sem-foto-fake.png'" alt="Foto de perfil"
+            class="profile-pic" />
+    </div>
+</header>
