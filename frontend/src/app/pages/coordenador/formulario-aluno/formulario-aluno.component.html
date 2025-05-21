@@ -1,41 +1,45 @@
 <form (ngSubmit)="cadastrarAluno()" #formAluno="ngForm" class="form-upload">
+  <h3>{{ id ? 'Editar aluno' : 'Novo aluno' }}</h3>
+
   <div class="background">
+
+    <!-- CPF -->
     <div class="form-group">
       <label for="cpf">CPF</label>
-      <input id="cpf" name="cpf" type="text" [ngModel]="cpf" (ngModelChange)="onCpfChange($event)" required
+      <input id="cpf" name="cpf" type="text" mask="000.000.000-00" [(ngModel)]="cpf" [readonly]="id" required
         placeholder="Digite o CPF" />
-
     </div>
 
+    <!-- Nome -->
     <div class="form-group">
       <label for="nome">Nome</label>
       <input id="nome" name="nome" type="text" [(ngModel)]="nome" required placeholder="Digite o nome completo" />
     </div>
 
+    <!-- E-mail -->
     <div class="form-group">
       <label for="email">Email</label>
-      <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="Digite o email" />
+      <input id="email" name="email" type="email" [(ngModel)]="email" required placeholder="Digite o e-mail" />
     </div>
 
-    <div class="form-group">
-      <label for="descricao">Descrição</label>
-      <textarea id="descricao" name="descricao" [(ngModel)]="descricao" placeholder="Descreva o aluno"
-        required></textarea>
-    </div>
-
+    <!-- Currículo Lattes -->
     <div class="form-group">
       <label for="curriculoLattes">Currículo Lattes</label>
       <input id="curriculoLattes" name="curriculoLattes" type="url" [(ngModel)]="curriculoLattes" required
-        placeholder="Link do currículo Lattes" />
+        placeholder="Link do Currículo Lattes" />
     </div>
 
+    <!-- Celular -->
     <div class="form-group">
       <label for="celular">Celular</label>
-      <input id="celular" name="celular" type="text" [(ngModel)]="celular" mask="(00) 00000-0000" required
+      <input id="celular" name="celular" type="text" mask="(00) 00000-0000" [(ngModel)]="celular" required
         placeholder="(xx) xxxxx-xxxx" />
     </div>
 
+    <!-- Botão -->
+    <button type="submit">
+      {{ id ? 'Atualizar' : 'Salvar' }}
+    </button>
 
-    <button type="submit" [disabled]="formAluno.invalid">Salvar</button>
   </div>
 </form>

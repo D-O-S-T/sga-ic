@@ -1,10 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
+import { ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+interface Aluno {
+  id: number;
+  cpf: string;
+  nome: string;
+  email: string;
+  descricao: string;
+  curriculoLattes: string;
+  celular: string;
+}
 
 @Component({
   selector: 'app-formulario-aluno',
@@ -15,70 +29,112 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
   styleUrl: './formulario-aluno.component.scss',
 })
 export class FormularioAlunoComponent {
- cpf: string = '';
 
-onCpfChange(value: string) {
-  this.cpf = this.formatarCPF(value);
-}
+  @ViewChild('formAluno') formAluno!: NgForm;
 
-formatarCPF(cpf: string): string {
-  cpf = cpf.replace(/\D/g, ''); // Remove tudo que não é dígito
-  if (cpf.length > 11) cpf = cpf.slice(0, 11); // Limita a 11 dígitos
+  id?: number;
 
-  // Aplica a máscara: 000.000.000-00
-  if (cpf.length > 9) {
-    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-  } else if (cpf.length > 6) {
-    return cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-  } else if (cpf.length > 3) {
-    return cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-  } else {
-    return cpf;
-  }
-}
-
+  cpf = '';
   nome = '';
   email = '';
-  descricao = '';
   curriculoLattes = '';
-  
-  celular: string = '';
+  celular = '';
 
+  ngOnInit(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    if (idParam) {
+      this.id = +idParam;
+      this.carregarAluno(this.id);
+    }
+  }
 
+  private carregarAluno(id: number) {
+    this.http.get<Aluno>(`http://localhost:8080/sga-ic/api/aluno/${id}`, { withCredentials: true })
+      .subscribe({
+        next: (aluno) => this.zone.run(() => {
+          // 1. Atualiza o modelo
+          this.cpf = this.formatarCPF(aluno.cpf);
+          this.nome = aluno.nome;
+          this.email = aluno.email;
+          this.curriculoLattes = aluno.curriculoLattes;
+          this.celular = aluno.celular;
 
+          // 2. Empurra os valores para os controles do NgForm
+          this.formAluno.form.patchValue({
+            cpf: this.cpf,
+            nome: this.nome,
+            email: this.email,
+            curriculoLattes: this.curriculoLattes,
+            celular: this.celular,
+          });
 
-  constructor(private http: HttpClient) {}
+          // 3. (Opcional) Mantém o formulário “pristine”
+          this.formAluno.form.markAsPristine();
+        }),
+        error: err => console.error('Falha ao carregar aluno', err)
+      });
+  }
 
-  cadastrarAluno() {
+  onCpfChange(value: string) {
+    this.cpf = this.formatarCPF(value);
+  }
+
+  formatarCPF(cpf: string): string {
+    cpf = cpf.replace(/\D/g, ''); // Remove tudo que não é dígito
+    if (cpf.length > 11) cpf = cpf.slice(0, 11); // Limita a 11 dígitos
+
+    // Aplica a máscara: 000.000.000-00
+    if (cpf.length > 9) {
+      return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    } else if (cpf.length > 6) {
+      return cpf.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    } else if (cpf.length > 3) {
+      return cpf.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+    } else {
+      return cpf;
+    }
+  }
+
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private cd: ChangeDetectorRef,
+    private zone: NgZone
+  ) { }
+
+  cadastrarAluno(): void {
+
+    console.log('Função cadastrarAluno() chamada', { id: this.id });
+
     const alunoData = {
-      cpf: this.cpf,
+      cpf: this.cpf,  // envia sem máscara
       nome: this.nome,
       email: this.email,
-      descricao: this.descricao,
       curriculoLattes: this.curriculoLattes,
       celular: this.celular,
     };
 
-    this.http
-      .post('http://localhost:8080/sga-ic/api/aluno/registrar', alunoData, { withCredentials: true })
-      .subscribe({
-        next: (res) => {
-          console.log('Aluno salvo com sucesso!', res);
-          alert('Aluno salvo!');
-          this.resetForm();
-        },
-        error: (err) => {
-          console.error('Erro ao cadastrar aluno', err);
-          alert('Erro ao cadastrar aluno. Verifique os dados.');
-        },
-      });
+    // decide POST (novo) ou PUT (editar)
+    const req$ = this.id
+      ? this.http.put(`http://localhost:8080/sga-ic/api/aluno/editar/${this.id}`, alunoData, { withCredentials: true })
+      : this.http.post('http://localhost:8080/sga-ic/api/aluno/registrar', alunoData, { withCredentials: true });
+
+    req$.subscribe({
+      next: () => {
+        alert(`Aluno ${this.id ? 'atualizado' : 'salvo'} com sucesso!`);
+        if (!this.id) this.resetForm(); // em edição você pode redirecionar, se quiser
+      },
+      error: (err) => {
+        console.error('Erro ao salvar aluno', err);
+        alert('Erro ao salvar aluno. Verifique os dados.');
+      },
+    });
   }
 
   resetForm() {
     this.cpf = '';
     this.nome = '';
     this.email = '';
-    this.descricao = '';
     this.curriculoLattes = '';
     this.celular = '';
   }
