@@ -1,0 +1,30 @@
+<div class="tabela-container">
+  <h2>Lista de Alunos</h2>
+  <button mat-icon-button color="accent" [routerLink]="['/form-aluno']" aria-label="Adicionar edital">
+    <mat-icon>add</mat-icon>
+  </button>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Foto de Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let aluno of alunos">
+        <td>{{ aluno.nome }}</td>
+        <td>{{ aluno.cpf }}</td>
+        <td>
+          <img *ngIf="aluno.fotoPerfil; else semFoto" [src]="aluno.fotoPerfil" alt="Foto do aluno" class="foto-perfil">
+          <ng-template #semFoto>
+            <span class="sem-foto">Sem foto</span>
+          </ng-template>
+        </td>
+        <button (click)="editarAluno(aluno.id)">Editar</button>
+        <button (click)="deletarAluno(aluno.id)">Excluir</button>
+      </tr>
+    </tbody>
+  </table>
+  <p>Total de alunos: {{ alunos.length }}</p>
