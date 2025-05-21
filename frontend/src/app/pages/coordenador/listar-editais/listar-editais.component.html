@@ -1,0 +1,24 @@
+<div class="tabela-container">
+  <h2>Lista de Editais</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Instituição</th>
+        <th>Data Início</th>
+        <th>Data Fim</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let edital of editais">
+        <td>{{ edital.titulo }}</td>
+        <td>{{ edital.instituicao }}</td>
+        <td>{{ edital.dtInicio | date:'dd/MM/yyyy' }}</td>
+        <td>{{ edital.dtFim | date:'dd/MM/yyyy' }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Total de editais: {{ editais.length }}</p>
+</div>
