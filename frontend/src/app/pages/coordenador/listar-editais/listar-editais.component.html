@@ -1,6 +1,9 @@
 <div class="tabela-container">
   <h2>Lista de Editais</h2>
-
+     <button mat-icon-button color="accent" [routerLink]="['/form-edital']" aria-label="Adicionar edital">
+    <mat-icon>add</mat-icon>
+   
+  </button>
   <table>
     <thead>
       <tr>
@@ -8,14 +11,19 @@
         <th>Instituição</th>
         <th>Data Início</th>
         <th>Data Fim</th>
+        <th>Ações</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let edital of editais">
         <td>{{ edital.titulo }}</td>
         <td>{{ edital.instituicao }}</td>
-        <td>{{ edital.dtInicio | date:'dd/MM/yyyy' }}</td>
-        <td>{{ edital.dtFim | date:'dd/MM/yyyy' }}</td>
+        <td>{{ edital.dtInicio | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ edital.dtFim | date: 'dd/MM/yyyy' }}</td>
+        <td>
+          <button (click)="editarEdital(edital.id)">Editar</button>
+          <button (click)="deletarEdital(edital.id)">Excluir</button>
+        </td>
       </tr>
     </tbody>
   </table>

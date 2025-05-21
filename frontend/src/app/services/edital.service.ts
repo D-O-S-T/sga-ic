@@ -25,4 +25,13 @@ export class EditalService {
   criarEdital(edital: Edital): Observable<any> {
     return this.http.post(this.API_URL, edital);
   }
+
+  buscarEditalPorId(id: string) {
+  return this.http.get<Edital>(`http://localhost:8080/sga-ic/api/edital/${id}`);
+}
+
+atualizarEdital(id: string, edital: Edital) {
+  return this.http.put<Edital>(`http://localhost:8080/sga-ic/api/edital/${id}`, edital);
+}
+
 }
