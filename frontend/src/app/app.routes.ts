@@ -15,6 +15,7 @@ import { FormularioCoordenadorComponent } from './pages/coordenador/form-coorden
 import { AlunoListComponent } from './pages/coordenador/listar-alunos/listar-alunos.component';
 import { EditalListComponent } from './pages/coordenador/listar-editais/listar-editais.component';
 import { ProfessorListComponent } from './pages/coordenador/listar-professores/listar-professores.component';
+import { CoordenadorListComponent } from './pages/coordenador/listar-coordenadores/listar-coordenadores.component';
 
 export const routes: Routes = [
 
@@ -31,7 +32,9 @@ export const routes: Routes = [
     { path: 'form-professor/:id', component: FormularioProfessorComponent },
 
     { path: 'coordenador', component: CoordenadorComponent },
+    { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
+     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
 
     { path: 'form-edital', component: FormularioEditalComponent },
     { path: 'form-edital/:id**', component: FormularioEditalComponent },

@@ -1,0 +1,31 @@
+<div class="tabela-container">
+  <h2>Lista de Coordenadores</h2>
+  <button mat-icon-button color="accent" [routerLink]="['/form-coordenador']" aria-label="Adicionar coordenador">
+    <mat-icon>add</mat-icon>
+  </button>
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th>Foto de Perfil</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngFor="let coordenador of coordenadores">
+        <td>{{ coordenador.nome }}</td>
+        <td>{{ coordenador.cpf }}</td>
+        <td>
+          <img *ngIf="coordenador.fotoPerfil; else semFoto" [src]="coordenador.fotoPerfil" alt="Foto do coordenador" class="foto-perfil">
+          <ng-template #semFoto>
+            <span class="sem-foto">Sem foto</span>
+          </ng-template>
+        </td>
+        <button (click)="editarCoordenador(coordenador.id)">Editar</button>
+        <button (click)="deletarCoordenador(coordenador.id)">Excluir</button>
+      </tr>
+    </tbody>
+  </table>
+  <p>Total de coordenadores: {{ coordenadores.length }}</p>
+</div>
