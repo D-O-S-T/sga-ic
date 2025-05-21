@@ -103,18 +103,14 @@ export class FormularioAlunoComponent {
   ) { }
 
   cadastrarAluno(): void {
-
-    console.log('Função cadastrarAluno() chamada', { id: this.id });
-
     const alunoData = {
-      cpf: this.cpf,  // envia sem máscara
+      cpf: this.formatarCPF(this.cpf),
       nome: this.nome,
       email: this.email,
       curriculoLattes: this.curriculoLattes,
       celular: this.celular,
     };
 
-    // decide POST (novo) ou PUT (editar)
     const req$ = this.id
       ? this.http.put(`http://localhost:8080/sga-ic/api/aluno/editar/${this.id}`, alunoData, { withCredentials: true })
       : this.http.post('http://localhost:8080/sga-ic/api/aluno/registrar', alunoData, { withCredentials: true });
