@@ -13,6 +13,12 @@ import java.util.List;
 @Repository
 public interface ProjetoEditalRepository extends JpaRepository<ProjetoEdital, Long> {
 
+    long countByProjetoIdAndProfessorIsNotNull(Long projetoId);
+
+    long countByProjetoIdAndAlunoIsNotNullAndIsBolsistaTrue(Long projetoId);
+
+    long countByProjetoIdAndAlunoIsNotNullAndIsBolsistaFalse(Long projetoId);
+
     List<ProjetoEdital> findByProjetoIdAndAlunoIsNull(Long projetoId);
 
     List<ProjetoEdital> findByProjetoIdAndProfessorIsNullAndIsBolsistaIsFalse(Long projetoId);

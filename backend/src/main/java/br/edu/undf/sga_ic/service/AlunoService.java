@@ -1,14 +1,5 @@
 package br.edu.undf.sga_ic.service;
 
-import java.util.Base64;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import br.edu.undf.sga_ic.dto.req.AlunoAdd;
 import br.edu.undf.sga_ic.dto.res.AlunoRes;
 import br.edu.undf.sga_ic.dto.res.AlunoResShort;
@@ -24,6 +15,13 @@ import br.edu.undf.sga_ic.utils.RetornoUtils;
 import br.edu.undf.sga_ic.utils.UsuarioUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Base64;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -108,7 +106,7 @@ public class AlunoService {
 				.nome(usuario.getAluno().getNome()).cpf(usuario.getCpf())
 				.fotoPerfil(usuario.getAluno().getFotoPerfil() != null ? "data:image/jpeg;base64,"
 						+ Base64.getEncoder().encodeToString(usuario.getAluno().getFotoPerfil()) : null)
-				.build()).collect(Collectors.toList());
+				.build()).toList();
 	}
 
 	public Aluno salvar(AlunoAdd alunoAdd, Usuario usuario) {

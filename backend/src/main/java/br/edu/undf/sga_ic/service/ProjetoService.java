@@ -4,8 +4,7 @@ import br.edu.undf.sga_ic.dto.req.ProjetoAdd;
 import br.edu.undf.sga_ic.dto.res.*;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.model.*;
-import br.edu.undf.sga_ic.repository.ProjetoEditalRepository;
-import br.edu.undf.sga_ic.repository.ProjetoRepository;
+import br.edu.undf.sga_ic.repository.*;
 import br.edu.undf.sga_ic.utils.*;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +31,10 @@ public class ProjetoService {
     private final CustomExceptionUtils customExceptionUtils;
 
     private final ProjetoRepository projetoRepository;
+    private final AtividadeRepository atividadeRepository;
+    private final RelatorioRepository relatorioRepository;
+    private final ResAtividadeRepository resAtividadeRepository;
+    private final ResRelatorioRepository resRelatorioRepository;
     private final ProjetoEditalRepository projetoEditalRepository;
 
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
@@ -139,7 +142,7 @@ public class ProjetoService {
         List<ProjetoEdital> relNaoBolsistas = projetoEditalRepository.findByProjetoIdAndProfessorIsNullAndIsBolsistaIsFalse(projetoId);
 
         log.info("total professor={}", relProfessores.size());
-        log.info("total bolsista={}",  relBolsistas.size());
+        log.info("total bolsista={}", relBolsistas.size());
         log.info("total naoBolsista={}", relNaoBolsistas.size());
 
         List<ProfessorResShort> professores =
@@ -185,6 +188,31 @@ public class ProjetoService {
 
         log.info(" >>> Retornando participantes com sucesso.");
         return participantes;
+    }
+
+    public Metricas findMetricas(Long projetoId) throws CustomException {
+
+        Projeto projeto = projetoUtils.findById(projetoId);
+
+        long qtdProfessores = projetoEditalRepository.countByProjetoIdAndProfessorIsNotNull(projetoId);
+        long qtdBolsistas = projetoEditalRepository.countByProjetoIdAndAlunoIsNotNullAndIsBolsistaTrue(projetoId);
+        long qtdNaoBolsitas = projetoEditalRepository.countByProjetoIdAndAlunoIsNotNullAndIsBolsistaFalse(projetoId);
+
+        long qtdAtividades = atividadeRepository.countByProjetoId(projetoId);
+        long qtdResAtividades = resAtividadeRepository.countByProjetoId(projetoId);
+
+        long qtdRelatorios = relatorioRepository.countByEditalId(projeto.getEdital().getId());
+        long qtdResRelatotios = resRelatorioRepository.countByProjetoId(projetoId);
+
+        return Metricas.builder()
+                .qtdProfessores(qtdProfessores)
+                .qtdBolsistas(qtdBolsistas)
+                .qtdNaoBolsistas(qtdNaoBolsitas)
+                .qtdAtividades(qtdAtividades)
+                .qtdResAtividades(qtdResAtividades)
+                .qtdRelatorios(qtdRelatorios)
+                .qtdResRelatorios(qtdResRelatotios)
+                .build();
     }
 
     private List<ProjetoRes> mapProjetosToDTO(List<Projeto> projetos) {

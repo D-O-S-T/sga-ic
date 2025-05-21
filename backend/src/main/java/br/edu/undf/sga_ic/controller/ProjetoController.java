@@ -1,6 +1,7 @@
 package br.edu.undf.sga_ic.controller;
 
 import br.edu.undf.sga_ic.dto.req.ProjetoAdd;
+import br.edu.undf.sga_ic.dto.res.Metricas;
 import br.edu.undf.sga_ic.dto.res.Participantes;
 import br.edu.undf.sga_ic.dto.res.ProjetoRes;
 import br.edu.undf.sga_ic.dto.res.Retorno;
@@ -81,5 +82,12 @@ public class ProjetoController {
     public Participantes findParticipantes(@PathVariable Long projetoId) throws CustomException {
         log.info(" >>> Tentando retornar participantes de um Projeto.");
         return projetoService.findParticipantes(projetoId);
+    }
+
+    @Operation(summary = "Métricas by Projeto", description = "Este endpoint serve para retornar métricas de um projeto.")
+    @GetMapping("/metricas/{projetoId}")
+    public Metricas findMetricas(@PathVariable Long projetoId) throws CustomException {
+        log.info(" >>> Tentando retornar métricas de um Projeto.");
+        return projetoService.findMetricas(projetoId);
     }
 }

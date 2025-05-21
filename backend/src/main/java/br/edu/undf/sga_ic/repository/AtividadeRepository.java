@@ -10,5 +10,7 @@ import br.edu.undf.sga_ic.model.Atividade;
 @Repository
 public interface AtividadeRepository extends JpaRepository<Atividade, Long> {
 
+	long countByProjetoId(Long projetoId);
+
 	List<Atividade> findByProjetoIdOrderByDataRegistroDesc(Long projetoId);
 }

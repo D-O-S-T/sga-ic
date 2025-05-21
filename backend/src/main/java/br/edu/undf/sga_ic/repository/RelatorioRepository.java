@@ -8,4 +8,5 @@ import br.edu.undf.sga_ic.model.Relatorio;
 @Repository
 public interface RelatorioRepository extends JpaRepository<Relatorio, Long> {
 
+    long countByEditalId(Long editalId);
 }
