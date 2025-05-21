@@ -63,8 +63,8 @@ formatarCPF(cpf: string): string {
       .post('http://localhost:8080/sga-ic/api/aluno/registrar', alunoData, { withCredentials: true })
       .subscribe({
         next: (res) => {
-          console.log('Aluno cadastrado com sucesso!', res);
-          alert('Aluno cadastrado!');
+          console.log('Aluno salvo com sucesso!', res);
+          alert('Aluno salvo!');
           this.resetForm();
         },
         error: (err) => {

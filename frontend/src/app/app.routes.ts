@@ -28,6 +28,7 @@ export const routes: Routes = [
     {path: 'form-atividade', component: FormularioAtividadeComponent},
     {path: 'form-relatorio', component: FormularioRelatorioComponent},
     {path: 'form-aluno', component: FormularioAlunoComponent},
+    { path: 'form-aluno/:id', component: FormularioAlunoComponent },
     {path: 'form-professor', component: FormularioProfessorComponent},
     {path: 'form-coordenador', component: FormularioCoordenadorComponent},
     {path: 'listar-alunos', component: AlunoListComponent},

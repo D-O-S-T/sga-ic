@@ -1,7 +1,8 @@
 <div class="tabela-container">
   <h2>Lista de Alunos</h2>
-  
-
+    <button mat-icon-button color="accent" [routerLink]="['/form-aluno']" aria-label="Adicionar edital">
+    <mat-icon>add</mat-icon>
+  </button>
   <table>
     <thead>
       <tr>
@@ -26,6 +27,8 @@
             <span class="sem-foto">Sem foto</span>
           </ng-template>
         </td>
+        <button (click)="editarAluno(aluno.id)">Editar</button>
+          <button (click)="deletarAluno(aluno.id)">Excluir</button>
       </tr>
     </tbody>
   </table>
@@ -33,4 +36,4 @@
 
   
 
-</div>
+
