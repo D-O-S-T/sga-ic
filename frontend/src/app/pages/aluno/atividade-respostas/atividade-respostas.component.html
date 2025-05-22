@@ -11,28 +11,33 @@
         <div *ngIf="erro">{{ erro }}</div>
 
         <div *ngIf="atividade">
-            <button class="btn-enviar-resposta" (click)="abrirModalResposta()">
-                + Enviar resposta atividade
-            </button>
-
             <div class="atividade">
-                <h2>{{ atividade.titulo }}</h2>
-                <p>{{ atividade.descricao }}</p>
-                <p><strong>Professor:</strong> {{ atividade.professor.nome }}</p>
-                <p>
-                    <strong>Abertura:</strong> {{ atividade.dataAbertura }} |
-                    <strong>Encerramento:</strong> {{ atividade.dataEncerramento }} |
-                    <strong>Registro:</strong> {{ atividade.dataRegistro }}
-                </p>
+                <div class="teste">
+                    <div>
+                        <h2>{{ atividade.titulo }}</h2>
+                        <p>{{ atividade.descricao }}</p>
+                        <p><strong>Professor:</strong> {{ atividade.professor.nome }}</p>
+                        <p>
+                            <strong>Abertura:</strong> {{ atividade.dataAbertura }} |
+                            <strong>Encerramento:</strong> {{ atividade.dataEncerramento }} |
+                            <strong>Registro:</strong> {{ atividade.dataRegistro }}
+                        </p>
+                    </div>
+                    <div *ngIf="atividade.arquivosAtividade?.length > 0">
+                        <h4>Arquivos da atividade:</h4>
+                        <ul>
+                            <li *ngFor="let arquivo of atividade.arquivosAtividade">
+                                <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{
+                                    arquivo.nomeArquivo }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
-                <div *ngIf="atividade.arquivosAtividade?.length > 0">
-                    <h4>Arquivos da atividade:</h4>
-                    <ul>
-                        <li *ngFor="let arquivo of atividade.arquivosAtividade">
-                            <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{
-                                arquivo.nomeArquivo }} </a>
-                        </li>
-                    </ul>
+                <div>
+                    <button class="btn-enviar-resposta" (click)="abrirModalResposta()">
+                        + Enviar resposta atividade
+                    </button>
                 </div>
             </div>
 
