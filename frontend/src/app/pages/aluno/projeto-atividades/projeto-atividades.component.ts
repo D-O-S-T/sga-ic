@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
+import { Router } from '@angular/router';
 
 interface Projeto {
   id: number;
@@ -39,7 +40,7 @@ export class ProjetoAtividadesComponent implements OnInit {
   carregando = true;
   erro = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef,) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) { }
 
   ngOnInit(): void {
     const projetoId = Number(this.route.snapshot.paramMap.get('id'));
@@ -51,6 +52,10 @@ export class ProjetoAtividadesComponent implements OnInit {
 
     this.carregarProjeto(projetoId);
     this.carregarAtividades(projetoId);
+  }
+
+  irParaRespostas(atividadeId: number): void {
+    this.router.navigate(['/atividade', atividadeId, 'respostas']);
   }
 
   private carregarProjeto(id: number): void {
@@ -67,7 +72,7 @@ export class ProjetoAtividadesComponent implements OnInit {
         next: (dados) => {
           this.atividades = dados;
           this.carregando = false;
-           this.cdr.detectChanges();
+          this.cdr.detectChanges();
         },
         error: () => {
           this.erro = 'Erro ao carregar as atividades.';

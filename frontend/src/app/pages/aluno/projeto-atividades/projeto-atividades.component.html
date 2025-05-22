@@ -16,7 +16,7 @@
 
             <div *ngIf="!carregando && atividades.length > 0">
                 <ul>
-                    <li *ngFor="let atividade of atividades">
+                    <li *ngFor="let atividade of atividades" (click)="irParaRespostas(atividade.id)">
                         <h4>{{ atividade.titulo }}</h4>
                         <p>{{ atividade.descricao }}</p>
                         <small>

@@ -1,0 +1,78 @@
+.body-aluno {
+    display: flex;
+}
+
+.atividade {
+    height: 250px;
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1.25rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    margin-bottom: 1rem;
+
+     h2 {
+        color: #1f67a6;
+    }
+}
+
+.respostas {
+    height: 450px;
+    overflow-y: auto;
+    padding: 1.25rem;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.atividade-detalhes {
+    padding: 2rem;
+    width: 100%;
+
+    ul {
+        list-style: none;
+    }
+}
+
+.resposta-card {
+    background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.arquivos ul {
+  display: flex;
+  flex-wrap: wrap; /* quebra linha se não couber */
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.arquivos li {
+  margin: 0;
+}
+
+
+.arquivo-link {
+  display: inline-block;
+  background: #e3f2fd;
+  color: #1f67a6;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    background: #bbdefb;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &::before {
+    content: "📄 ";
+    margin-right: 0.25rem;
+  }
+}
