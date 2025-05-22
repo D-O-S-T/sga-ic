@@ -1,0 +1,19 @@
+<aside class="sidebar" [class.collapsed]="collapsed" [style.--sidebar-width.px]="width">
+  <!-- Botão hamburguer -->
+  <button class="toggle-btn" (click)="toggle()" aria-label="Alternar menu">
+    ☰
+  </button>
+
+  <!-- Lista de navegação -->
+  <nav>
+    <ul>
+      <li *ngFor="let item of items" routerLinkActive="active" [routerLink]="item.route">
+        <!-- Ícone opcional -->
+        <i *ngIf="item.icon" class="icon" [ngClass]="item.icon"></i>
+
+        <!-- Texto some ao colapsar -->
+        <span class="label">{{ item.label }}</span>
+      </li>
+    </ul>
+  </nav>
+</aside>

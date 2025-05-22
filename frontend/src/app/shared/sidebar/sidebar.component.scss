@@ -1,0 +1,72 @@
+/* Variável configurável via atributo [style.--sidebar-width] no host */
+$w: var(--sidebar-width, 220px);
+
+.sidebar {
+  width: $w;
+  min-height: calc(100vh - 83px); // ocupa altura do container flex (já descontado do header)
+  background: #1F67A6;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s;
+
+  &.collapsed {
+    ul{
+      overflow: hidden;
+    }
+    width: 60px;
+  }
+
+  .toggle-btn {
+    all: unset;
+    cursor: pointer;
+    padding: 0.75rem;
+    font-size: 1.25rem;
+    color: #ccc;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  nav {
+    flex: 1;
+    overflow-y: auto;
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        color: inherit;
+        white-space: nowrap;
+
+        &:hover,
+        &.active {
+          background: #48A1D9;
+        }
+
+        .icon {
+          font-size: 1.2rem;
+        }
+
+        .label {
+          transition: opacity 0.15s, visibility 0.15s;
+        }
+      }
+    }
+  }
+
+  &.collapsed {
+    nav .label {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+}

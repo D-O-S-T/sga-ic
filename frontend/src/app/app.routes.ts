@@ -17,11 +17,13 @@ import { EditalListComponent } from './pages/coordenador/listar-editais/listar-e
 import { ProfessorListComponent } from './pages/coordenador/listar-professores/listar-professores.component';
 import { CoordenadorListComponent } from './pages/coordenador/listar-coordenadores/listar-coordenadores.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 export const routes: Routes = [
 
     { path: 'navbar', component: NavbarComponent },
     { path: 'header', component: HeaderComponent },
+    { path: 'sidebar', component: SidebarComponent },
 
     { path: 'home', component: HomeComponent },
 
