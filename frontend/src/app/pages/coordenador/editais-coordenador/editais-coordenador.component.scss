@@ -1,7 +1,7 @@
 /* Grade responsiva que se ajusta ao tamanho da tela */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* define colunas responsivas */
   gap: 1rem;
   padding: 1rem;
 }

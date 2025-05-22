@@ -1,69 +1,63 @@
+<form (ngSubmit)="salvar()" #formEdital="ngForm" class="form-upload">
+  <h2>Cadastro de Edital</h2>
 
-<main>
+  <div class="background">
 
-<div class="form">
-  
-    <h2 mat-dialog-title>Cadastro de Edital</h2>
-<mat-dialog-content class = "mat-typography">
-  <form class="edital-form">
-    <mat-form-field appearance="outline">
-      <mat-label>Título</mat-label>
-      <input matInput placeholder="Título" [(ngModel)]="edital.titulo" name="titulo">
-    </mat-form-field>
+    <!-- Título -->
+    <div class="form-group">
+      <label for="titulo">Título</label>
+      <input id="titulo" name="titulo" type="text" [(ngModel)]="edital.titulo" required placeholder="Título do edital" />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Descrição</mat-label>
-      <textarea matInput rows="3" [(ngModel)]="edital.descricao" name="descricao"></textarea>
-    </mat-form-field>
+    <!-- Descrição -->
+    <div class="form-group">
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" name="descricao" rows="3" [(ngModel)]="edital.descricao" required placeholder="Descrição do edital"></textarea>
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Data de Início</mat-label>
-      <input matInput [matDatepicker]="inicioPicker" [(ngModel)]="edital.dtInicio" name="dtInicio">
-      <mat-datepicker-toggle matSuffix [for]="inicioPicker"></mat-datepicker-toggle>
-      <mat-datepicker #inicioPicker></mat-datepicker>
-    </mat-form-field>
+    <!-- Datas -->
+    <div class="form-group">
+      <label for="dtInicio">Data de Início</label>
+      <input id="dtInicio" name="dtInicio" type="date" [(ngModel)]="edital.dtInicio" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Data de Fim</mat-label>
-      <input matInput [matDatepicker]="fimPicker" [(ngModel)]="edital.dtFim" name="dtFim">
-      <mat-datepicker-toggle matSuffix [for]="fimPicker"></mat-datepicker-toggle>
-      <mat-datepicker #fimPicker></mat-datepicker>
-    </mat-form-field>
+    <div class="form-group">
+      <label for="dtFim">Data de Fim</label>
+      <input id="dtFim" name="dtFim" type="date" [(ngModel)]="edital.dtFim" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Instituição</mat-label>
-      <input matInput [(ngModel)]="edital.instituicao" name="instituicao">
-    </mat-form-field>
+    <!-- Instituição -->
+    <div class="form-group">
+      <label for="instituicao">Instituição</label>
+      <input id="instituicao" name="instituicao" type="text" [(ngModel)]="edital.instituicao" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade de Alunos</mat-label>
-      <input matInput type="number" [(ngModel)]="edital.qtdAlunos" name="qtdAlunos" min="0">
-    </mat-form-field>
+    <!-- Quantitativos -->
+    <div class="form-group">
+      <label for="qtdAlunos">Quantidade de Alunos</label>
+      <input id="qtdAlunos" name="qtdAlunos" type="number" [(ngModel)]="edital.qtdAlunos" min="0" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade de Projetos</mat-label>
-      <input matInput type="number" [(ngModel)]="edital.qtdProjetos" name="qtdProjetos" min="0">
-    </mat-form-field>
+    <div class="form-group">
+      <label for="qtdProjetos">Quantidade de Projetos</label>
+      <input id="qtdProjetos" name="qtdProjetos" type="number" [(ngModel)]="edital.qtdProjetos" min="0" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade de Bolsistas</mat-label>
-      <input matInput type="number" [(ngModel)]="edital.qtdBolsistas" name="qtdBolsistas" min="0">
-    </mat-form-field>
+    <div class="form-group">
+      <label for="qtdBolsistas">Quantidade de Bolsistas</label>
+      <input id="qtdBolsistas" name="qtdBolsistas" type="number" [(ngModel)]="edital.qtdBolsistas" min="0" required />
+    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Quantidade de Professores</mat-label>
-      <input matInput type="number" [(ngModel)]="edital.qtdProfessores" name="qtdProfessores" min="0">
-    </mat-form-field>
-  </form>
+    <div class="form-group">
+      <label for="qtdProfessores">Quantidade de Professores</label>
+      <input id="qtdProfessores" name="qtdProfessores" type="number" [(ngModel)]="edital.qtdProfessores" min="0" required />
+    </div>
 
-  <mat-dialog-actions >
-  <button mat-button (click)="fechar()">Cancelar</button>
-  <button mat-raised-button color="primary" (click)="salvar()">Salvar</button>
-</mat-dialog-actions>
+    <!-- Botões -->
+    <div class="actions">
+      <button type="button" (click)="fechar()" class="cancel">Cancelar</button>
+      <button type="submit">Salvar</button>
+    </div>
 
-</mat-dialog-content>
-
-
-
-</div>
-</main>
+  </div>
+</form>

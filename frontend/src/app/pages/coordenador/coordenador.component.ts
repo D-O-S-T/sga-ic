@@ -17,6 +17,7 @@ export class CoordenadorComponent {
    navItems: NavItem[] = [
       { label: 'Dashboard', route: '/listar-alunos' },
       { label: 'Usuários', route: '/usuarios' },
+      {label: 'Cadastro de Editais', route: '/form-edital'},
     ];
 
 }
