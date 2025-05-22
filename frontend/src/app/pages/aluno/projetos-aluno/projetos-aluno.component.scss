@@ -1,42 +1,39 @@
-/* Grade responsiva que se ajusta ao tamanho da tela */
 .projects-grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
   padding: 1rem;
 }
 
-/* Card inspirado no Moodle: fundo claro, canto arredondado, sombra suave */
 .project-card {
-  background: #fff;
-  border-radius: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background-color: #f9fafb;
   padding: 1.25rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
 
-  &:hover,
-  &:focus-visible {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+    color: #111827;
   }
-}
 
-/* Título destacado */
-.project-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin: 0 0 0.5rem;
-  color: #1f67a6; // mesmo azul que você usou na sidebar
-}
+  .project-title {
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 0.25rem;
+  }
 
-/* Descrição truncada a 3 linhas */
-.project-desc {
-  font-size: 0.95rem;
-  color: #333;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* quantas linhas mostrar */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  .project-desc {
+    color: #4b5563;
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+  }
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
 }

@@ -20,6 +20,8 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ProjetosProfessorComponent } from './pages/professor/projetos-professor/projetos-professor.component';
 import { ProjetoAtividadesComponent } from './pages/aluno/projeto-atividades/projeto-atividades.component';
+import{EditaisComponent} from './pages/coordenador/editais-coordenador/editais-coordenador.component';
+
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
 
 export const routes: Routes = [
@@ -49,6 +51,7 @@ export const routes: Routes = [
     { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
+    {path: 'editais', component: EditaisComponent},
 
 
     { path: 'form-edital', component: FormularioEditalComponent },
@@ -58,6 +61,8 @@ export const routes: Routes = [
     { path: 'projetos', component: ProjetosComponent },
     { path: 'form-atividade', component: FormularioAtividadeComponent },
     { path: 'form-relatorio', component: FormularioRelatorioComponent },
+
+
 
 
    

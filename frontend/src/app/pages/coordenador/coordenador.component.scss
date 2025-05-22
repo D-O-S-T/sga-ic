@@ -1,40 +1,7 @@
-* {
-
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-
+.body-aluno {
+    display: flex;
 }
 
-h1 {
-  font-size: 20px;
-}
-
-header {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  padding: 16px;
-
-}
-
-.cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 70px;
-  padding: 16px;
-  max-width: 50%;
-  margin: 0 auto;
-
-  .example-card {
-    border-radius: 4px;
-    background: #b5cef4c3;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 0px 2px 6px 2px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
-    transition: background 0.2s ease;
-
-    &:active {
-      background: #89a9d6; // Tom mais escuro ao clicar
-    }
-  }
+.projetos {
+    padding: 3%;
 }
