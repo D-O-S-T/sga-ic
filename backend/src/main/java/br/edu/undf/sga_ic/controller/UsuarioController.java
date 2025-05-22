@@ -1,6 +1,7 @@
 package br.edu.undf.sga_ic.controller;
 
 import br.edu.undf.sga_ic.dto.res.Perfil;
+import br.edu.undf.sga_ic.dto.res.PerfilCheio;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.exception.CustomException;
 import br.edu.undf.sga_ic.service.UsuarioService;
@@ -37,5 +38,12 @@ public class UsuarioController {
     public Perfil getPerfil(HttpServletRequest request) throws CustomException {
         log.info(" >>> Um Usuário está tentando retornar as suas informações de perfil");
         return usuarioService.getPerfil(request);
+    }
+
+    @Operation(summary = "Retornar Perfil Cheio", description = "Este endpoint serve para retornar perfil cheio de usuário logado.")
+    @GetMapping("/perfil-cheio")
+    public PerfilCheio getPerfilCheio(HttpServletRequest request) throws CustomException {
+        log.info(" >>> Um Usuário está tentando retornar as suas informações de perfil cheio");
+        return usuarioService.getPerfilCheio(request);
     }
 }

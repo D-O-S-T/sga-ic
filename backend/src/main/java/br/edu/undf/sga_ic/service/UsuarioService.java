@@ -1,6 +1,7 @@
 package br.edu.undf.sga_ic.service;
 
 import br.edu.undf.sga_ic.dto.res.Perfil;
+import br.edu.undf.sga_ic.dto.res.PerfilCheio;
 import br.edu.undf.sga_ic.dto.res.Retorno;
 import br.edu.undf.sga_ic.enums.UsuarioRole;
 import br.edu.undf.sga_ic.exception.CustomException;
@@ -115,6 +116,66 @@ public class UsuarioService {
 
         log.info("Retornando perfil de Uusário com sucesso.");
         return perfil;
+    }
+
+    public PerfilCheio getPerfilCheio(HttpServletRequest request)
+            throws CustomException {
+
+        Usuario usuario = usuarioUtils.findByToken(request);
+
+        PerfilCheio perfilCheio = switch (usuario.getUsuarioRole()) {
+            case ALUNO -> {
+
+                Aluno aluno = usuario.getAluno();
+
+                yield PerfilCheio.builder()
+                        .id(aluno.getId())
+                        .nome(aluno.getNome())
+                        .cpf(usuario.getCpf())
+                        .email(aluno.getEmail())
+                        .celular(aluno.getCelular())
+                        .curriculoLattes(aluno.getCurriculoLattes())
+                        .fotoPerfil(aluno.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(aluno.getFotoPerfil())
+                        : null)
+                        .build();
+            }
+            case PROFESSOR -> {
+
+                Professor professor = usuario.getProfessor();
+
+                yield PerfilCheio.builder()
+                        .id(professor.getId())
+                        .nome(professor.getNome())
+                        .cpf(usuario.getCpf())
+                        .email(professor.getEmail())
+                        .celular(professor.getCelular())
+                        .curriculoLattes(professor.getCurriculoLattes())
+                        .fotoPerfil(professor.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(professor.getFotoPerfil())
+                        : null)
+                        .build();
+            }
+            case COORDENADOR -> {
+
+                Coordenador coordenador = usuario.getCoordenador();
+
+                yield PerfilCheio.builder()
+                        .id(coordenador.getId())
+                        .nome(coordenador.getNome())
+                        .cpf(usuario.getCpf())
+                        .email(coordenador.getEmail())
+                        .celular(coordenador.getCelular())
+                        .curriculoLattes(null)
+                        .fotoPerfil(coordenador.getFotoPerfil() != null
+                        ? "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(coordenador.getFotoPerfil())
+                        : null)
+                        .build();
+            }
+        };
+
+        log.info("Retornando perfil cheio de Uusário com sucesso.");
+        return perfilCheio;
     }
 
     @Transactional(rollbackFor = {Exception.class, RuntimeException.class})
