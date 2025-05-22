@@ -29,6 +29,13 @@ export class AtividadeRespostasComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
 
+  enviarResposta(): void {
+  // Exemplo: abrir modal, navegar ou console
+  console.log('Abrir formulário para enviar resposta');
+  // ou redirecionar para outra rota, ex:
+  // this.router.navigate(['/atividade', this.atividade.id, 'responder']);
+}
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {

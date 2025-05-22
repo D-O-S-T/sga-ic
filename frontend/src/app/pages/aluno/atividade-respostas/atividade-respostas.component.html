@@ -7,6 +7,10 @@
         <div *ngIf="erro">{{ erro }}</div>
 
         <div *ngIf="atividade">
+            <button class="btn-enviar-resposta" (click)="enviarResposta()">
+                + Enviar resposta atividade
+            </button>
+
             <div class="atividade">
                 <h2>{{ atividade.titulo }}</h2>
                 <p>{{ atividade.descricao }}</p>
@@ -21,7 +25,8 @@
                     <h4>Arquivos da atividade:</h4>
                     <ul>
                         <li *ngFor="let arquivo of atividade.arquivosAtividade">
-                            <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{ arquivo.nomeArquivo }} </a>
+                            <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{
+                                arquivo.nomeArquivo }} </a>
                         </li>
                     </ul>
                 </div>
@@ -37,7 +42,8 @@
                         <h5>Arquivos enviados:</h5>
                         <ul>
                             <li *ngFor="let arq of resposta.arquivosResposta">
-                                <a [href]="arq.arquivo" download="{{ arq.nomeArquivo }}" class="arquivo-link">{{ arq.nomeArquivo }} </a>
+                                <a [href]="arq.arquivo" download="{{ arq.nomeArquivo }}" class="arquivo-link">{{
+                                    arq.nomeArquivo }} </a>
                             </li>
                         </ul>
                     </div>
