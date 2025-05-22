@@ -2,12 +2,16 @@
 <div class="body-aluno">
     <app-sidebar [items]="navItems"></app-sidebar>
 
+    <app-res-atividade *ngIf="mostrarModal" [atividadeId]="atividade.id" (fecharModal)="mostrarModal = false"
+        (respostaSalva)="aoSalvarResposta()">
+    </app-res-atividade>
+
     <div class="atividade-detalhes">
         <div *ngIf="carregando">Carregando atividade…</div>
         <div *ngIf="erro">{{ erro }}</div>
 
         <div *ngIf="atividade">
-            <button class="btn-enviar-resposta" (click)="enviarResposta()">
+            <button class="btn-enviar-resposta" (click)="abrirModalResposta()">
                 + Enviar resposta atividade
             </button>
 

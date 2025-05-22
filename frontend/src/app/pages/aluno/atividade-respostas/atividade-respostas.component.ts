@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { CommonModule } from '@angular/common';
+import { ResAtividadeComponent } from '../res-atividade/res-atividade.component';
 
 @Component({
   selector: 'app-atividade-respostas',
   standalone: true,
-  imports: [CommonModule, HeaderComponent, SidebarComponent],
+  imports: [CommonModule, HeaderComponent, SidebarComponent, ResAtividadeComponent],
   templateUrl: './atividade-respostas.component.html',
   styleUrl: './atividade-respostas.component.scss'
 })
@@ -19,6 +20,17 @@ export class AtividadeRespostasComponent implements OnInit {
     { label: 'Projetos', route: '/aluno' },
   ];
 
+  mostrarModal = false;
+
+  abrirModalResposta(): void {
+    this.mostrarModal = true;
+  }
+
+  aoSalvarResposta(): void {
+    this.mostrarModal = false;
+    this.carregarAtividade(); // função que recarrega a atividade
+  }
+
   atividade: any;
   carregando = true;
   erro = '';
@@ -27,16 +39,13 @@ export class AtividadeRespostasComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private cdr: ChangeDetectorRef
-  ) {}
-
-  enviarResposta(): void {
-  // Exemplo: abrir modal, navegar ou console
-  console.log('Abrir formulário para enviar resposta');
-  // ou redirecionar para outra rota, ex:
-  // this.router.navigate(['/atividade', this.atividade.id, 'responder']);
-}
+  ) { }
 
   ngOnInit(): void {
+    this.carregarAtividade();
+  }
+
+  carregarAtividade(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.http.get(`http://localhost:8080/sga-ic/api/atividade/${id}`, { withCredentials: true })
