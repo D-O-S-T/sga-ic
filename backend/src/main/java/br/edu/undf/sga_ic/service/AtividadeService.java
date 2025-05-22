@@ -119,19 +119,28 @@ public class AtividadeService {
 
 				}).collect(Collectors.toList());
 
-		return AtividadeResBig.builder().id(atividade.getId()).titulo(atividade.getTitulo())
+		return AtividadeResBig.builder()
+				.id(atividade.getId())
+				.titulo(atividade.getTitulo())
 				.descricao(atividade.getDescricao())
 				.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
-				.dataAbertura(atividade.getDataAbertura()).dataEncerramento(atividade.getDataEncerramento())
-				.professor(professorDTO).arquivosAtividade(arquivosAtividade).repostas(respostasDTO).build();
+				.dataAbertura(dateUtils.formatarData(atividade.getDataAbertura()))
+				.dataEncerramento(dateUtils.formatarData(atividade.getDataEncerramento()))
+				.professor(professorDTO)
+				.arquivosAtividade(arquivosAtividade)
+				.repostas(respostasDTO)
+				.build();
 	}
 
 	private List<AtividadeRes> mapAtividadesToDTO(List<Atividade> atividades) {
 		return atividades.stream()
-				.map(atividade -> AtividadeRes.builder().id(atividade.getId()).titulo(atividade.getTitulo())
+				.map(atividade -> AtividadeRes.builder()
+						.id(atividade.getId())
+						.titulo(atividade.getTitulo())
 						.descricao(atividade.getDescricao())
 						.dataRegistro(dateUtils.formatarDataHora(atividade.getDataRegistro()))
-						.dataAbertura(atividade.getDataAbertura()).dataEncerramento(atividade.getDataEncerramento())
+						.dataAbertura(dateUtils.formatarData(atividade.getDataAbertura()))
+						.dataEncerramento(dateUtils.formatarData(atividade.getDataEncerramento()))
 						.build())
 				.toList();
 	}
