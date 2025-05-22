@@ -1,0 +1,10 @@
+<div
+  class="project-card"
+  *ngFor="let projeto of projetos"
+  (click)="abrirFormularioAtividade(projeto.id)"
+  role="button"
+  tabindex="0"
+>
+  <h3 class="project-title">{{ projeto.titulo }}</h3>
+  <p class="project-desc">{{ projeto.descricao }}</p>
+</div>

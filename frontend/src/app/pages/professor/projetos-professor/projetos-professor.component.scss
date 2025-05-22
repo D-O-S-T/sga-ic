@@ -1,0 +1,41 @@
+/* Grade responsiva que se ajusta ao tamanho da tela */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Card inspirado no Moodle: fundo claro, canto arredondado, sombra suave */
+.project-card {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  }
+}
+
+/* Título destacado */
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #1f67a6; // mesmo azul que você usou na sidebar
+}
+
+/* Descrição truncada a 3 linhas */
+.project-desc {
+  font-size: 0.95rem;
+  color: #333;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* quantas linhas mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
