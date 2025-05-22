@@ -18,6 +18,7 @@ import { ProfessorListComponent } from './pages/coordenador/listar-professores/l
 import { CoordenadorListComponent } from './pages/coordenador/listar-coordenadores/listar-coordenadores.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { ProjetoAtividadesComponent } from './pages/aluno/projeto-atividades/projeto-atividades.component';
 
 export const routes: Routes = [
 
@@ -31,6 +32,7 @@ export const routes: Routes = [
     { path: 'listar-alunos', component: AlunoListComponent },
     { path: 'form-aluno', component: FormularioAlunoComponent },
     { path: 'form-aluno/:id', component: FormularioAlunoComponent },
+    { path: 'projeto/:id/atividades', component: ProjetoAtividadesComponent },
 
     { path: 'professor', component: ProfessorComponent },
     { path: 'listar-professores', component: ProfessorListComponent },
@@ -40,7 +42,7 @@ export const routes: Routes = [
     { path: 'coordenador', component: CoordenadorComponent },
     { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
-     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
+    { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
 
     { path: 'form-edital', component: FormularioEditalComponent },
     { path: 'form-edital/:id**', component: FormularioEditalComponent },

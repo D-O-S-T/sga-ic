@@ -4,6 +4,7 @@
     *ngFor="let projeto of projetos"
     role="button"
     tabindex="0"
+    (click)="irParaProjeto(projeto.id)"
   >
     <h3 class="project-title">{{ projeto.titulo }}</h3>
     <p class="project-desc">{{ projeto.descricao }}</p>
