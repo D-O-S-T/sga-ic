@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 export interface Projeto {
   id: number;
@@ -20,7 +21,15 @@ export class ProjetosAlunoComponent implements OnInit {
   carregando = true;
   erro = '';
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) { }
+
+  irParaProjeto(projetoId: number): void {
+    this.router.navigate(['/projeto', projetoId, 'atividades']);
+  }
 
   ngOnInit(): void {
     this.http

@@ -11,10 +11,49 @@ $w: var(--sidebar-width, 220px);
   transition: width 0.25s;
 
   &.collapsed {
-    ul{
+    ul {
       overflow: hidden;
     }
+
+    .logout-container{
+      overflow: hidden;
+    }
+    
     width: 60px;
+  }
+
+  /* Empurra o footer para o rodapé */
+  .logout-container {
+    margin-top: auto;
+  }
+
+  /* Botão */
+  .logout-btn {
+    all: unset;
+    display: flex;
+    align-items: center;
+    width: 188px;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    color: inherit;
+
+    &:hover {
+      background: #48A1D9;
+    }
+
+    .icon {
+      font-size: 1.2rem;
+    }
+
+    .label {
+      transition: opacity .15s, visibility .15s;
+    }
+  }
+
+  /* Some o texto quando a sidebar estiver colapsada */
+  .sidebar.collapsed .logout-btn .label {
+    opacity: 0;
+    visibility: hidden;
   }
 
   .toggle-btn {
