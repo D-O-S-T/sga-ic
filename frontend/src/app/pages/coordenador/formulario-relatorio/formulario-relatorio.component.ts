@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core'; // <- Importa Input
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -13,12 +13,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   styleUrl: './formulario-relatorio.component.scss'
 })
 export class FormularioRelatorioComponent {
+  
+  @Input() editalId!: number; // <- Adicionado Input
 
   titulo = '';
   descricao = '';
   dataAbertura = '';
   dataEncerramento = '';
-  editalId!: number;
   selectedFile: File | null = null;
 
   constructor(private http: HttpClient) {}
@@ -62,7 +63,6 @@ export class FormularioRelatorioComponent {
     this.descricao = '';
     this.dataAbertura = '';
     this.dataEncerramento = '';
-    this.editalId = 0;
     this.selectedFile = null;
   }
 }

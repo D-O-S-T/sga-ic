@@ -1,4 +1,5 @@
 <form (ngSubmit)="uploadFile()" #formUpload="ngForm" class="form-upload">
+  <h1>Adicionar Relatório</h1>
   <div class="background">
 
     <div class="form-group">
@@ -46,17 +47,7 @@
       />
     </div>
 
-    <div class="form-group">
-      <label for="editalId">Edital ID</label>
-      <input
-        id="editalId"
-        name="editalId"
-        type="number"
-        [(ngModel)]="editalId"
-        required
-        placeholder="ID do edital"
-      />
-    </div>
+    
 
     <div class="form-group">
       <label for="arquivo">Arquivo</label>

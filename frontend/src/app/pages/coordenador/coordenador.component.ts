@@ -8,12 +8,13 @@ import { ProjetosListComponent } from './listar-projetos/listar-projetos.compone
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import {FormularioRelatorioComponent} from './formulario-relatorio/formulario-relatorio.component';
 
 
 @Component({
   selector: 'app-coordenador',
   standalone: true,
-  imports: [HeaderComponent, SidebarComponent, EditaisComponent, ProjetosListComponent, CommonModule],
+  imports: [HeaderComponent, SidebarComponent, EditaisComponent, ProjetosListComponent, CommonModule, FormularioRelatorioComponent],
   templateUrl: './coordenador.component.html',
   styleUrl: './coordenador.component.scss'
 })
@@ -94,6 +95,28 @@ export class CoordenadorComponent {
         error: (err) => alert('Erro ao carregar detalhes do edital.')
       });
   }
+
+  formularioRelatorioAberto = false;
+
+abrirFormularioRelatorio() {
+  this.formularioRelatorioAberto = true;
+}
+
+fecharFormularioRelatorio() {
+  this.formularioRelatorioAberto = false;
+}
+
+mostrarModalRelatorio = false;
+
+abrirModalRelatorio() {
+  this.mostrarModalRelatorio = true;
+}
+
+fecharModalRelatorio() {
+  this.mostrarModalRelatorio = false;
+}
+
+
 
 
 }

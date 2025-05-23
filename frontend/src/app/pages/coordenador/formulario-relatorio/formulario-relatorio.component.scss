@@ -1,58 +1,64 @@
 .form-upload {
   max-width: 600px;
   margin: 40px auto;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  background: #ffffff;
-  padding: 32px;
+  padding: 24px;
+  background-color: #fefefe;
   border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.full-width {
-  width: 100%;
-}
-
-.form-group {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   flex-direction: column;
-  gap: 8px;
-}
+  gap: 20px;
 
-.form-group label {
-  font-weight: 500;
-  color: #3f3f3f;
-  margin-bottom: 4px;
-}
+  .form-group {
+    display: flex;
+    flex-direction: column;
 
-.form-group input,
-.form-group textarea {
-  padding: 12px;
-  font-size: 16px;
-  border: 1px solid #c0c0c0;
-  border-radius: 8px;
-  outline: none;
-  transition: border-color 0.3s;
-}
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
 
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: #3f51b5;
-}
+    input,
+    textarea {
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: border-color 0.3s, box-shadow 0.3s;
 
-.submit-btn {
-  align-self: flex-end;
-  font-weight: bold;
-  background-color: #3f51b5;
-  color: white;
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
+      &:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        outline: none;
+      }
+    }
 
-.submit-btn:hover {
-  background-color: #303f9f;
+    textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+  }
+
+  .submit-btn {
+    padding: 14px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover:enabled {
+      background-color: #0056b3;
+    }
+
+    &:disabled {
+      background-color: #b3d1f1;
+      cursor: not-allowed;
+    }
+  }
 }

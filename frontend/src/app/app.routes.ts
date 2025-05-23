@@ -33,6 +33,7 @@ import { FormularioProjetoComponent } from './pages/coordenador/formulario-proje
 import { ProjetoRelatoriosComponent } from './pages/professor/projeto-relatorios/projeto-relatorios.component';
 import { RelatorioRespostasComponent } from './pages/professor/relatorio-respostas/relatorio-respostas.component';
 
+
 export const routes: Routes = [
 
     { path: 'navbar', component: NavbarComponent },
