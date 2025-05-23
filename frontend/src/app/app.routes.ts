@@ -25,6 +25,8 @@ import{EditaisComponent} from './pages/coordenador/editais-coordenador/editais-c
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
 import { PerfilAlunoComponent } from './pages/aluno/perfil-aluno/perfil-aluno.component';
 
+import {ProjetosListComponent} from './pages/coordenador/listar-projetos/listar-projetos.component';
+
 export const routes: Routes = [
 
     { path: 'navbar', component: NavbarComponent },
@@ -54,6 +56,8 @@ export const routes: Routes = [
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
     {path: 'editais', component: EditaisComponent},
+    {path: 'listar-projetos', component: ProjetosListComponent},
+   
 
 
     { path: 'form-edital', component: FormularioEditalComponent },

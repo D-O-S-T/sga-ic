@@ -1,0 +1,40 @@
+.projetos-list {
+  padding: 1rem;
+
+  .loading {
+    font-weight: bold;
+    color: #007bff;
+  }
+
+  .erro {
+    color: red;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .card-projeto {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    width: 300px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+    }
+  }
+}

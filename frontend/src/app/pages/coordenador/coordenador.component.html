@@ -1,14 +1,17 @@
-
 <app-header></app-header>
 
-
 <div class="body-aluno">
-   <app-sidebar [items]="navItems"></app-sidebar>
-    
-    <div class="projetos">
-       
-        <h1>Editais abertos:</h1>
+  <app-sidebar [items]="navItems"></app-sidebar>
+
+  <div class="projetos">
+    <h1>Editais abertos:</h1>
        <app-editais (editalSelecionado)="carregarProjetosPorEdital($event)"></app-editais>
 
-    </div>
+  <div class="modal-overlay" *ngIf="modalAberta">
+  <div class="modal-content">
+      <button class="btn-fechar" (click)="fecharModal()">×</button> 
+    <app-projetos-list [editalId]="editalSelecionadoId"></app-projetos-list>
+  </div>
+</div>
+  </div>
 </div>
