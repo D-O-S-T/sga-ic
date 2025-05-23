@@ -9,25 +9,38 @@ $w: var(--sidebar-width, 220px);
   display: flex;
   flex-direction: column;
   transition: width 0.25s;
+  overflow-x: hidden;
 
   &.collapsed {
-    ul {
+    width: 60px;
+
+    ul,
+    .logout-container {
       overflow: hidden;
     }
 
-    .logout-container{
-      overflow: hidden;
+    nav {
+      .label {
+        opacity: 0;
+        visibility: hidden;
+      }
+
+      ul li {
+        padding: 0.75rem 0.5rem;
+        gap: 0;
+
+        &:hover,
+        &.active {
+          background: none;
+        }
+      }
     }
-    
-    width: 60px;
   }
 
-  /* Empurra o footer para o rodapé */
   .logout-container {
     margin-top: auto;
   }
 
-  /* Botão */
   .logout-btn {
     all: unset;
     display: flex;
@@ -46,14 +59,8 @@ $w: var(--sidebar-width, 220px);
     }
 
     .label {
-      transition: opacity .15s, visibility .15s;
+      transition: opacity 0.2s, visibility 0.2s;
     }
-  }
-
-  /* Some o texto quando a sidebar estiver colapsada */
-  .sidebar.collapsed .logout-btn .label {
-    opacity: 0;
-    visibility: hidden;
   }
 
   .toggle-btn {
@@ -71,6 +78,7 @@ $w: var(--sidebar-width, 220px);
   nav {
     flex: 1;
     overflow-y: auto;
+    overflow-x: hidden;
 
     ul {
       list-style: none;
@@ -85,27 +93,26 @@ $w: var(--sidebar-width, 220px);
         cursor: pointer;
         color: inherit;
         white-space: nowrap;
-
-        &:hover,
-        &.active {
-          background: #48A1D9;
-        }
+        transition: background 0.25s, padding 0.25s;
 
         .icon {
           font-size: 1.2rem;
         }
 
         .label {
-          transition: opacity 0.15s, visibility 0.15s;
+          transition: opacity 0.2s, visibility 0.2s;
         }
       }
-    }
-  }
 
-  &.collapsed {
-    nav .label {
-      opacity: 0;
-      visibility: hidden;
+      // Hover only when not collapsed
+      .sidebar:not(.collapsed) & li:hover {
+        padding-left: calc(1rem + 4px);
+        background: #48A1D9;
+      }
+
+      li.active {
+        background: #48A1D9;
+      }
     }
   }
 }
