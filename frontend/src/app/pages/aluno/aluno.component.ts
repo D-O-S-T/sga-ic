@@ -14,7 +14,7 @@ import { ProjetosAlunoComponent } from './projetos-aluno/projetos-aluno.componen
 export class AlunoComponent {
 
   navItems: NavItem[] = [
-    { label: 'Perfil', route: '/perfil' },
+    { label: 'Perfil', route: '/perfil-aluno' },
     { label: 'Projetos', route: '/aluno' },
   ];
   

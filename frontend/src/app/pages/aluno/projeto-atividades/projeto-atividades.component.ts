@@ -31,7 +31,7 @@ interface Atividade {
 export class ProjetoAtividadesComponent implements OnInit {
 
   navItems: NavItem[] = [
-    { label: 'Perfil', route: '/perfil' },
+    { label: 'Perfil', route: '/perfil-aluno' },
     { label: 'Projetos', route: '/aluno' },
   ];
 

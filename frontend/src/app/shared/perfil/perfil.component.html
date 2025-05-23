@@ -1,0 +1,18 @@
+<div *ngIf="usuario" class="perfil-container">
+    <div>
+        <img [src]="getFoto()" alt="Foto de perfil" class="foto-perfil" />
+    </div>
+    <div>
+        <h2>{{ usuario.nome }}</h2>
+        <p><strong>CPF:</strong> {{ usuario.cpf }}</p>
+        <p><strong>Email:</strong> {{ usuario.email }}</p>
+        <p><strong>Celular:</strong> {{ usuario.celular }}</p>
+
+        <p *ngIf="usuario.curriculoLattes">
+            <strong>Lattes:</strong>
+            <a [href]="'https://lattes.cnpq.br/' + usuario.curriculoLattes" target="_blank">
+                {{ usuario.curriculoLattes }}
+            </a>
+        </p>
+    </div>
+</div>

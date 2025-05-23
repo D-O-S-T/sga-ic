@@ -16,7 +16,7 @@ import { ResAtividadeComponent } from '../res-atividade/res-atividade.component'
 export class AtividadeRespostasComponent implements OnInit {
 
   navItems: NavItem[] = [
-    { label: 'Perfil', route: '/perfil' },
+    { label: 'Perfil', route: '/perfil-aluno' },
     { label: 'Projetos', route: '/aluno' },
   ];
 

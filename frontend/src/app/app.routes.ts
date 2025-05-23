@@ -23,6 +23,7 @@ import { ProjetoAtividadesComponent } from './pages/aluno/projeto-atividades/pro
 import{EditaisComponent} from './pages/coordenador/editais-coordenador/editais-coordenador.component';
 
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
+import { PerfilAlunoComponent } from './pages/aluno/perfil-aluno/perfil-aluno.component';
 
 export const routes: Routes = [
 
@@ -33,6 +34,7 @@ export const routes: Routes = [
     { path: 'home', component: HomeComponent },
 
     { path: 'aluno', component: AlunoComponent },
+    { path: 'perfil-aluno', component: PerfilAlunoComponent },
     { path: 'listar-alunos', component: AlunoListComponent },
     { path: 'form-aluno', component: FormularioAlunoComponent },
     { path: 'form-aluno/:id', component: FormularioAlunoComponent },
