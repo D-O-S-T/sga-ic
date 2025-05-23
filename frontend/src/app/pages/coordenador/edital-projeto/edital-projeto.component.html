@@ -6,47 +6,81 @@
         <div>
             <h1>Participantes:</h1>
 
+            <!-- Comboboxes para adicionar -->
+            <mat-form-field appearance="fill" class="combo">
+                <mat-label>Adicionar professor</mat-label>
+                <mat-select [(ngModel)]="professorSelecionado">
+                    <mat-option *ngFor="let prof of professoresDisponiveis" [value]="prof">
+                        {{ prof.nome }} ({{ prof.cpf }})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="atribuirProfessor()"
+                [disabled]="!professorSelecionado">Adicionar</button>
+
+            <mat-form-field appearance="fill" class="combo">
+                <mat-label>Adicionar aluno</mat-label>
+                <mat-select [(ngModel)]="alunoSelecionado">
+                    <mat-option *ngFor="let al of alunosDisponiveis" [value]="al">
+                        {{ al.nome }} ({{ al.cpf }})
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-checkbox [(ngModel)]="isBolsista">Bolsista?</mat-checkbox>
+            <button mat-raised-button color="primary" (click)="atribuirAluno()"
+                [disabled]="!alunoSelecionado">Adicionar</button>
+
+            <!-- Carregamento ou erro -->
             <div *ngIf="carregando">Carregando participantes…</div>
             <div *ngIf="erro">{{ erro }}</div>
 
-            <div *ngIf="!carregando && !erro">
+            <!-- Listagens existentes -->
+            <div *ngIf="!carregando && !erro" class="scrollable-list">
                 <h2>Professores</h2>
                 <ul>
                     <li *ngFor="let p of professores">
-                        <img *ngIf="p.fotoPerfil; else placeholder" [src]="p.fotoPerfil" alt="Foto de {{p.nome}}"
-                            width="40" height="40">
+                        <img *ngIf="p.fotoPerfil; else placeholder" [src]="p.fotoPerfil" width="40" height="40">
                         <ng-template #placeholder>
-                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                            <img src="../../../assets/images/profile_default.png" width="40" height="40">
                         </ng-template>
                         <strong>{{ p.nome }}</strong> ({{ p.cpf }})
+                        <button mat-icon-button color="warn" (click)="desatribuir(p.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </li>
                 </ul>
 
                 <h2>Bolsistas</h2>
                 <ul>
                     <li *ngFor="let b of bolsistas">
-                        <img *ngIf="b.fotoPerfil; else placeholder" [src]="b.fotoPerfil" alt="Foto de {{b.nome}}"
-                            width="40" height="40">
+                        <img *ngIf="b.fotoPerfil; else placeholder" [src]="b.fotoPerfil" width="40" height="40">
                         <ng-template #placeholder>
-                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                            <img src="../../../assets/images/profile_default.png" width="40" height="40">
                         </ng-template>
                         <strong>{{ b.nome }}</strong> ({{ b.cpf }})
+                        <button mat-icon-button color="warn" (click)="desatribuir(b.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </li>
                 </ul>
 
                 <h2>Não Bolsistas</h2>
                 <ul>
                     <li *ngFor="let n of naoBolsistas">
-                        <img *ngIf="n.fotoPerfil; else placeholder" [src]="n.fotoPerfil" alt="Foto de {{n.nome}}"
-                            width="40" height="40">
+                        <img *ngIf="n.fotoPerfil; else placeholder" [src]="n.fotoPerfil" width="40" height="40">
                         <ng-template #placeholder>
-                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                            <img src="../../../assets/images/profile_default.png" width="40" height="40">
                         </ng-template>
                         <strong>{{ n.nome }}</strong> ({{ n.cpf }})
+                        <button mat-icon-button color="warn" (click)="desatribuir(n.id)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <!-- Métricas -->
         <div>
             <h1 *ngIf="metricas">Métricas:</h1>
             <div *ngIf="metricas" class="metricas">

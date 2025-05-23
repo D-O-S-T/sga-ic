@@ -9,6 +9,12 @@
     width: 100%;
 }
 
+.combo {
+  width: 280px;
+  margin: 0 0 1rem 0;
+}
+
+
 ul li {
   display: flex;
   align-items: center;
@@ -20,6 +26,13 @@ ul img {
   border-radius: 50%;
   object-fit: cover;
 }
+
+.scrollable-list {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
 
 .metricas {
   margin-left: 3rem;
