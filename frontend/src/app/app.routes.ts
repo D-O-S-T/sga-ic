@@ -9,7 +9,7 @@ import { FormularioEditalComponent } from './pages/coordenador/formulario-edital
 import { FormularioAtividadeComponent } from './pages/professor/formulario-atividade/formulario-atividade.component';
 import { FormularioRelatorioComponent } from './pages/coordenador/formulario-relatorio/formulario-relatorio.component';
 import { FormularioAlunoComponent } from './pages/coordenador/formulario-aluno/formulario-aluno.component';
-import { ProjetosComponent } from './pages/coordenador/projetos/projetos.component';
+
 import { FormularioProfessorComponent } from './pages/coordenador/formulario-professor/formulario-professor.component';
 import { FormularioCoordenadorComponent } from './pages/coordenador/form-coordenador/formulario-coordenador.component';
 import { AlunoListComponent } from './pages/coordenador/listar-alunos/listar-alunos.component';
@@ -20,7 +20,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ProjetosProfessorComponent } from './pages/professor/projetos-professor/projetos-professor.component';
 import { ProjetoAtividadesComponent } from './pages/aluno/projeto-atividades/projeto-atividades.component';
-import{EditaisComponent} from './pages/coordenador/editais-coordenador/editais-coordenador.component';
+import { EditaisComponent } from './pages/coordenador/editais-coordenador/editais-coordenador.component';
 
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
 import { PerfilAlunoComponent } from './pages/aluno/perfil-aluno/perfil-aluno.component';
@@ -28,7 +28,8 @@ import { ProjetoAtividadesProfComponent } from './pages/professor/projeto-ativid
 import { AtividadeRespostasProfComponent } from './pages/professor/atividade-respostas-prof/atividade-respostas-prof.component';
 import { PerfilProfessorComponent } from './pages/professor/perfil-professor/perfil-professor.component';
 
-import {ProjetosListComponent} from './pages/coordenador/listar-projetos/listar-projetos.component';
+import { ProjetosListComponent } from './pages/coordenador/listar-projetos/listar-projetos.component';
+import { FormularioProjetoComponent } from './pages/coordenador/formulario-projeto/formulario-projeto.component';
 
 export const routes: Routes = [
 
@@ -54,29 +55,31 @@ export const routes: Routes = [
     { path: 'projeto/:id/atividades-prof', component: ProjetoAtividadesProfComponent },
     { path: 'atividade/:id/respostas-prof', component: AtividadeRespostasProfComponent },
     { path: 'projetos-professor', component: ProjetosProfessorComponent },
-    {  path: 'formulario-atividade/:projetoId',component: FormularioAtividadeComponent },
+    { path: 'formulario-atividade/:projetoId', component: FormularioAtividadeComponent },
 
 
     { path: 'coordenador', component: CoordenadorComponent },
     { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
-    {path: 'editais', component: EditaisComponent},
-    {path: 'listar-projetos', component: ProjetosListComponent},
-   
+    { path: 'editais', component: EditaisComponent },
+    { path: 'listar-projetos', component: ProjetosListComponent },
+    { path: 'form-projeto', component: FormularioProjetoComponent },
+
+
 
 
     { path: 'form-edital', component: FormularioEditalComponent },
     { path: 'form-edital/:id**', component: FormularioEditalComponent },
     { path: 'listar-editais', component: EditalListComponent },
 
-    { path: 'projetos', component: ProjetosComponent },
+
     { path: 'form-atividade', component: FormularioAtividadeComponent },
     { path: 'form-relatorio', component: FormularioRelatorioComponent },
 
 
 
 
-   
+
 
 ];

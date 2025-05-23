@@ -6,6 +6,7 @@ import { EditaisComponent } from './editais-coordenador/editais-coordenador.comp
 import { EditalService } from '../../services/edital.service';
 import { ProjetosListComponent } from './listar-projetos/listar-projetos.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,14 +26,14 @@ export class CoordenadorComponent {
   ];
 
   projetos: any[] = [];
-  
+
 
   editalSelecionadoId!: number;
   projetoErro: string = '';
   carregandoProjetos = false;
   modalAberta = false;
 
-  constructor(private editalService: EditalService) { }
+  constructor(private editalService: EditalService, private router: Router) { }
 
 
   carregarProjetosPorEdital(idEdital: number) {
@@ -54,15 +55,20 @@ export class CoordenadorComponent {
     });
   }
 
-  
-    abrirModalComProjetos(editalId: number) {
+
+  abrirModalComProjetos(editalId: number) {
     this.editalSelecionadoId = editalId;
     this.modalAberta = true;
   }
 
   fecharModal() {
     this.modalAberta = false;
-    
+
   }
+
+  irParaFormProjeto() {
+  this.router.navigate(['/form-projeto'], { queryParams: { editalId: this.editalSelecionadoId } });
+}
+
 
 }

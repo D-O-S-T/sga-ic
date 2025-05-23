@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 
 // Interface do projeto (exemplo simples)
 export interface Projeto {
-  id: number;
+  id?: number;
   titulo: string;
-  descricao?: string;
-  // outras propriedades que você tiver...
+  descricao: string;
+  editalId: number;
 }
 
 @Injectable({
@@ -20,5 +20,11 @@ export class ProjetoService {
 
   getProjetosPorEdital(editalId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/edital/${editalId}`);
+  }
+
+   criarProjeto(projeto: Projeto): Observable<Projeto> {
+    console.log('Dados enviados para o backend (criarProjeto):', projeto);
+    return this.http.post<Projeto>(`${this.baseUrl}/registrar`, projeto);
+    
   }
 }

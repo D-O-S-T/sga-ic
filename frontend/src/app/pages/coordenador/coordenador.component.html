@@ -7,8 +7,13 @@
     <h1>Editais abertos:</h1>
        <app-editais (editalSelecionado)="carregarProjetosPorEdital($event)"></app-editais>
 
+    
+
   <div class="modal-overlay" *ngIf="modalAberta">
   <div class="modal-content">
+        <button class="btn-adicionar-projeto" (click)="irParaFormProjeto()">
+    + Adicionar Projeto
+  </button>
       <button class="btn-fechar" (click)="fecharModal()">×</button> 
     <app-projetos-list [editalId]="editalSelecionadoId"></app-projetos-list>
   </div>

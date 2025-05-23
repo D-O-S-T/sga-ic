@@ -1,0 +1,42 @@
+<form (ngSubmit)="salvarProjeto()" #formProjeto="ngForm" class="form-projeto">
+
+  <div class="form-group">
+    <label for="titulo">Título</label>
+    <input
+      type="text"
+      id="titulo"
+      name="titulo"
+      [(ngModel)]="novoProjeto.titulo"
+      required
+      minlength="3"
+      maxlength="100"
+      placeholder="Digite o título do projeto"
+      class="form-control"
+      [disabled]="carregando"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="descricao">Descrição</label>
+    <textarea
+      id="descricao"
+      name="descricao"
+      [(ngModel)]="novoProjeto.descricao"
+      required
+      minlength="5"
+      maxlength="500"
+      placeholder="Digite uma breve descrição do projeto"
+      class="form-control"
+      rows="4"
+      [disabled]="carregando"
+    ></textarea>
+  </div>
+
+  <!-- Você não precisa do editalId no formulário pois ele vem por @Input -->
+
+  <div class="botoes">
+    <button type="submit" [disabled]="carregando || formProjeto.invalid" class="btn btn-primary">
+      {{ carregando ? 'Salvando...' : 'Salvar' }}
+    </button>
+    <button type="button" (click)="cancelarForm()" [disabled]="carregando" class="btn btn-secondary">
+      Cancelar
