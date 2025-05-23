@@ -1,22 +1,51 @@
 .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1.5rem;
+  width: 100%;
+  display: flex; /* mudança de grid para flex */
+  flex-wrap: wrap; /* orientação horizontal */
+  overflow-x: auto; /* permite rolagem horizontal */
+  gap: 1rem;
   padding: 1rem;
-  max-width: 1500px;
-  margin: 0 auto; /* centraliza */
+
+  span {
+    color: black;
+    font-weight: bold;
+  }
 }
 
 .project-card {
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  min-width: 300px; /* largura mínima para cada card */
+  max-width: 320px;
+  flex: 0 0 auto; /* impede que os cards quebrem linha */
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.25rem;
   cursor: pointer;
-  transition: transform 0.2s;
-  height: 200px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover,
+  &:focus-visible {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  }
 }
 
-.project-card:hover {
-  transform: translateY(-5px);
+
+/* Título destacado */
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #1f67a6; // mesmo azul que você usou na sidebar
+}
+
+/* Descrição truncada a 3 linhas */
+.project-desc {
+  font-size: 0.95rem;
+  color: #333;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* quantas linhas mostrar */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

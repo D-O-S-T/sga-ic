@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
-import { EditaisComponent, Edital } from '../editais-coordenador/editais-coordenador.component';
+import { EditaisCoordenadorComponent, Edital } from '../editais-coordenador/editais-coordenador.component';
 import { EditalService } from '../../../services/edital.service';
 import { ProjetosListComponent } from '../listar-projetos/listar-projetos.component';
 import { CommonModule } from '@angular/common';
@@ -15,7 +15,7 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-formulario-projeto',
   standalone: true,
-  imports: [FormsModule, HeaderComponent, SidebarComponent, EditaisComponent, ProjetosListComponent, CommonModule],
+  imports: [FormsModule, HeaderComponent, SidebarComponent, EditaisCoordenadorComponent, ProjetosListComponent, CommonModule],
   templateUrl: './formulario-projeto.component.html',
   styleUrl: './formulario-projeto.component.scss'
 })

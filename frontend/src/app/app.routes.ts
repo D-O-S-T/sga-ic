@@ -20,7 +20,7 @@ import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { ProjetosProfessorComponent } from './pages/professor/projetos-professor/projetos-professor.component';
 import { ProjetoAtividadesComponent } from './pages/aluno/projeto-atividades/projeto-atividades.component';
-import { EditaisComponent } from './pages/coordenador/editais-coordenador/editais-coordenador.component';
+import { EditaisCoordenadorComponent } from './pages/coordenador/editais-coordenador/editais-coordenador.component';
 
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
 import { PerfilAlunoComponent } from './pages/aluno/perfil-aluno/perfil-aluno.component';
@@ -32,6 +32,8 @@ import { ProjetosListComponent } from './pages/coordenador/listar-projetos/lista
 import { FormularioProjetoComponent } from './pages/coordenador/formulario-projeto/formulario-projeto.component';
 import { ProjetoRelatoriosComponent } from './pages/professor/projeto-relatorios/projeto-relatorios.component';
 import { RelatorioRespostasComponent } from './pages/professor/relatorio-respostas/relatorio-respostas.component';
+import { ProjetosEditalComponent } from './pages/coordenador/projetos-edital/projetos-edital.component';
+import { EditalProjetoComponent } from './pages/coordenador/edital-projeto/edital-projeto.component';
 
 
 export const routes: Routes = [
@@ -67,9 +69,11 @@ export const routes: Routes = [
     { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },
-    { path: 'editais', component: EditaisComponent },
+    { path: 'editais', component: EditaisCoordenadorComponent },
     { path: 'listar-projetos', component: ProjetosListComponent },
     { path: 'form-projeto', component: FormularioProjetoComponent },
+    { path: 'projetos/:id/edital', component: ProjetosEditalComponent },
+    { path: 'edital/:id/projeto', component: EditalProjetoComponent },
 
 
 

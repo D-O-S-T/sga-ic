@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <div class="atividades-body">
+        <div class="projeto">
+            <div>
+                <h2>{{ edital.titulo }}</h2>
+                <p><strong>Instituição:</strong> {{ edital.instituicao }}</p>
+                <p><strong>Descrição:</strong> {{ edital.descricao }}</p>
+            </div>
+            <div>
+                <p><strong>Quantidade de Bolsistas:</strong> {{ edital.qtdBolsistas }}</p>
+                <p><strong>Quantidade de Alunos:</strong> {{ edital.qtdAlunos }}</p>
+                <p><strong>Quantidade de Professores:</strong> {{ edital.qtdProfessores }}</p>
+            </div>
+            <div>
+                <p><strong>Quantidade de Projetos:</strong> {{ edital.qtdProjetos }}</p>
+                <p><strong>Data de Início:</strong> {{ edital.dtInicio | date: 'dd/MM/yyyy' }}</p>
+                <p><strong>Data de Fim:</strong> {{ edital.dtFim | date: 'dd/MM/yyyy' }}</p>
+            </div>
+        </div>
+
+        <div class="atividades">
+            <h3>Projetos</h3>
+
+            <div *ngIf="carregando">Carregando atividades…</div>
+            <div *ngIf="erro">{{ erro }}</div>
+
+            <div *ngIf="!carregando && projetos.length > 0">
+                <ul>
+                    <li *ngFor="let projeto of projetos" (click)="irParaProjeto(projeto.id)">
+                        <h4>{{ projeto.titulo }}</h4>
+                        <p>{{ projeto.descricao }}</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p *ngIf="!carregando && projetos.length === 0">Nenhuma atividade encontrada.</p>
+    </div>
+</div>

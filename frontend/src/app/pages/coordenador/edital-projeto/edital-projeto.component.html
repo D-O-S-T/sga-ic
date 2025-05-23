@@ -1,0 +1,63 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <div class="projetos">
+        <div>
+            <h1>Participantes:</h1>
+
+            <div *ngIf="carregando">Carregando participantes…</div>
+            <div *ngIf="erro">{{ erro }}</div>
+
+            <div *ngIf="!carregando && !erro">
+                <h2>Professores</h2>
+                <ul>
+                    <li *ngFor="let p of professores">
+                        <img *ngIf="p.fotoPerfil; else placeholder" [src]="p.fotoPerfil" alt="Foto de {{p.nome}}"
+                            width="40" height="40">
+                        <ng-template #placeholder>
+                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                        </ng-template>
+                        <strong>{{ p.nome }}</strong> ({{ p.cpf }})
+                    </li>
+                </ul>
+
+                <h2>Bolsistas</h2>
+                <ul>
+                    <li *ngFor="let b of bolsistas">
+                        <img *ngIf="b.fotoPerfil; else placeholder" [src]="b.fotoPerfil" alt="Foto de {{b.nome}}"
+                            width="40" height="40">
+                        <ng-template #placeholder>
+                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                        </ng-template>
+                        <strong>{{ b.nome }}</strong> ({{ b.cpf }})
+                    </li>
+                </ul>
+
+                <h2>Não Bolsistas</h2>
+                <ul>
+                    <li *ngFor="let n of naoBolsistas">
+                        <img *ngIf="n.fotoPerfil; else placeholder" [src]="n.fotoPerfil" alt="Foto de {{n.nome}}"
+                            width="40" height="40">
+                        <ng-template #placeholder>
+                            <img src="../../../assets/images/profile_default.png" alt="Sem foto" width="40" height="40">
+                        </ng-template>
+                        <strong>{{ n.nome }}</strong> ({{ n.cpf }})
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <h1 *ngIf="metricas">Métricas:</h1>
+            <div *ngIf="metricas" class="metricas">
+                <p>Professores: {{ metricas.qtdProfessores }}</p>
+                <p>Bolsistas: {{ metricas.qtdBolsistas }}</p>
+                <p>Não Bolsistas: {{ metricas.qtdNaoBolsistas }}</p>
+                <p>Atividades: {{ metricas.qtdAtividades }}</p>
+                <p>Respostas de Atividades: {{ metricas.qtdResAtividades }}</p>
+                <p>Relatórios: {{ metricas.qtdRelatorios }}</p>
+                <p>Respostas de Relatórios: {{ metricas.qtdResRelatorios }}</p>
+            </div>
+        </div>
+    </div>
+</div>

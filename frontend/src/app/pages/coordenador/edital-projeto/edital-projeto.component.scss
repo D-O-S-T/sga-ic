@@ -1,0 +1,50 @@
+.body-aluno {
+    display: flex;
+}
+
+.projetos {
+    display: flex;
+    padding: 3%;
+    justify-content: space-around;
+    width: 100%;
+}
+
+ul li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+ul img {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.metricas {
+  margin-left: 3rem;
+  padding: 1.5rem;
+  background-color: #f7f9fa;
+  border-radius: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.06);
+  font-size: 0.95rem;
+  min-width: 220px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.3s ease-in-out;
+
+  p {
+    margin: 0;
+    padding: 0.25rem 0;
+    font-weight: 500;
+    color: #333;
+
+    &::before {
+      content: '•';
+      color: #1f67a6;
+      margin-right: 0.5rem;
+    }
+  }
+}

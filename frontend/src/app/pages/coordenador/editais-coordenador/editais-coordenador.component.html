@@ -2,24 +2,18 @@
   <div
     class="project-card"
     *ngFor="let edital of editais"
-     role="button"
+    role="button"
     tabindex="0"
-    (click)="selecionarEdital(edital.id)"
-   
+    (click)="irParaEdital(edital.id)"
   >
-    <h3>{{ edital.titulo }}</h3>
-    <h3 class="project-title">{{ edital.instituicao }}</h3>
-    <p class="project-desc">{{ edital.dtInicio | date: 'shortDate' }}</p>
-    <p class="project-desc">{{ edital.dtFim | date: 'shortDate' }}</p>
-    
-
-
-    
-
+    <h3 class="project-title"><span>Título:</span> {{ edital.titulo }}</h3>
+    <p class="project-desc"><span>Instituição:</span> {{ edital.instituicao }}</p>
+    <p class="project-desc"><span>Data de Abertura:</span> {{ edital.dtInicio }}</p>
+    <p><span>Data de Vencimento:</span> {{ edital.dtFim }}</p>
   </div>
 </div>
 
 <ng-template #status>
-  <p *ngIf="carregando">Carregando editais…</p>
+  <p *ngIf="carregando">Carregando projetos…</p>
   <p *ngIf="erro">{{ erro }}</p>
 </ng-template>
