@@ -1,0 +1,34 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <div class="atividades-body">
+        <div class="projeto">
+            <h2>{{ projeto.titulo }}</h2>
+            <p>{{ projeto.descricao }}</p>
+        </div>
+
+        <div class="atividades">
+            <h3>Atividades</h3>
+
+            <div *ngIf="carregando">Carregando atividades…</div>
+            <div *ngIf="erro">{{ erro }}</div>
+
+            <div *ngIf="!carregando && atividades.length > 0">
+                <ul>
+                    <li *ngFor="let atividade of atividades" (click)="irParaRespostas(atividade.id)">
+                        <h4>{{ atividade.titulo }}</h4>
+                        <p>{{ atividade.descricao }}</p>
+                        <small>
+                            Abertura: {{ atividade.dataAbertura }} |
+                            Encerramento: {{ atividade.dataEncerramento }} |
+                            Registro: {{ atividade.dataRegistro }}
+                        </small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p *ngIf="!carregando && atividades.length === 0">Nenhuma atividade encontrada.</p>
+    </div>
+</div>

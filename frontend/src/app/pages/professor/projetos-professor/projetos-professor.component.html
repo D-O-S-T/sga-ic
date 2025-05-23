@@ -1,10 +1,17 @@
-<div
-  class="project-card"
-  *ngFor="let projeto of projetos"
-  (click)="abrirFormularioAtividade(projeto.id)"
-  role="button"
-  tabindex="0"
->
-  <h3 class="project-title">{{ projeto.titulo }}</h3>
-  <p class="project-desc">{{ projeto.descricao }}</p>
+<div class="projects-grid" *ngIf="!carregando && !erro; else status">
+  <div
+    class="project-card"
+    *ngFor="let projeto of projetos"
+    role="button"
+    tabindex="0"
+    (click)="irParaProjeto(projeto.id)"
+  >
+    <h3 class="project-title">{{ projeto.titulo }}</h3>
+    <p class="project-desc">{{ projeto.descricao }}</p>
+  </div>
 </div>
+
+<ng-template #status>
+  <p *ngIf="carregando">Carregando projetos…</p>
+  <p *ngIf="erro">{{ erro }}</p>
+</ng-template>

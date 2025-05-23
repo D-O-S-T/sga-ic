@@ -1,5 +1,6 @@
 /* Grade responsiva que se ajusta ao tamanho da tela */
 .projects-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
@@ -35,7 +36,8 @@
   font-size: 0.95rem;
   color: #333;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* quantas linhas mostrar */
+  -webkit-line-clamp: 3;
+  /* quantas linhas mostrar */
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

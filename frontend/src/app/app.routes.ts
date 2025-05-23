@@ -24,6 +24,9 @@ import{EditaisComponent} from './pages/coordenador/editais-coordenador/editais-c
 
 import { AtividadeRespostasComponent } from './pages/aluno/atividade-respostas/atividade-respostas.component';
 import { PerfilAlunoComponent } from './pages/aluno/perfil-aluno/perfil-aluno.component';
+import { ProjetoAtividadesProfComponent } from './pages/professor/projeto-atividades-prof/projeto-atividades-prof.component';
+import { AtividadeRespostasProfComponent } from './pages/professor/atividade-respostas-prof/atividade-respostas-prof.component';
+import { PerfilProfessorComponent } from './pages/professor/perfil-professor/perfil-professor.component';
 
 import {ProjetosListComponent} from './pages/coordenador/listar-projetos/listar-projetos.component';
 
@@ -44,9 +47,12 @@ export const routes: Routes = [
     { path: 'atividade/:id/respostas', component: AtividadeRespostasComponent },
 
     { path: 'professor', component: ProfessorComponent },
+    { path: 'perfil-professor', component: PerfilProfessorComponent },
     { path: 'listar-professores', component: ProfessorListComponent },
     { path: 'form-professor', component: FormularioProfessorComponent },
     { path: 'form-professor/:id', component: FormularioProfessorComponent },
+    { path: 'projeto/:id/atividades-prof', component: ProjetoAtividadesProfComponent },
+    { path: 'atividade/:id/respostas-prof', component: AtividadeRespostasProfComponent },
     { path: 'projetos-professor', component: ProjetosProfessorComponent },
     {  path: 'formulario-atividade/:projetoId',component: FormularioAtividadeComponent },
 
