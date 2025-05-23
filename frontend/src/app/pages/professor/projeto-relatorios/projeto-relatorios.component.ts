@@ -5,7 +5,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
 import { Router } from '@angular/router';
-import { FormularioAtividadeComponent } from '../formulario-atividade/formulario-atividade.component';
 
 interface Projeto {
   id: number;
@@ -13,7 +12,7 @@ interface Projeto {
   descricao: string;
 }
 
-interface Atividade {
+interface Relatorio {
   id: number;
   titulo: string;
   descricao: string;
@@ -23,13 +22,13 @@ interface Atividade {
 }
 
 @Component({
-  selector: 'app-projeto-atividades',
+  selector: 'app-projeto-relatorios',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, HeaderComponent, SidebarComponent, FormularioAtividadeComponent],
-  templateUrl: './projeto-atividades-prof.component.html',
-  styleUrl: './projeto-atividades-prof.component.scss'
+  imports: [CommonModule, HttpClientModule, HeaderComponent, SidebarComponent],
+  templateUrl: './projeto-relatorios.component.html',
+  styleUrl: './projeto-relatorios.component.scss'
 })
-export class ProjetoAtividadesProfComponent implements OnInit {
+export class ProjetoRelatoriosComponent implements OnInit {
 
   navItems: NavItem[] = [
     { label: 'Perfil', route: '/perfil-professor' },
@@ -37,28 +36,9 @@ export class ProjetoAtividadesProfComponent implements OnInit {
   ];
 
   projeto!: Projeto;
-  atividades: Atividade[] = [];
+  relatorios: Relatorio[] = [];
   carregando = true;
   erro = '';
-
-  modalAberta = false;
-  esconderConteudo = false; // use true se quiser esconder em vez de aplicar blur
-
-  abrirModal(): void {
-    this.modalAberta = true;
-    // this.esconderConteudo = true; // descomente se quiser esconder
-  }
-
-  fecharModal(): void {
-    this.modalAberta = false;
-    this.esconderConteudo = false;
-  }
-
-
-  aoCriarAtividade(): void {
-    this.fecharModal();
-    this.carregarAtividades(this.projeto.id); // Recarrega atividades após o envio
-  }
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) { }
 
@@ -71,15 +51,11 @@ export class ProjetoAtividadesProfComponent implements OnInit {
     }
 
     this.carregarProjeto(projetoId);
-    this.carregarAtividades(projetoId);
+    this.carregarRelatorios(projetoId);
   }
 
-  irParaRespostas(atividadeId: number): void {
-    this.router.navigate(['/atividade', atividadeId, 'respostas-prof']);
-  }
-
-  irParaRelatorios(projetoId: number): void {
-    this.router.navigate(['/projeto', projetoId, 'relatorios']);
+  irParaRespostas(relatorioId: number): void {
+    this.router.navigate(['/relatorio', relatorioId, 'respostas']);
   }
 
   private carregarProjeto(id: number): void {
@@ -90,16 +66,16 @@ export class ProjetoAtividadesProfComponent implements OnInit {
       });
   }
 
-  private carregarAtividades(id: number): void {
-    this.http.get<Atividade[]>(`http://localhost:8080/sga-ic/api/atividade/projeto/${id}`, { withCredentials: true })
+  private carregarRelatorios(id: number): void {
+    this.http.get<Relatorio[]>(`http://localhost:8080/sga-ic/api/relatorio/projeto/${id}`, { withCredentials: true })
       .subscribe({
         next: (dados) => {
-          this.atividades = dados;
+          this.relatorios = dados;
           this.carregando = false;
           this.cdr.detectChanges();
         },
         error: () => {
-          this.erro = 'Erro ao carregar as atividades.';
+          this.erro = 'Erro ao carregar as relatorios.';
           this.carregando = false;
         }
       });

@@ -1,0 +1,34 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <div class="atividades-body">
+        <div class="projeto">
+            <h2>{{ projeto.titulo }}</h2>
+            <p>{{ projeto.descricao }}</p>
+        </div>
+
+        <div class="atividades">
+            <h3>Relatorios</h3>
+
+            <div *ngIf="carregando">Carregando relatorios…</div>
+            <div *ngIf="erro">{{ erro }}</div>
+
+            <div *ngIf="!carregando && relatorios.length > 0">
+                <ul>
+                    <li *ngFor="let relatorio of relatorios" (click)="irParaRespostas(relatorio.id)">
+                        <h4>{{ relatorio.titulo }}</h4>
+                        <p>{{ relatorio.descricao }}</p>
+                        <small>
+                            Abertura: {{ relatorio.dataAbertura }} |
+                            Encerramento: {{ relatorio.dataEncerramento }} |
+                            Registro: {{ relatorio.dataRegistro }}
+                        </small>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <p *ngIf="!carregando && relatorios.length === 0">Nenhum relatorio encontrada.</p>
+    </div>
+</div>

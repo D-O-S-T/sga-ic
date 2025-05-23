@@ -12,5 +12,9 @@ public interface ArquivoRepository extends JpaRepository<Arquivo, Long> {
 
 	List<Arquivo> findByAtividadeId(Long atividadeId);
 
+	List<Arquivo> findByRelatorioId(Long atividadeId);
+
 	List<Arquivo> findByResAtividadeId(Long resAtividadeId);
+
+	List<Arquivo> findByResRelatorioId(Long resAtividadeId);
 }

@@ -59,8 +59,20 @@ public class ArquivoService {
 		return mapArquivoToDTO(arquivos);
 	}
 
-	public List<ArquivoRes> findArquivosByResposta(Long resAtividadeId) {
+	public List<ArquivoRes> findArquivosByRelatorio(Long relatorioId) {
+
+		List<Arquivo> arquivos = arquivoRepository.findByRelatorioId(relatorioId);
+
+		return mapArquivoToDTO(arquivos);
+	}
+
+	public List<ArquivoRes> findArquivosByRespostaAtividade(Long resAtividadeId) {
 		List<Arquivo> arquivos = arquivoRepository.findByResAtividadeId(resAtividadeId);
+		return mapArquivoToDTO(arquivos);
+	}
+
+	public List<ArquivoRes> findArquivosByRespostaRelatorio(Long resRelatorioId) {
+		List<Arquivo> arquivos = arquivoRepository.findByResRelatorioId(resRelatorioId);
 		return mapArquivoToDTO(arquivos);
 	}
 

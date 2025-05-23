@@ -1,0 +1,65 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <app-res-relatorio *ngIf="mostrarModal" [relatorioId]="relatorio.id" (fecharModal)="mostrarModal = false"
+        (respostaSalva)="aoSalvarResposta()">
+    </app-res-relatorio>
+
+    <div class="atividade-detalhes">
+        <div *ngIf="carregando">Carregando atividade…</div>
+        <div *ngIf="erro">{{ erro }}</div>
+
+        <div *ngIf="relatorio">
+            <div class="atividade">
+                <div class="teste">
+                    <div>
+                        <h2>{{ relatorio.titulo }}</h2>
+                        <p>{{ relatorio.descricao }}</p>
+                        <p><strong>Coordenador:</strong> {{ relatorio.coordenador.nome }}</p>
+                        <p>
+                            <strong>Abertura:</strong> {{ relatorio.dataAbertura }} |
+                            <strong>Encerramento:</strong> {{ relatorio.dataEncerramento }} |
+                            <strong>Registro:</strong> {{ relatorio.dataRegistro }}
+                        </p>
+                    </div>
+                    <div *ngIf="relatorio.arquivosRelatorio?.length > 0">
+                        <h4>Arquivos da atividade:</h4>
+                        <ul>
+                            <li *ngFor="let arquivo of relatorio.arquivosRelatorio">
+                                <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{
+                                    arquivo.nomeArquivo }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn-enviar-resposta" (click)="abrirModalResposta()">
+                        + Enviar resposta relatorio
+                    </button>
+                </div>
+            </div>
+
+            <div *ngIf="relatorio.repostas?.length > 0" class="respostas">
+                <h3>Respostas dos Professores:</h3>
+                <div *ngFor="let resposta of relatorio.repostas" class="resposta-card">
+                    <p><strong>{{ resposta.professor.nome }}</strong></p>
+                    <p>{{ resposta.descricao }}</p>
+
+                    <div class="arquivos" *ngIf="resposta.arquivosResposta?.length > 0">
+                        <h5>Arquivos enviados:</h5>
+                        <ul>
+                            <li *ngFor="let arq of resposta.arquivosResposta">
+                                <a [href]="arq.arquivo" download="{{ arq.nomeArquivo }}" class="arquivo-link">{{
+                                    arq.nomeArquivo }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p *ngIf="relatorio.repostas?.length === 0">Nenhuma resposta enviada ainda.</p>
+        </div>
+    </div>
+</div>

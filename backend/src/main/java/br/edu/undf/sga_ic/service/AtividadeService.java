@@ -112,7 +112,7 @@ public class AtividadeService {
 					AlunoShort alunoDTO = AlunoShort.builder().id(res.getAluno().getId()).nome(res.getAluno().getNome())
 							.build();
 
-					List<ArquivoRes> arquivosResposta = arquivoService.findArquivosByResposta(res.getId());
+					List<ArquivoRes> arquivosResposta = arquivoService.findArquivosByRespostaAtividade(res.getId());
 
 					return ResAtividadeResBig.builder().id(res.getId()).descricao(res.getDescricao()).aluno(alunoDTO)
 							.arquivosResposta(arquivosResposta).build();

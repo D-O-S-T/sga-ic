@@ -30,6 +30,8 @@ import { PerfilProfessorComponent } from './pages/professor/perfil-professor/per
 
 import { ProjetosListComponent } from './pages/coordenador/listar-projetos/listar-projetos.component';
 import { FormularioProjetoComponent } from './pages/coordenador/formulario-projeto/formulario-projeto.component';
+import { ProjetoRelatoriosComponent } from './pages/professor/projeto-relatorios/projeto-relatorios.component';
+import { RelatorioRespostasComponent } from './pages/professor/relatorio-respostas/relatorio-respostas.component';
 
 export const routes: Routes = [
 
@@ -52,6 +54,8 @@ export const routes: Routes = [
     { path: 'listar-professores', component: ProfessorListComponent },
     { path: 'form-professor', component: FormularioProfessorComponent },
     { path: 'form-professor/:id', component: FormularioProfessorComponent },
+    { path: 'projeto/:id/relatorios', component: ProjetoRelatoriosComponent },
+    { path: 'relatorio/:id/respostas', component: RelatorioRespostasComponent },
     { path: 'projeto/:id/atividades-prof', component: ProjetoAtividadesProfComponent },
     { path: 'atividade/:id/respostas-prof', component: AtividadeRespostasProfComponent },
     { path: 'projetos-professor', component: ProjetosProfessorComponent },

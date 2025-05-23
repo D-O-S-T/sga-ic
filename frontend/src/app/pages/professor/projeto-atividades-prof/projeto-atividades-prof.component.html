@@ -9,7 +9,7 @@
                 <p>{{ projeto.descricao }}</p>
             </div>
             <div class="botoes">
-                <button>Ver Relatórios</button>
+                <button (click)="irParaRelatorios(projeto.id)">Ver Relatórios</button>
                 <button (click)="abrirModal()">+ Nova Atividade</button>
             </div>
         </div>
