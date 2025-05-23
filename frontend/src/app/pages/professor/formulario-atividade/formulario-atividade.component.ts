@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,14 +17,22 @@ import { MatLabel } from '@angular/material/form-field';
 })
 export class FormularioAtividadeComponent implements OnInit {
 
+  @Input() projetoId!: number;
+  @Output() atividadeCriada = new EventEmitter<void>();
+
   titulo = '';
   descricao = '';
   dataAbertura = '';
   dataEncerramento = '';
-  projetoId!: number;
   selectedFile: File | null = null;
 
-  constructor(private http: HttpClient, private route: ActivatedRoute) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute) { }
+
+  @Output() fecharModal = new EventEmitter<void>();
+
+  fechar() {
+    this.fecharModal.emit();
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
@@ -60,6 +68,7 @@ export class FormularioAtividadeComponent implements OnInit {
       next: (res) => {
         console.log('Dados enviados com sucesso', res);
         alert('Upload realizado com sucesso!');
+        this.atividadeCriada.emit();
         this.resetForm();
       },
       error: (err) => {

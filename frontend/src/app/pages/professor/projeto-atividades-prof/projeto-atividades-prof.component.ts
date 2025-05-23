@@ -5,6 +5,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
 import { Router } from '@angular/router';
+import { FormularioAtividadeComponent } from '../formulario-atividade/formulario-atividade.component';
 
 interface Projeto {
   id: number;
@@ -24,7 +25,7 @@ interface Atividade {
 @Component({
   selector: 'app-projeto-atividades',
   standalone: true,
-  imports: [CommonModule, HttpClientModule, HeaderComponent, SidebarComponent],
+  imports: [CommonModule, HttpClientModule, HeaderComponent, SidebarComponent, FormularioAtividadeComponent],
   templateUrl: './projeto-atividades-prof.component.html',
   styleUrl: './projeto-atividades-prof.component.scss'
 })
@@ -39,6 +40,25 @@ export class ProjetoAtividadesProfComponent implements OnInit {
   atividades: Atividade[] = [];
   carregando = true;
   erro = '';
+
+  modalAberta = false;
+  esconderConteudo = false; // use true se quiser esconder em vez de aplicar blur
+
+  abrirModal(): void {
+    this.modalAberta = true;
+    // this.esconderConteudo = true; // descomente se quiser esconder
+  }
+
+  fecharModal(): void {
+    this.modalAberta = false;
+    this.esconderConteudo = false;
+  }
+
+
+  aoCriarAtividade(): void {
+    this.fecharModal();
+    this.carregarAtividades(this.projeto.id); // Recarrega atividades após o envio
+  }
 
   constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) { }
 

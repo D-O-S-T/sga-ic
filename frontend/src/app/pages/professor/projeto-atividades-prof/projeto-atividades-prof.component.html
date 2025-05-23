@@ -4,8 +4,14 @@
 
     <div class="atividades-body">
         <div class="projeto">
-            <h2>{{ projeto.titulo }}</h2>
-            <p>{{ projeto.descricao }}</p>
+            <div>
+                <h2>{{ projeto.titulo }}</h2>
+                <p>{{ projeto.descricao }}</p>
+            </div>
+            <div class="botoes">
+                <button>Ver Relatórios</button>
+                <button (click)="abrirModal()">+ Nova Atividade</button>
+            </div>
         </div>
 
         <div class="atividades">
@@ -30,5 +36,12 @@
         </div>
 
         <p *ngIf="!carregando && atividades.length === 0">Nenhuma atividade encontrada.</p>
+    </div>
+</div>
+<div class="modal-overlay" *ngIf="modalAberta">
+    <div class="modal-container">
+        <button class="fechar-modal" (click)="fecharModal()">X</button>
+        <app-formulario-atividade [projetoId]="projeto.id" (atividadeCriada)="aoCriarAtividade()"
+            (fecharModal)="fecharModal()"></app-formulario-atividade>
     </div>
 </div>
