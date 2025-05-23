@@ -18,7 +18,8 @@ export interface Edital {
   providedIn: 'root'
 })
 export class EditalService {
-   private API_URL = 'http://localhost:8080/sga-ic/api/edital/registrar'// Altere para sua URL real
+  private API_URL = 'http://localhost:8080/sga-ic/api/edital/registrar'; // URL para criar edital
+  private baseUrl = 'http://localhost:8080/sga-ic/api'; // Base para outros endpoints
 
   constructor(private http: HttpClient) { }
 
@@ -26,12 +27,15 @@ export class EditalService {
     return this.http.post(this.API_URL, edital);
   }
 
-  buscarEditalPorId(id: string) {
-  return this.http.get<Edital>(`http://localhost:8080/sga-ic/api/edital/${id}`);
-}
+  buscarEditalPorId(id: string): Observable<Edital> {
+    return this.http.get<Edital>(`${this.baseUrl}/edital/${id}`);
+  }
 
-atualizarEdital(id: string, edital: Edital) {
-  return this.http.put<Edital>(`http://localhost:8080/sga-ic/api/edital/${id}`, edital);
-}
+  atualizarEdital(id: string, edital: Edital): Observable<Edital> {
+    return this.http.put<Edital>(`${this.baseUrl}/edital/${id}`, edital);
+  }
 
+  obterProjetosPorEdital(idEdital: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/projeto/edital/${idEdital}`);
+  }
 }

@@ -1,9 +1,13 @@
 /* Grade responsiva que se ajusta ao tamanho da tela */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); /* define colunas responsivas */
+ justify-self: center;
   gap: 1rem;
   padding: 1rem;
+ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-auto-rows: 200px; /* altura fixa para cada item da linha */
+  max-height: calc(200px * 3 + 2rem); /* 3 linhas + gaps (aprox) */
+  overflow: hidden;
 }
 
 /* Card inspirado no Moodle: fundo claro, canto arredondado, sombra suave */

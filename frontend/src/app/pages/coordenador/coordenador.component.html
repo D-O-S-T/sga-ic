@@ -1,8 +1,14 @@
+
 <app-header></app-header>
+
+
 <div class="body-aluno">
-    <app-sidebar [items]="navItems"></app-sidebar>
+   <app-sidebar [items]="navItems"></app-sidebar>
+    
     <div class="projetos">
+       
         <h1>Editais abertos:</h1>
-        <app-editais></app-editais>
+       <app-editais (editalSelecionado)="carregarProjetosPorEdital($event)"></app-editais>
+
     </div>
 </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -19,6 +19,9 @@ export interface Edital {
   styleUrls: ['./editais-coordenador.component.scss']
 })
 export class EditaisComponent implements OnInit {
+
+    @Output() editalSelecionado = new EventEmitter<number>();
+
   editais: Edital[] = [];
   carregando = true;
   erro = '';
@@ -39,4 +42,9 @@ export class EditaisComponent implements OnInit {
       }
     });
   }
+
+   selecionarEdital(id: number) {
+    this.editalSelecionado.emit(id);
+  }
+
 }
