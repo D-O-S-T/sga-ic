@@ -3,11 +3,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export interface Edital {
-  id: number;
+   id: number;
   titulo: string;
   instituicao: string;
-  dtInicio: string; // <- ajustar o nome aqui
-  dtFim: string;    // <- ajustar o nome aqui
+  descricao: string;
+  qtdBolsistas: number;
+  qtdAlunos: number;
+  qtdProfessores: number;
+  qtdProjetos: number;
+  dtInicio: string;
+  dtFim: string;
 }
 
 
@@ -31,6 +36,7 @@ export class EditaisComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<Edital[]>('http://localhost:8080/sga-ic/api/edital', { withCredentials: true }).subscribe({
       next: dados => {
+           console.log('Dados recebidos da API:', dados);  
         this.editais = dados;
         this.carregando = false;
         this.cdr.detectChanges();
@@ -47,4 +53,15 @@ export class EditaisComponent implements OnInit {
     this.editalSelecionado.emit(id);
   }
 
+  
+  editalSelecionado1?: Edital;
+  modalAberta = false;
+
+
+
+
+
+  fecharModal() {
+    this.modalAberta = false;
+  }
 }

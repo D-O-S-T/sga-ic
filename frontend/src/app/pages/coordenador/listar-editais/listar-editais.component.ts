@@ -6,12 +6,18 @@ import { RouterModule } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
 
 interface Edital {
-  id: number;
+    id: number;
   titulo: string;
   instituicao: string;
+  descricao: string;
+  qtdBolsistas: number;
+  qtdAlunos: number;
+  qtdProfessores: number;
+  qtdProjetos: number;
   dtInicio: string;
   dtFim: string;
 }
+
 
 @Component({
   selector: 'app-edital-list',

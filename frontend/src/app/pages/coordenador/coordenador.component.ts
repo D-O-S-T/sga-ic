@@ -2,11 +2,12 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../shared/sidebar/sidebar.component';
-import { EditaisComponent } from './editais-coordenador/editais-coordenador.component';
+import { EditaisComponent, Edital } from './editais-coordenador/editais-coordenador.component';
 import { EditalService } from '../../services/edital.service';
 import { ProjetosListComponent } from './listar-projetos/listar-projetos.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 
 @Component({
@@ -33,7 +34,9 @@ export class CoordenadorComponent {
   carregandoProjetos = false;
   modalAberta = false;
 
-  constructor(private editalService: EditalService, private router: Router) { }
+  detalhesEdital: Edital | null = null;
+
+  constructor(private editalService: EditalService, private router: Router, private http: HttpClient) { }
 
 
   carregarProjetosPorEdital(idEdital: number) {
@@ -61,14 +64,36 @@ export class CoordenadorComponent {
     this.modalAberta = true;
   }
 
-  fecharModal() {
-    this.modalAberta = false;
 
+  abrirModal(editalId: number) {
+    this.editalSelecionadoId = editalId;
+    this.modalAberta = true;
+    this.detalhesEdital = null;  // limpa detalhes antes de buscar
   }
 
-  irParaFormProjeto() {
-  this.router.navigate(['/form-projeto'], { queryParams: { editalId: this.editalSelecionadoId } });
+ fecharModal() {
+  this.modalAberta = false;
+  this.detalhesEdital = null;  // reseta os detalhes do edital
 }
+
+
+  irParaFormProjeto() {
+    this.router.navigate(['/form-projeto'], { queryParams: { editalId: this.editalSelecionadoId } });
+  }
+
+
+  carregarDetalhesEdital() {
+
+
+   
+
+    this.http.get<Edital>(`http://localhost:8080/sga-ic/api/edital/${this.editalSelecionadoId}`, { withCredentials: true })
+      .subscribe({
+        next: (detalhes) => this.detalhesEdital = detalhes,
+
+        error: (err) => alert('Erro ao carregar detalhes do edital.')
+      });
+  }
 
 
 }

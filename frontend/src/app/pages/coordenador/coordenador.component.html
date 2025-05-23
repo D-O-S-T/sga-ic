@@ -3,20 +3,34 @@
 <div class="body-aluno">
   <app-sidebar [items]="navItems"></app-sidebar>
 
-  <div class="projetos">
-    <h1>Editais abertos:</h1>
-       <app-editais (editalSelecionado)="carregarProjetosPorEdital($event)"></app-editais>
+  <div class="projetos-com-modal">
+   
 
-    
-
-  <div class="modal-overlay" *ngIf="modalAberta">
-  <div class="modal-content">
-        <button class="btn-adicionar-projeto" (click)="irParaFormProjeto()">
-    + Adicionar Projeto
-  </button>
+    <!-- Modal lateral direita -->
+    <div class="modal-lateral" *ngIf="modalAberta">
+      <button class="btn-adicionar-projeto" (click)="irParaFormProjeto()">+ Adicionar Projeto</button>
       <button class="btn-fechar" (click)="fecharModal()">×</button> 
-    <app-projetos-list [editalId]="editalSelecionadoId"></app-projetos-list>
-  </div>
-</div>
+
+      <app-projetos-list [editalId]="editalSelecionadoId"></app-projetos-list>
+
+      <button (click)="carregarDetalhesEdital()">Mais detalhes</button>
+
+      <div *ngIf="detalhesEdital" class="detalhes-edital">
+        <h2>{{ detalhesEdital.titulo }}</h2>
+        <p><strong>Instituição:</strong> {{ detalhesEdital.instituicao }}</p>
+        <p><strong>Descrição:</strong> {{ detalhesEdital.descricao }}</p>
+        <p><strong>Qtd Bolsistas:</strong> {{ detalhesEdital.qtdBolsistas }}</p>
+        <p><strong>Qtd Alunos:</strong> {{ detalhesEdital.qtdAlunos }}</p>
+        <p><strong>Qtd Professores:</strong> {{ detalhesEdital.qtdProfessores }}</p>
+        <p><strong>Qtd Projetos:</strong> {{ detalhesEdital.qtdProjetos }}</p>
+        <p><strong>Início:</strong> {{ detalhesEdital.dtInicio | date }}</p>
+        <p><strong>Fim:</strong> {{ detalhesEdital.dtFim | date }}</p>
+      </div>
+    </div>
+
+     <div class="projetos">
+      <h1>Editais abertos:</h1>
+      <app-editais (editalSelecionado)="carregarProjetosPorEdital($event)"></app-editais>
+    </div>
   </div>
 </div>

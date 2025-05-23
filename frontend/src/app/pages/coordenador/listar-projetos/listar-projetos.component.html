@@ -1,10 +1,12 @@
 <div class="projetos-list">
+   <h2>Lista de projetos deste Edital</h2>
   <div *ngIf="carregando" class="loading">Carregando projetos...</div>
   <div *ngIf="erro" class="erro">{{ erro }}</div>
-
+  
   <div *ngIf="!carregando && !erro && projetos.length > 0" class="cards-container">
-    
+     
     <div *ngFor="let projeto of projetos" class="card-projeto">
+    
       <h2>{{ projeto.titulo }}</h2>
       <p>{{ projeto.descricao }}</p>
     </div>
