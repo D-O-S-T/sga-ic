@@ -1,0 +1,55 @@
+<app-header></app-header>
+<div class="body-aluno">
+    <app-sidebar [items]="navItems"></app-sidebar>
+
+    <div class="atividade-detalhes">
+        <div *ngIf="carregando">Carregando atividade…</div>
+        <div *ngIf="erro">{{ erro }}</div>
+
+        <div *ngIf="atividade">
+            <div class="atividade">
+                <div class="teste">
+                    <div>
+                        <h2>{{ atividade.titulo }}</h2>
+                        <p>{{ atividade.descricao }}</p>
+                        <p><strong>Professor:</strong> {{ atividade.professor.nome }}</p>
+                        <p>
+                            <strong>Abertura:</strong> {{ atividade.dataAbertura }} |
+                            <strong>Encerramento:</strong> {{ atividade.dataEncerramento }} |
+                            <strong>Registro:</strong> {{ atividade.dataRegistro }}
+                        </p>
+                    </div>
+                    <div *ngIf="atividade.arquivosAtividade?.length > 0">
+                        <h4>Arquivos da atividade:</h4>
+                        <ul>
+                            <li *ngFor="let arquivo of atividade.arquivosAtividade">
+                                <a [href]="arquivo.arquivo" download="{{ arquivo.nomeArquivo }}" class="arquivo-link">{{
+                                    arquivo.nomeArquivo }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="atividade.repostas?.length > 0" class="respostas">
+                <h3>Respostas dos Alunos:</h3>
+                <div *ngFor="let resposta of atividade.repostas" class="resposta-card">
+                    <p><strong>{{ resposta.aluno.nome }}</strong></p>
+                    <p>{{ resposta.descricao }}</p>
+
+                    <div class="arquivos" *ngIf="resposta.arquivosResposta?.length > 0">
+                        <h5>Arquivos enviados:</h5>
+                        <ul>
+                            <li *ngFor="let arq of resposta.arquivosResposta">
+                                <a [href]="arq.arquivo" download="{{ arq.nomeArquivo }}" class="arquivo-link">{{
+                                    arq.nomeArquivo }} </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <p *ngIf="atividade.repostas?.length === 0">Nenhuma resposta enviada ainda.</p>
+        </div>
+    </div>
+</div>

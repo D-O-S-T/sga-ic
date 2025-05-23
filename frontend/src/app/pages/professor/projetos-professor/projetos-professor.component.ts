@@ -14,14 +14,22 @@ export interface Projeto {
   standalone: true,
   imports: [CommonModule, HttpClientModule],
   templateUrl: './projetos-professor.component.html',
-  styleUrl: './projetos-professor.component.scss'
+  styleUrls: ['./projetos-professor.component.scss']
 })
-export class ProjetosProfessorComponent  implements OnInit {
+export class ProjetosProfessorComponent implements OnInit {
   projetos: Projeto[] = [];
   carregando = true;
   erro = '';
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) { }
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef,
+    private router: Router
+  ) { }
+
+  irParaProjeto(projetoId: number): void {
+    this.router.navigate(['/projeto', projetoId, 'atividades-prof']);
+  }
 
   ngOnInit(): void {
     this.http
@@ -39,8 +47,4 @@ export class ProjetosProfessorComponent  implements OnInit {
         }
       });
   }
-
-  abrirFormularioAtividade(projetoId: number) {
-  this.router.navigate(['/formulario-atividade', projetoId]);
-}
 }
