@@ -1,9 +1,17 @@
 <div class="tabela-container">
-  <h2>Lista de Editais</h2>
-     <button mat-icon-button color="accent" [routerLink]="['/form-edital']" aria-label="Adicionar edital">
-    <mat-icon>add</mat-icon>
-   
-  </button>
+  <div class="tabela-header">
+    <div class="header-actions">
+      <button mat-icon-button [routerLink]="['/coordenador']" matTooltip="Voltar">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Lista de Editais</h2>
+    </div>
+    <button mat-mini-fab color="primary" [routerLink]="['/form-edital']" matTooltip="Adicionar edital"
+      aria-label="Adicionar edital">
+      <mat-icon>post_add</mat-icon>
+    </button>
+  </div>
+
   <table>
     <thead>
       <tr>
@@ -11,7 +19,7 @@
         <th>Instituição</th>
         <th>Data Início</th>
         <th>Data Fim</th>
-        <th>Ações</th>
+        <th style="text-align: right;">Ações</th>
       </tr>
     </thead>
     <tbody>
@@ -20,13 +28,17 @@
         <td>{{ edital.instituicao }}</td>
         <td>{{ edital.dtInicio | date: 'dd/MM/yyyy' }}</td>
         <td>{{ edital.dtFim | date: 'dd/MM/yyyy' }}</td>
-        <td>
-          <button (click)="editarEdital(edital.id)">Editar</button>
-          <button (click)="deletarEdital(edital.id)">Excluir</button>
+        <td class="acoes">
+          <button mat-icon-button color="accent" (click)="editarEdital(edital.id)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletarEdital(edital.id)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 
-  <p>Total de editais: {{ editais.length }}</p>
+  <p class="total">Total de editais: <strong>{{ editais.length }}</strong></p>
 </div>

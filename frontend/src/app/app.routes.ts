@@ -34,6 +34,7 @@ import { ProjetoRelatoriosComponent } from './pages/professor/projeto-relatorios
 import { RelatorioRespostasComponent } from './pages/professor/relatorio-respostas/relatorio-respostas.component';
 import { ProjetosEditalComponent } from './pages/coordenador/projetos-edital/projetos-edital.component';
 import { EditalProjetoComponent } from './pages/coordenador/edital-projeto/edital-projeto.component';
+import { PerfilCoordenadorComponent } from './pages/coordenador/perfil-coordenador/perfil-coordenador.component';
 
 
 export const routes: Routes = [
@@ -66,6 +67,7 @@ export const routes: Routes = [
 
 
     { path: 'coordenador', component: CoordenadorComponent },
+    { path: 'perfil-coordenador', component: PerfilCoordenadorComponent },
     { path: 'listar-coordenadores', component: CoordenadorListComponent },
     { path: 'form-coordenador', component: FormularioCoordenadorComponent },
     { path: 'form-coordenador/:id', component: FormularioCoordenadorComponent },

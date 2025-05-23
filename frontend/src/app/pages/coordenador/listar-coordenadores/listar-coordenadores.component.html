@@ -1,31 +1,47 @@
 <div class="tabela-container">
-  <h2>Lista de Coordenadores</h2>
-  <button mat-icon-button color="accent" [routerLink]="['/form-coordenador']" aria-label="Adicionar coordenador">
-    <mat-icon>add</mat-icon>
-  </button>
+  <div class="tabela-header">
+    <div class="header-actions">
+      <button mat-icon-button [routerLink]="['/coordenador']" matTooltip="Voltar">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Lista de coordenadores</h2>
+    </div>
+    <button mat-mini-fab color="primary" [routerLink]="['/form-coordenador']" aria-label="Adicionar aluno">
+      <mat-icon>person_add</mat-icon>
+    </button>
+  </div>
+
   <table>
     <thead>
       <tr>
+        <th>Foto</th>
         <th>Nome</th>
         <th>CPF</th>
-        <th>Foto de Perfil</th>
+        <th style="text-align: right;">Ações</th>
       </tr>
     </thead>
     <tbody>
-
       <tr *ngFor="let coordenador of coordenadores">
-        <td>{{ coordenador.nome }}</td>
-        <td>{{ coordenador.cpf }}</td>
         <td>
-          <img *ngIf="coordenador.fotoPerfil; else semFoto" [src]="coordenador.fotoPerfil" alt="Foto do coordenador" class="foto-perfil">
+          <img *ngIf="coordenador.fotoPerfil; else semFoto" [src]="coordenador.fotoPerfil" alt="Foto do coordenador"
+            class="foto-perfil" />
           <ng-template #semFoto>
             <span class="sem-foto">Sem foto</span>
           </ng-template>
         </td>
-        <button (click)="editarCoordenador(coordenador.id)">Editar</button>
-        <button (click)="deletarCoordenador(coordenador.id)">Excluir</button>
+        <td>{{ coordenador.nome }}</td>
+        <td>{{ coordenador.cpf }}</td>
+        <td class="acoes">
+          <button mat-icon-button color="accent" (click)="editarCoordenador(coordenador.id)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletarCoordenador(coordenador.id)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
-  <p>Total de coordenadores: {{ coordenadores.length }}</p>
+
+  <p class="total">Total de coordenadores: <strong>{{ coordenadores.length }}</strong></p>
 </div>

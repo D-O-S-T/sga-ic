@@ -9,6 +9,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { ChangeDetectorRef, NgZone } from '@angular/core';
 import { ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Professor {
   id: number;
@@ -99,7 +100,8 @@ export class FormularioProfessorComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private cd: ChangeDetectorRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private router: Router
   ) { }
 
   cadastrarProfessor(): void {
@@ -119,6 +121,7 @@ export class FormularioProfessorComponent {
       next: () => {
         alert(`Professor ${this.id ? 'atualizado' : 'salvo'} com sucesso!`);
         if (!this.id) this.resetForm(); // em edição você pode redirecionar, se quiser
+        this.router.navigate(['/listar-professores']);
       },
       error: (err) => {
         console.error('Erro ao salvar professor', err);

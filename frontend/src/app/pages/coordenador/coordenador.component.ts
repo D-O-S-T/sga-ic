@@ -15,6 +15,7 @@ export class CoordenadorComponent {
 
   navItems: NavItem[] = [
     { label: 'Home', route: '/coordenador' },
+    { label: 'Perfil', route: '/perfil-coordenador' },
     { label: 'Editais', route: '/listar-editais' },
     { label: 'Alunos', route: '/listar-alunos' },
     { label: 'Professores', route: '/listar-professores' },

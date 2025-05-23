@@ -5,6 +5,9 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HeaderComponent } from '../../../shared/header/header.component';
 import { SidebarComponent, NavItem } from '../../../shared/sidebar/sidebar.component';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { FormularioRelatorioComponent } from '../formulario-relatorio/formulario-relatorio.component'; 
+
 
 export interface Edital {
   id: number;
@@ -47,7 +50,7 @@ export class ProjetosEditalComponent implements OnInit {
   carregando = true;
   erro = '';
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router) { }
+  constructor(private route: ActivatedRoute, private http: HttpClient, private cdr: ChangeDetectorRef, private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     const editalId = Number(this.route.snapshot.paramMap.get('id'));
@@ -63,6 +66,16 @@ export class ProjetosEditalComponent implements OnInit {
 
   irParaProjeto(projetoId: number): void {
     this.router.navigate(['/edital', projetoId, 'projeto']);
+  }
+
+  
+  abrirModalRelatorio(): void {
+    const dialogRef = this.dialog.open(FormularioRelatorioComponent, {
+      width: '600px',
+    });
+
+    // Atribuir o valor do @Input após abrir o modal
+    dialogRef.componentInstance.editalId = this.edital.id;
   }
 
   private carregarEdital(id: number): void {

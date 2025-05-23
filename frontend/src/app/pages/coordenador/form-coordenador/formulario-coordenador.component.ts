@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -95,7 +95,8 @@ export class FormularioCoordenadorComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private cd: ChangeDetectorRef,
-    private zone: NgZone
+    private zone: NgZone,
+    private router: Router
   ) { }
 
   cadastrarCoordenador(): void {
@@ -114,6 +115,7 @@ export class FormularioCoordenadorComponent {
       next: () => {
         alert(`Coordenador ${this.id ? 'atualizado' : 'salvo'} com sucesso!`);
         if (!this.id) this.resetForm(); // em edição você pode redirecionar, se quiser
+        this.router.navigate(['/listar-coordenadores']);
       },
       error: (err) => {
         console.error('Erro ao salvar coordenador', err);

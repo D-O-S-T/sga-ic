@@ -1,32 +1,47 @@
 <div class="tabela-container">
-    <h2>Lista de Professores</h2>
-    <button mat-icon-button color="accent" [routerLink]="['/form-professor']" aria-label="Adicionar edital">
-        <mat-icon>add</mat-icon>
+  <div class="tabela-header">
+    <div class="header-actions">
+      <button mat-icon-button [routerLink]="['/coordenador']" matTooltip="Voltar">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <h2>Lista de Professores</h2>
+    </div>
+    <button mat-mini-fab color="primary" [routerLink]="['/form-professor']" aria-label="Adicionar aluno">
+      <mat-icon>person_add</mat-icon>
     </button>
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>CPF</th>
-                <th>Foto de Perfil</th>
-            </tr>
-        </thead>
-        <tbody>
+  </div>
 
-            <tr *ngFor="let professor of professores">
-                <td>{{ professor.nome }}</td>
-                <td>{{ professor.cpf }}</td>
-                <td>
-                    <img *ngIf="professor.fotoPerfil; else semFoto" [src]="professor.fotoPerfil" alt="Foto do professor"
-                        class="foto-perfil">
-                    <ng-template #semFoto>
-                        <span class="sem-foto">Sem foto</span>
-                    </ng-template>
-                </td>
-                <button (click)="editarProfessor(professor.id)">Editar</button>
-                <button (click)="deletarProfessor(professor.id)">Excluir</button>
-            </tr>
-        </tbody>
-    </table>
-    <p>Total de professores: {{ professores.length }}</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Foto</th>
+        <th>Nome</th>
+        <th>CPF</th>
+        <th style="text-align: right;">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let professor of professores">
+        <td>
+          <img *ngIf="professor.fotoPerfil; else semFoto" [src]="professor.fotoPerfil" alt="Foto do professor"
+            class="foto-perfil" />
+          <ng-template #semFoto>
+            <span class="sem-foto">Sem foto</span>
+          </ng-template>
+        </td>
+        <td>{{ professor.nome }}</td>
+        <td>{{ professor.cpf }}</td>
+        <td class="acoes">
+          <button mat-icon-button color="accent" (click)="editarProfessor(professor.id)" matTooltip="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button color="warn" (click)="deletarProfessor(professor.id)" matTooltip="Excluir">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="total">Total de professores: <strong>{{ professores.length }}</strong></p>
 </div>

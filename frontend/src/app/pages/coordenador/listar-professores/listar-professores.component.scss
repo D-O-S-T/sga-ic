@@ -1,15 +1,32 @@
 .tabela-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 2rem auto;
-  padding: 1rem;
-  background-color: #f4f4f4;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 
-  h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: #333;
+  .tabela-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      h2 {
+        margin: 0;
+      }
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.75rem;
+      color: #2c3e50;
+    }
   }
 
   table {
@@ -17,33 +34,57 @@
     border-collapse: collapse;
 
     thead {
-      background-color: #f2f2f2;
+      background-color: #f9f9f9;
+
       th {
-        padding: 0.75rem;
+        padding: 1rem;
         text-align: left;
-        font-weight: bold;
-        color: #555;
+        font-weight: 600;
+        color: #34495e;
+        border-bottom: 2px solid #ddd;
       }
     }
 
     tbody {
+      tr {
+        transition: background-color 0.2s;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+
       td {
-        padding: 0.75rem;
-        border-top: 1px solid #ddd;
+        padding: 0.75rem 1rem;
+        vertical-align: middle;
+        border-top: 1px solid #eee;
       }
 
       .foto-perfil {
-        width: 50px;
-        height: 50px;
+        width: 45px;
+        height: 45px;
         object-fit: cover;
         border-radius: 50%;
         border: 1px solid #ccc;
       }
 
       .sem-foto {
-        color: #999;
+        color: #bbb;
         font-style: italic;
       }
+
+      .acoes {
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5rem;
+      }
     }
+  }
+
+  .total {
+    margin-top: 1.5rem;
+    text-align: right;
+    color: #555;
+    font-size: 1rem;
   }
 }

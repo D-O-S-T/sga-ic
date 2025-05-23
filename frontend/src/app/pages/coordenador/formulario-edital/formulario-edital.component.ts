@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core'; 
+import { MatNativeDateModule } from '@angular/material/core';
 import { EditalService, Edital } from '../../../services/edital.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -33,7 +33,7 @@ import { MatIcon } from '@angular/material/icon';
   ],
 })
 export class FormularioEditalComponent implements OnInit {
-  
+
   edital: Edital = {
     titulo: '',
     descricao: '',
@@ -53,11 +53,10 @@ export class FormularioEditalComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     @Optional() @Inject(MatDialogRef) public dialogRef: MatDialogRef<FormularioEditalComponent>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.idEdital = this.route.snapshot.paramMap.get('id');
-
     if (this.idEdital) {
       this.editalService.buscarEditalPorId(this.idEdital).subscribe({
         next: (dados: Edital) => {
@@ -69,6 +68,7 @@ export class FormularioEditalComponent implements OnInit {
       });
     }
   }
+
 
   salvar() {
     if (this.idEdital) {
