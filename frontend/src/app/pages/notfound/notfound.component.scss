@@ -1,0 +1,46 @@
+@use "@angular/material" as mat;
+
+.not-found-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, #0d47a1, #0091ea);
+  color: white;
+
+  h1 {
+    font-size: 2.5rem;
+    margin: 1rem 0 0.5rem;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 1.25rem;
+    margin: 0 0 2rem;
+    max-width: 420px;
+    line-height: 1.6;
+  }
+
+  button {
+    padding: 1rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .not-found-icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    color: mat.get-color-from-palette(mat.$grey-palette, 50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 5rem;
+      height: 5rem;
+    }
+  }
+}

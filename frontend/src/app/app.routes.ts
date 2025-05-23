@@ -34,6 +34,7 @@ import { ProjetoRelatoriosComponent } from './pages/professor/projeto-relatorios
 import { RelatorioRespostasComponent } from './pages/professor/relatorio-respostas/relatorio-respostas.component';
 import { ProjetosEditalComponent } from './pages/coordenador/projetos-edital/projetos-edital.component';
 import { EditalProjetoComponent } from './pages/coordenador/edital-projeto/edital-projeto.component';
+import { NotfoundComponent } from './pages/notfound/notfound.component';
 
 
 export const routes: Routes = [
@@ -43,6 +44,7 @@ export const routes: Routes = [
     { path: 'sidebar', component: SidebarComponent },
 
     { path: 'home', component: HomeComponent },
+    { path: 'notfound', component: NotfoundComponent },
 
     { path: 'aluno', component: AlunoComponent },
     { path: 'perfil-aluno', component: PerfilAlunoComponent },
@@ -87,8 +89,8 @@ export const routes: Routes = [
     { path: 'form-relatorio', component: FormularioRelatorioComponent },
 
 
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
 
-
-
-
+    // Sempre tem que estar no final
+    { path: '**', redirectTo: '/notfound' },
 ];
